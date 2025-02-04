@@ -7,7 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,5 +72,12 @@ public class SplashScreenFragment extends Fragment {
             @Override
             public void onAnimationRepeat(Animator animation) {}
         });
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Navigation.findNavController(view).navigate(R.id.action_splashScreen_to_startScreen2);
+            }
+        }, 3000);
     }
 }

@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">FoodPlanner</string>
+    <string name="client_id">315159952979-c8s66tsnj1e3eoicci03j32c1n0gupja.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">1686966208525457</string>
+    <string name="fb_login_protocol_scheme">fb1686966208525457</string>
+    <string name="facebook_client_token">380703e24798ab4c078909990bca289f</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
