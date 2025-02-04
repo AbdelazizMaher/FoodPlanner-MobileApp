@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/intro_nav_graph"
     app:startDestination="@id/splashScreenFragment">
-
     <fragment
         android:id="@+id/splashScreenFragment"
         android:name="com.example.foodplanner.SplashScreenFragment"
