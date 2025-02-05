@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "315159952979",
+    "project_id": "fir-auth-d444c",
+    "storage_bucket": "fir-auth-d444c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315159952979:android:5768e9494ddfa0cd8b10a6",
+        "android_client_info": {
+          "package_name": "com.example.firebaseauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315159952979-fthnvsflcr2vp9pr59i0suh93vrunmuu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebaseauth",
+            "certificate_hash": "65357b7764d2f7cc5d82709979e9163ff98629f1"
+          }
+        },
+        {
+          "client_id": "315159952979-c8s66tsnj1e3eoicci03j32c1n0gupja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1gUEZGrRJ2mUd9GIu0Fl2bnyQXZNr_1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315159952979-c8s66tsnj1e3eoicci03j32c1n0gupja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315159952979:android:430f0dae310a17298b10a6",
+        "android_client_info": {
+          "package_name": "com.example.foodplanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315159952979-c8s66tsnj1e3eoicci03j32c1n0gupja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1gUEZGrRJ2mUd9GIu0Fl2bnyQXZNr_1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315159952979-c8s66tsnj1e3eoicci03j32c1n0gupja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
