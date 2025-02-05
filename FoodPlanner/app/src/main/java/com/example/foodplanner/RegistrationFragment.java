@@ -67,40 +67,40 @@ public class RegistrationFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
-        view.findViewById(R.id.signUp).setOnClickListener(v-> {
-            Intent intent = new Intent(requireContext(),SignUpActivity.class);
-            startActivity(intent);
-        });
+//        view.findViewById(R.id.signUp).setOnClickListener(v-> {
+//            Intent intent = new Intent(requireContext(),SignUpActivity.class);
+//            startActivity(intent);
+//        });
 
 
-        LoginButton loginButton = view.findViewById(R.id.facebook_signIn);
-        loginButton.setReadPermissions("email", "public_profile");
-        mCallbackManager = CallbackManager.Factory.create();
-        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG1, "facebook:onSuccess:" + loginResult);
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                Log.d(TAG1, "facebook:onCancel");
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.d(TAG1, "facebook:onError", error);
-            }
-        });
+//        LoginButton loginButton = view.findViewById(R.id.facebook_signIn);
+//        loginButton.setReadPermissions("email", "public_profile");
+//        mCallbackManager = CallbackManager.Factory.create();
+//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//                Log.d(TAG1, "facebook:onSuccess:" + loginResult);
+//                handleFacebookAccessToken(loginResult.getAccessToken());
+//            }
+//
+//            @Override
+//            public void onCancel() {
+//                Log.d(TAG1, "facebook:onCancel");
+//            }
+//
+//            @Override
+//            public void onError(FacebookException error) {
+//                Log.d(TAG1, "facebook:onError", error);
+//            }
+//        });
 
         createRequest();
-        view.findViewById(R.id.google_signIn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                googleSignIn();
-            }
-        });
+//        view.findViewById(R.id.google_signIn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                googleSignIn();
+//            }
+//        });
     }
 
     @Override
