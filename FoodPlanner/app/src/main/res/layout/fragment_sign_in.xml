@@ -1,14 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInFragment">
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/peridotlatin"
+            android:paddingBottom="8dp"
+            android:text="Sign In"
+            android:textColor="#01404f"
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="16dp"
+            android:text="Welcome back! You're just a tap away from something delicious."
+            android:textColor="#274b52"
+            android:textSize="20sp" />
+
+
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:background="@android:color/transparent"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="#787a82"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:background="@android:color/transparent"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColor="@color/black"
+            android:textColorHint="#787a82"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <CheckBox
+            android:id="@+id/checkbox_subscribe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:buttonTint="@color/black"
+            android:paddingStart="10dp"
+            android:paddingTop="8dp"
+            android:text="I would like to receive recipe inspiration, meal plans, updates, and more!"
+            android:textColor="#0b3a39"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/gray"
+            android:enabled="false"
+            android:text="START COOKING!"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+</LinearLayout>
+

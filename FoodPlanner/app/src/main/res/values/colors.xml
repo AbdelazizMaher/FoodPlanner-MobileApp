@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#D3D3D3</color>
     <color name="semi_transparent">#99FFFFFF</color>
     <color name="facebook_blue">#3B5998</color>
 </resources>
