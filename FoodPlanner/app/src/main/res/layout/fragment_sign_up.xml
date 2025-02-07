@@ -44,20 +44,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 android:fontFamily="@font/peridotlatin"
-                android:textColor="#01404f"
+                android:textColor="@color/primaryColor"
                 android:paddingBottom="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Save delicious recipes and get personalized content."
+                android:text="@string/sign_up_title"
                 android:textSize="20sp"
-                android:textColor="#274b52"
+                android:textColor="@color/primaryColor"
                 android:paddingBottom="16dp" />
 
             <EditText
@@ -65,13 +65,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:hint="Display Name"
+                android:hint="@string/display_name"
                 android:background="@android:color/transparent"
                 android:padding="12dp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textColorHint="#787a82"
+                android:textColorHint="@color/hintColor"
                 android:inputType="textPersonName" />
 
             <View
@@ -84,13 +84,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:background="@android:color/transparent"
                 android:padding="12dp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textColorHint="#787a82"
+                android:textColorHint="@color/hintColor"
                 android:inputType="textEmailAddress" />
 
             <View
@@ -103,13 +103,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:background="@android:color/transparent"
                 android:padding="12dp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textColorHint="#787a82"
+                android:textColorHint="@color/hintColor"
                 android:inputType="textPassword" />
 
             <View
@@ -122,13 +122,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="26dp"
-                android:hint="Confirm Password"
+                android:hint="@string/confirm_password"
                 android:background="@android:color/transparent"
                 android:padding="12dp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:textColorHint="#787a82"
+                android:textColorHint="@color/hintColor"
                 android:inputType="textPassword" />
 
             <View
@@ -141,18 +141,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                android:text="I would like to receive recipe inspiration, meal plans, updates, and more!"
+                android:text="@string/sign_up_check"
                 android:textSize="20sp"
-                android:textColor="#0b3a39"
+                android:textColor="@color/primaryColor"
                 android:paddingTop="8dp"
-                android:paddingStart="10dp"
+                android:paddingStart="10sp"
+                android:paddingEnd="10sp"
                 android:buttonTint="@color/black" />
 
             <Button
                 android:id="@+id/btn_next"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="NEXT"
+                android:text="@string/next"
                 android:backgroundTint="@color/gray"
                 android:textColor="@color/white"
                 android:textSize="18sp"

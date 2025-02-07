@@ -41,7 +41,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-auth:23.1.0'
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
+    implementation 'com.facebook.android:facebook-android-sdk:18.0.1'
+    implementation 'com.facebook.android:facebook-login:16.0.0'
+    implementation 'com.facebook.android:facebook-share:16.0.0'
     implementation 'com.airbnb.android:lottie:6.6.2'
     implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
     implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
