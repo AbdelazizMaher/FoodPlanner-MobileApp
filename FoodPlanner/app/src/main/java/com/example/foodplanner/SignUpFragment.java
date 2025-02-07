@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,7 @@ public class SignUpFragment extends Fragment {
     private EditText etDisplayName, etEmail, etPassword, etConfirmPassword;
     private CheckBox checkBoxSubscribe;
     private Button btnNext;
+    RelativeLayout progressOverlay;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -75,6 +77,7 @@ public class SignUpFragment extends Fragment {
         etConfirmPassword = view.findViewById(R.id.et_confirm_password);
         checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
         btnNext = view.findViewById(R.id.btn_next);
+        progressOverlay = view.findViewById(R.id.progress_overlay);
 
         etDisplayName.addTextChangedListener(textWatcher);
         etEmail.addTextChangedListener(textWatcher);
@@ -85,14 +88,17 @@ public class SignUpFragment extends Fragment {
     }
 
     private void createAccount(String email, String password) {
+        progressOverlay.setVisibility(View.VISIBLE);
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressOverlay.setVisibility(View.GONE);
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
+                            progressOverlay.setVisibility(View.GONE);
                             // If sign in fails, display a message to the user.
                             Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
                         }
@@ -116,7 +122,6 @@ public class SignUpFragment extends Fragment {
             return;
         }
 
-        btnNext.setEnabled(false);
         createAccount(email,password);
     }
 
@@ -130,7 +135,7 @@ public class SignUpFragment extends Fragment {
                 !TextUtils.isEmpty(email) &&
                 !TextUtils.isEmpty(password) &&
                 !TextUtils.isEmpty(confirmPassword) &&
-                password.equals(confirmPassword));
+                password.equals(confirmPassword);
 
         btnNext.setEnabled(isEnabled);
 

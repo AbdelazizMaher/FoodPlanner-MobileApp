@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ public class SignInFragment extends Fragment {
     private EditText etEmail, etPassword;
     private Button btnNext;
     private CheckBox checkBoxSubscribe;
+    RelativeLayout progressOverlay;
 
     public SignInFragment() {
         // Required empty public constructor
@@ -55,6 +57,7 @@ public class SignInFragment extends Fragment {
         etPassword = view.findViewById(R.id.et_password);
         btnNext = view.findViewById(R.id.btn_next);
         checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
+        progressOverlay = view.findViewById(R.id.progress_overlay);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -80,15 +83,18 @@ public class SignInFragment extends Fragment {
     }
 
     private void signIn(String email, String password) {
+        progressOverlay.setVisibility(View.VISIBLE);
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            progressOverlay.setVisibility(View.GONE);
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = mAuth.getCurrentUser();
                         } else {
+                            progressOverlay.setVisibility(View.GONE);
                             // If sign in fails, display a message to the user.
 
                         }
