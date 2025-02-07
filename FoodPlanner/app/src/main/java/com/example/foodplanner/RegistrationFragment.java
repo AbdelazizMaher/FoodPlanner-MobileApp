@@ -6,17 +6,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -33,6 +37,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
+
+import java.util.Arrays;
 
 
 public class RegistrationFragment extends Fragment {
@@ -66,41 +72,51 @@ public class RegistrationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        //FacebookSdk.sdkInitialize(requireContext());
+        mCallbackManager = CallbackManager.Factory.create();
 
-//        view.findViewById(R.id.signUp).setOnClickListener(v-> {
-//            Intent intent = new Intent(requireContext(),SignUpActivity.class);
-//            startActivity(intent);
-//        });
+        view.findViewById(R.id.emailSignUpButton).setOnClickListener(v-> {
+            Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_signUpFragment);
+        });
 
+        view.findViewById(R.id.loginText).setOnClickListener(v-> {
+            Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_signInFragment);
+        });
 
-//        LoginButton loginButton = view.findViewById(R.id.facebook_signIn);
-//        loginButton.setReadPermissions("email", "public_profile");
-//        mCallbackManager = CallbackManager.Factory.create();
-//        loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                Log.d(TAG1, "facebook:onSuccess:" + loginResult);
-//                handleFacebookAccessToken(loginResult.getAccessToken());
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Log.d(TAG1, "facebook:onCancel");
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Log.d(TAG1, "facebook:onError", error);
-//            }
-//        });
+        view.findViewById(R.id.facebookSignInButton).setOnClickListener(v-> {
+            LoginManager.getInstance().logInWithReadPermissions(getActivity(), Arrays.asList("email", "public_profile"));
+        });
+
+        LoginManager.getInstance().registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d(TAG, "facebook:onSuccess:" + loginResult);
+                AccessToken accessToken = loginResult.getAccessToken();
+                handleFacebookAccessToken(accessToken);
+                Toast.makeText(getActivity(), "LoginManager success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d(TAG, "facebook:onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.d(TAG, "facebook:onError", error);
+                Toast.makeText(getActivity(), "LoginManager onError", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        view.findViewById(R.id.googleSignInButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                googleSignIn();
+            }
+        });
 
         createRequest();
-//        view.findViewById(R.id.google_signIn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                googleSignIn();
-//            }
-//        });
     }
 
     @Override
@@ -138,6 +154,8 @@ public class RegistrationFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Toast.makeText(requireContext(), "onActivityResult", Toast.LENGTH_SHORT).show();
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -145,14 +163,16 @@ public class RegistrationFragment extends Fragment {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                Toast.makeText(requireContext(), "success", Toast.LENGTH_SHORT).show();
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
-                Toast.makeText(requireContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show();
             }
         } else {
             mCallbackManager.onActivityResult(requestCode, resultCode, data);
+            Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -166,6 +186,7 @@ public class RegistrationFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(requireContext(), "Welcome " + user.getDisplayName(), Toast.LENGTH_SHORT).show();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

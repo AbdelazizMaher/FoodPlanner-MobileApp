@@ -1,90 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/peridotlatin"
-            android:paddingBottom="8dp"
-            android:text="Sign In"
-            android:textColor="#01404f"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:paddingBottom="16dp"
-            android:text="Welcome back! You're just a tap away from something delicious."
-            android:textColor="#274b52"
-            android:textSize="20sp" />
-
-
-        <EditText
-            android:id="@+id/et_email"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:background="@android:color/transparent"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textColorHint="#787a82"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            >
 
-        <View
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/white"
+                    android:elevation="8dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                        <ImageView
+                            android:id="@+id/back_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/arrowback"
+                            android:layout_gravity="start"
+                            />
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/darker_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/peridotlatin"
+                            android:paddingBottom="8dp"
+                            android:text="@string/sign_in"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:paddingBottom="16dp"
+                            android:text="@string/welcome_back"
+                            android:textColor="#274b52"
+                            android:textSize="20sp" />
+
+
+                        <EditText
+                            android:id="@+id/et_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="36dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/hintColor"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
+
+                        <EditText
+                            android:id="@+id/et_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="26dp"
+                            android:background="@android:color/transparent"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            android:padding="12dp"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/hintColor"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray" />
+
+                        <CheckBox
+                            android:id="@+id/checkbox_subscribe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="28dp"
+                            android:buttonTint="@color/black"
+                            android:paddingStart="10dp"
+                            android:paddingTop="8dp"
+                            android:text="@string/check"
+                            android:textColor="@color/primaryColor"
+                            android:textSize="20sp" />
+
+                        <Button
+                            android:id="@+id/btn_next"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_marginTop="24dp"
+                            android:backgroundTint="@color/gray"
+                            android:enabled="false"
+                            android:text="@string/start_cooking"
+                            android:textColor="@color/white"
+                            android:textSize="18sp" />
+                </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/progress_overlay"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:background="@android:color/transparent"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
-            android:textColor="@color/black"
-            android:textColorHint="#787a82"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp"
+                    android:background="@drawable/loading_background">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
+                        <ProgressBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?android:attr/progressBarStyleLarge"
+                            android:indeterminate="true"/>
 
-        <CheckBox
-            android:id="@+id/checkbox_subscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:buttonTint="@color/black"
-            android:paddingStart="10dp"
-            android:paddingTop="8dp"
-            android:text="I would like to receive recipe inspiration, meal plans, updates, and more!"
-            android:textColor="#0b3a39"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/btn_next"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/gray"
-            android:enabled="false"
-            android:text="START COOKING!"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-</LinearLayout>
-
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/loading"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:layout_marginTop="8dp"/>
+                </LinearLayout>
+        </RelativeLayout>
+</FrameLayout>
