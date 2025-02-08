@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.network.MealClient;
-import com.example.foodplanner.network.MealResponseModel;
+import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.NetworkCallback;
 import com.example.foodplanner.view.RandomRecyclerAdapter;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
@@ -46,7 +46,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         carouselRecyclerview = view.findViewById(R.id.carouselRecyclerview);
-        adapter = new RandomRecyclerAdapter(getContext(), mealList);
+        adapter = new RandomRecyclerAdapter(mealList);
         carouselRecyclerview.setAdapter(adapter);
 
         fetchRandomMeals();
