@@ -13,17 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
-import com.example.foodplanner.network.MealResponseModel;
+import com.example.foodplanner.model.MealResponseModel;
 
 import java.util.ArrayList;
 
 public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAdapter.MyViewHolder> {
-    private Context context;
     private ArrayList<MealResponseModel> meals;
     private OnRandomMealClickListener onMealClickListener;
 
-    public RandomRecyclerAdapter(Context context, ArrayList<MealResponseModel> meals) {
-        this.context = context;
+    public RandomRecyclerAdapter(ArrayList<MealResponseModel> meals) {
         this.meals = meals;
     }
 
