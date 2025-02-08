@@ -27,6 +27,10 @@ public class MealClient {
         return instance;
     }
 
+    public MealApiService getService() {
+        return service;
+    }
+
     public <T> void makeNetworkCall(Call<T> call, final NetworkCallback<T> callback) {
         call.enqueue(new Callback<T>() {
             @Override
