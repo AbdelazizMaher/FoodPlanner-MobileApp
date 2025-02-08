@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/mealImage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_launcher_foreground" />
 

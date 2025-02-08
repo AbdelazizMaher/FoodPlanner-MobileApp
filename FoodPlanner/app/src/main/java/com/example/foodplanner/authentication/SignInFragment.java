@@ -1,10 +1,11 @@
-package com.example.foodplanner;
+package com.example.foodplanner.authentication;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.example.foodplanner.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -79,6 +80,7 @@ public class SignInFragment extends Fragment {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
             signIn(email, password);
+            Navigation.findNavController(v).navigate(R.id.action_signInFragment_to_homeFragment2);
         });
     }
 

@@ -55,9 +55,6 @@
         android:layout_marginTop="10dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:itemSpace="20dp"
-        app:scaleOnScroll="true"
         tools:listitem="@layout/item_meal_custom"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

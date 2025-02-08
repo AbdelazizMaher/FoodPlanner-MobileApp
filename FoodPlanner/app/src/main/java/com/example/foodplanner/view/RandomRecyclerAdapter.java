@@ -66,7 +66,6 @@ public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAd
 
             Glide.with(mealImage.getContext())
                     .load(meal.getMeals().get(0).getStrMealThumb())
-                    .placeholder(R.drawable.ic_launcher_foreground)
                     .into(mealImage);
 
             addIngredientsBtn.setOnClickListener(v -> {
