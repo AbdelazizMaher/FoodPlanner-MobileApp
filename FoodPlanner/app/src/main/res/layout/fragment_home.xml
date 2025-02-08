@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".HomeFragment">
 
     <LinearLayout
         android:id="@+id/topSection"
