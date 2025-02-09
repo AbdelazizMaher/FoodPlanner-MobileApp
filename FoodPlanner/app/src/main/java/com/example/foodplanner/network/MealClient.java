@@ -41,7 +41,7 @@ public class MealClient {
                     callback.onFailure("Response failed: " + response.message());
                 }
             }
-
+    
             @Override
             public void onFailure(Call<T> call, Throwable t) {
                 callback.onFailure("Network Error: " + t.getMessage());

@@ -80,7 +80,7 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
     public void checkIfUserIsLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            //view.navigateToHome();
+            view.navigateToHome();
         }
     }
 }
