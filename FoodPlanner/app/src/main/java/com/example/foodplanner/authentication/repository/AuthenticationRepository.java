@@ -1,7 +1,6 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.repository;
 
 import com.facebook.AccessToken;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +33,28 @@ public class AuthenticationRepository {
                         callback.onSuccess(mAuth.getCurrentUser());
                     } else {
                         callback.onFailure("Facebook authentication failed.");
+                    }
+                });
+    }
+
+    public void signInWithEmail(String email, String password, AuthenticationCallback callback) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(mAuth.getCurrentUser());
+                    } else {
+                        callback.onFailure(task.getException().getMessage());
+                    }
+                });
+    }
+
+    public void signUpWithEmail(String email, String password, AuthenticationCallback callback) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        callback.onSuccess(mAuth.getCurrentUser());
+                    } else {
+                        callback.onFailure(task.getException().getMessage());
                     }
                 });
     }

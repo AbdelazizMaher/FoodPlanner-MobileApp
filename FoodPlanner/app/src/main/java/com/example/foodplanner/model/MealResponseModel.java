@@ -1,5 +1,9 @@
 package com.example.foodplanner.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -17,13 +21,16 @@ public class MealResponseModel {
         this.meals = meals;
     }
 
+    @Entity(tableName = "meals_table")
     public static class MealsDTO {
         @SerializedName("idMeal")
+        @PrimaryKey
+        @NonNull
         private String idMeal;
         @SerializedName("strMeal")
         private String strMeal;
         @SerializedName("strDrinkAlternate")
-        private Object strDrinkAlternate;
+        private String strDrinkAlternate;
         @SerializedName("strCategory")
         private String strCategory;
         @SerializedName("strArea")
@@ -67,15 +74,15 @@ public class MealResponseModel {
         @SerializedName("strIngredient15")
         private String strIngredient15;
         @SerializedName("strIngredient16")
-        private Object strIngredient16;
+        private String strIngredient16;
         @SerializedName("strIngredient17")
-        private Object strIngredient17;
+        private String strIngredient17;
         @SerializedName("strIngredient18")
-        private Object strIngredient18;
+        private String strIngredient18;
         @SerializedName("strIngredient19")
-        private Object strIngredient19;
+        private String strIngredient19;
         @SerializedName("strIngredient20")
-        private Object strIngredient20;
+        private String strIngredient20;
         @SerializedName("strMeasure1")
         private String strMeasure1;
         @SerializedName("strMeasure2")
@@ -107,23 +114,25 @@ public class MealResponseModel {
         @SerializedName("strMeasure15")
         private String strMeasure15;
         @SerializedName("strMeasure16")
-        private Object strMeasure16;
+        private String strMeasure16;
         @SerializedName("strMeasure17")
-        private Object strMeasure17;
+        private String strMeasure17;
         @SerializedName("strMeasure18")
-        private Object strMeasure18;
+        private String strMeasure18;
         @SerializedName("strMeasure19")
-        private Object strMeasure19;
+        private String strMeasure19;
         @SerializedName("strMeasure20")
-        private Object strMeasure20;
+        private String strMeasure20;
         @SerializedName("strSource")
-        private Object strSource;
+        private String strSource;
         @SerializedName("strImageSource")
-        private Object strImageSource;
+        private String strImageSource;
         @SerializedName("strCreativeCommonsConfirmed")
-        private Object strCreativeCommonsConfirmed;
+        private String strCreativeCommonsConfirmed;
         @SerializedName("dateModified")
-        private Object dateModified;
+        private String dateModified;
+        private boolean isFavorite;
+        private boolean isPlanned;
 
         public String getIdMeal() {
             return idMeal;
@@ -141,11 +150,11 @@ public class MealResponseModel {
             this.strMeal = strMeal;
         }
 
-        public Object getStrDrinkAlternate() {
+        public String getStrDrinkAlternate() {
             return strDrinkAlternate;
         }
 
-        public void setStrDrinkAlternate(Object strDrinkAlternate) {
+        public void setStrDrinkAlternate(String strDrinkAlternate) {
             this.strDrinkAlternate = strDrinkAlternate;
         }
 
@@ -317,43 +326,43 @@ public class MealResponseModel {
             this.strIngredient15 = strIngredient15;
         }
 
-        public Object getStrIngredient16() {
+        public String getStrIngredient16() {
             return strIngredient16;
         }
 
-        public void setStrIngredient16(Object strIngredient16) {
+        public void setStrIngredient16(String strIngredient16) {
             this.strIngredient16 = strIngredient16;
         }
 
-        public Object getStrIngredient17() {
+        public String getStrIngredient17() {
             return strIngredient17;
         }
 
-        public void setStrIngredient17(Object strIngredient17) {
+        public void setStrIngredient17(String strIngredient17) {
             this.strIngredient17 = strIngredient17;
         }
 
-        public Object getStrIngredient18() {
+        public String getStrIngredient18() {
             return strIngredient18;
         }
 
-        public void setStrIngredient18(Object strIngredient18) {
+        public void setStrIngredient18(String strIngredient18) {
             this.strIngredient18 = strIngredient18;
         }
 
-        public Object getStrIngredient19() {
+        public String getStrIngredient19() {
             return strIngredient19;
         }
 
-        public void setStrIngredient19(Object strIngredient19) {
+        public void setStrIngredient19(String strIngredient19) {
             this.strIngredient19 = strIngredient19;
         }
 
-        public Object getStrIngredient20() {
+        public String getStrIngredient20() {
             return strIngredient20;
         }
 
-        public void setStrIngredient20(Object strIngredient20) {
+        public void setStrIngredient20(String strIngredient20) {
             this.strIngredient20 = strIngredient20;
         }
 
@@ -477,76 +486,92 @@ public class MealResponseModel {
             this.strMeasure15 = strMeasure15;
         }
 
-        public Object getStrMeasure16() {
+        public String getStrMeasure16() {
             return strMeasure16;
         }
 
-        public void setStrMeasure16(Object strMeasure16) {
+        public void setStrMeasure16(String strMeasure16) {
             this.strMeasure16 = strMeasure16;
         }
 
-        public Object getStrMeasure17() {
+        public String getStrMeasure17() {
             return strMeasure17;
         }
 
-        public void setStrMeasure17(Object strMeasure17) {
+        public void setStrMeasure17(String strMeasure17) {
             this.strMeasure17 = strMeasure17;
         }
 
-        public Object getStrMeasure18() {
+        public String getStrMeasure18() {
             return strMeasure18;
         }
 
-        public void setStrMeasure18(Object strMeasure18) {
+        public void setStrMeasure18(String strMeasure18) {
             this.strMeasure18 = strMeasure18;
         }
 
-        public Object getStrMeasure19() {
+        public String getStrMeasure19() {
             return strMeasure19;
         }
 
-        public void setStrMeasure19(Object strMeasure19) {
+        public void setStrMeasure19(String strMeasure19) {
             this.strMeasure19 = strMeasure19;
         }
 
-        public Object getStrMeasure20() {
+        public String getStrMeasure20() {
             return strMeasure20;
         }
 
-        public void setStrMeasure20(Object strMeasure20) {
+        public void setStrMeasure20(String strMeasure20) {
             this.strMeasure20 = strMeasure20;
         }
 
-        public Object getStrSource() {
+        public String getStrSource() {
             return strSource;
         }
 
-        public void setStrSource(Object strSource) {
+        public void setStrSource(String strSource) {
             this.strSource = strSource;
         }
 
-        public Object getStrImageSource() {
+        public String getStrImageSource() {
             return strImageSource;
         }
 
-        public void setStrImageSource(Object strImageSource) {
+        public void setStrImageSource(String strImageSource) {
             this.strImageSource = strImageSource;
         }
 
-        public Object getStrCreativeCommonsConfirmed() {
+        public String getStrCreativeCommonsConfirmed() {
             return strCreativeCommonsConfirmed;
         }
 
-        public void setStrCreativeCommonsConfirmed(Object strCreativeCommonsConfirmed) {
+        public void setStrCreativeCommonsConfirmed(String strCreativeCommonsConfirmed) {
             this.strCreativeCommonsConfirmed = strCreativeCommonsConfirmed;
         }
 
-        public Object getDateModified() {
+        public String getDateModified() {
             return dateModified;
         }
 
-        public void setDateModified(Object dateModified) {
+        public void setDateModified(String dateModified) {
             this.dateModified = dateModified;
+        }
+
+        public boolean isFavorite() {
+            return isFavorite;
+        }
+
+        public void setFavorite(boolean favorite) {
+            isFavorite = favorite;
+        }
+
+        public boolean isPlanned() {
+            return isPlanned;
+        }
+
+        public void setPlanned(boolean planned) {
+            isPlanned = planned;
         }
     }
 }

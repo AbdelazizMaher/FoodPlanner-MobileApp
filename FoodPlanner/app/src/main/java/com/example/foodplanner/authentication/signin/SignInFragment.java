@@ -1,4 +1,4 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.signin;
 
 import android.os.Bundle;
 
@@ -16,17 +16,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.foodplanner.authentication.repository.AuthenticationRepository;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 
-public class SignInFragment extends Fragment {
+public class SignInFragment extends Fragment implements SignInContract.IView {
 
+    private SignInPresenter presenter;
     private FirebaseAuth mAuth;
     private EditText etEmail, etPassword;
     private Button btnNext;
@@ -40,6 +39,7 @@ public class SignInFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        presenter = new SignInPresenter(this, new AuthenticationRepository());
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -79,30 +79,30 @@ public class SignInFragment extends Fragment {
         btnNext.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
             String password = etPassword.getText().toString().trim();
-            signIn(email, password);
-            Navigation.findNavController(v).navigate(R.id.action_signInFragment_to_homeFragment2);
+            presenter.signIn(email, password);
         });
     }
 
-    private void signIn(String email, String password) {
-        progressOverlay.setVisibility(View.VISIBLE);
-        // [START sign_in_with_email]
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressOverlay.setVisibility(View.GONE);
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            progressOverlay.setVisibility(View.GONE);
-                            // If sign in fails, display a message to the user.
 
-                        }
-                    }
-                });
-        // [END sign_in_with_email]
+    @Override
+    public void showProgress() {
+        progressOverlay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressOverlay.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showSignInSuccess() {
+        Toast.makeText(getContext(), "Sign-in successful", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(requireView()).navigate(R.id.action_signInFragment_to_homeFragment2);
+    }
+
+    @Override
+    public void showSignInError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void checkInputs() {

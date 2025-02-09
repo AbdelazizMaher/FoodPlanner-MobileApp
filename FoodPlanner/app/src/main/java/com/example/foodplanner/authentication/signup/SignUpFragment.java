@@ -1,4 +1,4 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.signup;
 
 import android.os.Bundle;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextUtils;
@@ -20,14 +21,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.foodplanner.authentication.repository.AuthenticationRepository;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-public class SignUpFragment extends Fragment {
+public class SignUpFragment extends Fragment implements SignUpContract.IView {
 
+    private SignUpPresenter presenter;
     private FirebaseAuth mAuth;
     private EditText etDisplayName, etEmail, etPassword, etConfirmPassword;
     private CheckBox checkBoxSubscribe;
@@ -42,7 +41,8 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        presenter = new SignUpPresenter(this, new AuthenticationRepository());
+        mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
@@ -56,8 +56,45 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAuth = FirebaseAuth.getInstance();
+        initUI(view);
+        setupWatcher();
 
+        btnNext.setOnClickListener(v -> registerUser());
+    }
+
+    @Override
+    public void showProgress() {
+        progressOverlay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressOverlay.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showSignUpSuccess() {
+        Toast.makeText(getContext(), "Sign-up successful", Toast.LENGTH_SHORT).show();
+        Navigation.findNavController(requireView()).navigate(R.id.action_signInFragment_to_homeFragment2);
+
+    }
+
+    @Override
+    public void showSignUpError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void initUI(View view) {
+        etDisplayName = view.findViewById(R.id.et_display_name);
+        etEmail = view.findViewById(R.id.et_email);
+        etPassword = view.findViewById(R.id.et_password);
+        etConfirmPassword = view.findViewById(R.id.et_confirm_password);
+        checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
+        btnNext = view.findViewById(R.id.btn_next);
+        progressOverlay = view.findViewById(R.id.progress_overlay);
+    }
+
+    private void setupWatcher() {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -70,40 +107,10 @@ public class SignUpFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {}
         };
-
-        etDisplayName = view.findViewById(R.id.et_display_name);
-        etEmail = view.findViewById(R.id.et_email);
-        etPassword = view.findViewById(R.id.et_password);
-        etConfirmPassword = view.findViewById(R.id.et_confirm_password);
-        checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
-        btnNext = view.findViewById(R.id.btn_next);
-        progressOverlay = view.findViewById(R.id.progress_overlay);
-
         etDisplayName.addTextChangedListener(textWatcher);
         etEmail.addTextChangedListener(textWatcher);
         etPassword.addTextChangedListener(textWatcher);
         etConfirmPassword.addTextChangedListener(textWatcher);
-
-        btnNext.setOnClickListener(v -> registerUser());
-    }
-
-    private void createAccount(String email, String password) {
-        progressOverlay.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            progressOverlay.setVisibility(View.GONE);
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                        } else {
-                            progressOverlay.setVisibility(View.GONE);
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     private void registerUser() {
@@ -122,7 +129,7 @@ public class SignUpFragment extends Fragment {
             return;
         }
 
-        createAccount(email,password);
+        presenter.signUp(email, password);
     }
 
     private void checkInputs() {
@@ -146,7 +153,4 @@ public class SignUpFragment extends Fragment {
         }
     }
 
-    private void signOut() {
-        FirebaseAuth.getInstance().signOut();
-    }
 }
