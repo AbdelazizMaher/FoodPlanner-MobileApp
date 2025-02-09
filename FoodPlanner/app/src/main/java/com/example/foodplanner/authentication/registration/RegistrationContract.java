@@ -1,7 +1,6 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.registration;
 
 import com.facebook.AccessToken;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 public interface RegistrationContract {

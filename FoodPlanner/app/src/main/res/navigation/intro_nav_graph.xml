@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.foodplanner.authentication.RegistrationFragment"
+        android:name="com.example.foodplanner.authentication.registration.RegistrationFragment"
         android:label="fragment_registration"
         tools:layout="@layout/fragment_registration" >
         <action
@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.example.foodplanner.authentication.SignUpFragment"
+        android:name="com.example.foodplanner.authentication.signup.SignUpFragment"
         android:label="SignUpFragment" >
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.foodplanner.authentication.SignInFragment"
+        android:name="com.example.foodplanner.authentication.signin.SignInFragment"
         android:label="SignInFragment" >
         <action
             android:id="@+id/action_signInFragment_to_homeFragment2"

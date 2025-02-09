@@ -1,4 +1,4 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.registration;
 
 import android.content.Intent;
 import android.os.Bundle;

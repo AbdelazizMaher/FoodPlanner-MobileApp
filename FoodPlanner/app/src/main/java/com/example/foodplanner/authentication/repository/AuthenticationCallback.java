@@ -1,4 +1,4 @@
-package com.example.foodplanner.authentication;
+package com.example.foodplanner.authentication.repository;
 
 import com.google.firebase.auth.FirebaseUser;
 
