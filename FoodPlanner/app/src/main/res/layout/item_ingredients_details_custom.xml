@@ -1,0 +1,84 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <FrameLayout
+            android:id="@+id/ingredientImageContainer"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/ingredientImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/ingredientQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120 mL"
+            android:textSize="14sp"
+            android:textColor="#2B3A3F"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/ingredientImageContainer"
+            app:layout_constraintTop_toTopOf="@id/ingredientImageContainer"
+            app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/ingredientQuantity"
+            app:layout_constraintTop_toTopOf="@id/ingredientImageContainer"
+            app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer"
+            app:layout_constraintEnd_toStartOf="@id/arrowIcon">
+
+            <TextView
+                android:id="@+id/ingredientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teriyaki Sauce"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#032A37"
+                android:underlineText="true" />
+
+            <TextView
+                android:id="@+id/ingredientDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Used Soy Vay Veri Veri Teriyaki Sauce"
+                android:textSize="12sp"
+                android:textColor="#A0A5A9"
+                android:layout_marginTop="2dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/arrowIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_forward"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
