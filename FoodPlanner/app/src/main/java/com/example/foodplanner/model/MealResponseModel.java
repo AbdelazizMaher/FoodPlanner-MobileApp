@@ -21,12 +21,18 @@ public class MealResponseModel {
         this.meals = meals;
     }
 
-    @Entity(tableName = "meals_table")
+    @Entity(
+            tableName = "meals_table",
+            primaryKeys = {"idUser", "idMeal", "date"}
+    )
     public static class MealsDTO {
         @SerializedName("idMeal")
-        @PrimaryKey
         @NonNull
         private String idMeal;
+        @NonNull
+        private String idUser;
+        @NonNull
+        private String date;
         @SerializedName("strMeal")
         private String strMeal;
         @SerializedName("strDrinkAlternate")
@@ -556,6 +562,24 @@ public class MealResponseModel {
 
         public void setDateModified(String dateModified) {
             this.dateModified = dateModified;
+        }
+
+        @NonNull
+        public String getIdUser() {
+            return idUser;
+        }
+
+        public void setIdUser(@NonNull String idUser) {
+            this.idUser = idUser;
+        }
+
+        @NonNull
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(@NonNull String date) {
+            this.date = date;
         }
 
         public boolean isFavorite() {
