@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodplanner.network.MealClient;
+import com.example.foodplanner.network.MealRemoteDataSource;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.NetworkCallback;
 import com.example.foodplanner.view.RandomRecyclerAdapter;
@@ -57,8 +57,8 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         for (int i = 0; i < 3; i++) {
-            MealClient.getInstance().makeNetworkCall(
-                    MealClient.getInstance().getService().getRandomMeal(),
+            MealRemoteDataSource.getInstance().makeNetworkCall(
+                    MealRemoteDataSource.getInstance().getService().getRandomMeal(),
                     new NetworkCallback<MealResponseModel>() {
                         @Override
                         public void onSuccess(MealResponseModel response) {

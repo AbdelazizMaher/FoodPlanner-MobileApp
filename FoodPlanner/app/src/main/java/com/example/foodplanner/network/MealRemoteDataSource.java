@@ -7,12 +7,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MealClient {
+public class MealRemoteDataSource implements IMealRemoteDataSource {
     private static String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private MealApiService service;
-    private static MealClient instance = null;
+    private static MealRemoteDataSource instance = null;
 
-    private MealClient() {
+    private MealRemoteDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -20,9 +20,9 @@ public class MealClient {
         service = retrofit.create(MealApiService.class);
     }
 
-    public static MealClient getInstance() {
+    public static MealRemoteDataSource getInstance() {
         if (instance == null) {
-            instance = new MealClient();
+            instance = new MealRemoteDataSource();
         }
         return instance;
     }
@@ -31,6 +31,7 @@ public class MealClient {
         return service;
     }
 
+    @Override
     public <T> void makeNetworkCall(Call<T> call, final NetworkCallback<T> callback) {
         call.enqueue(new Callback<T>() {
             @Override

@@ -21,12 +21,13 @@ public interface MealDAO {
     @Delete
     void deleteMeal(MealResponseModel.MealsDTO meal);
 
-    @Query("SELECT * FROM meals_table WHERE isFavorite = 1")
-    LiveData<List<MealResponseModel.MealsDTO>> getFavoriteMeals();
+    @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND isFavorite = 1")
+    LiveData<List<MealResponseModel.MealsDTO>> getFavoriteMeals(String idUser);
 
-    @Query("SELECT * FROM meals_table WHERE isPlanned = 1")
-    LiveData<List<MealResponseModel.MealsDTO>> getPlannedMeals();
+    @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND idMeal = :idMeal AND isPlanned = 1")
+    LiveData<MealResponseModel.MealsDTO> getPlannedMeal(String idUser, String idMeal);
 
     @Query("SELECT * FROM meals_table WHERE idMeal = :idMeal")
     LiveData<MealResponseModel.MealsDTO> getMealById(String idMeal);
+
 }
