@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,11 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         carouselRecyclerview = view.findViewById(R.id.carouselRecyclerview);
         adapter = new RandomRecyclerAdapter(mealList);
         carouselRecyclerview.setAdapter(adapter);
+
+        adapter.setOnMealClickListener(meal-> {
+            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal);
+            Navigation.findNavController(requireView()).navigate(action);
+        });
 
         presenter.fetchRandomMeals();
     }

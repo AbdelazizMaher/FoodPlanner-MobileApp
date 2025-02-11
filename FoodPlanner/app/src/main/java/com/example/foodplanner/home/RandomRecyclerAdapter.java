@@ -69,9 +69,13 @@ public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAd
                     .load(meal.getStrMealThumb())
                     .into(mealImage);
 
+            mealImage.setOnClickListener(v -> {
+                onMealClickListener.showMealDetails(meal);
+            });
+
             addIngredientsBtn.setOnClickListener(v -> {
                 if (onMealClickListener != null) {
-                    onMealClickListener.onMealClick(meal);
+
                 }
             });
         }

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MealResponseModel {
@@ -25,7 +26,7 @@ public class MealResponseModel {
             tableName = "meals_table",
             primaryKeys = {"idUser", "idMeal", "date"}
     )
-    public static class MealsDTO {
+    public static class MealsDTO  implements Serializable {
         @SerializedName("idMeal")
         @NonNull
         private String idMeal;
