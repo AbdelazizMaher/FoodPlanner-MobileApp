@@ -66,20 +66,17 @@
                         android:src="@drawable/search"
                         android:layout_marginEnd="8dp"/>
 
-                    <EditText
-                        android:id="@+id/search_bar"
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/searchView"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Search Recipes"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textColorHint="@color/gray"
+                        android:queryHint="Search Recipes"
                         android:background="@android:color/transparent"
-                        android:imeOptions="actionSearch"
-                        android:singleLine="true"/>
+                        android:iconifiedByDefault="false"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
 
 
             <TextView
