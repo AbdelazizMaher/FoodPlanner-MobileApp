@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="0dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="20dp"
     app:cardBackgroundColor="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +18,7 @@
             android:id="@+id/ingredientImageContainer"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:background="@drawable/rounded_ingredient_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
@@ -26,9 +27,17 @@
                 android:id="@+id/ingredientImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:padding="8dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_foreground" />
         </FrameLayout>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/quantityBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="ingredientQuantity" />
 
         <TextView
             android:id="@+id/ingredientQuantity"
@@ -42,34 +51,18 @@
             app:layout_constraintTop_toTopOf="@id/ingredientImageContainer"
             app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer" />
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/ingredientName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp"
-            app:layout_constraintStart_toEndOf="@id/ingredientQuantity"
+            android:text="Teriyaki Sauce"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#032A37"
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toStartOf="@id/quantityBarrier"
             app:layout_constraintTop_toTopOf="@id/ingredientImageContainer"
-            app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer"
-            app:layout_constraintEnd_toStartOf="@id/arrowIcon">
-
-            <TextView
-                android:id="@+id/ingredientName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Teriyaki Sauce"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#032A37" />
-
-            <TextView
-                android:id="@+id/ingredientDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Used Soy Vay Veri Veri Teriyaki Sauce"
-                android:textSize="12sp"
-                android:textColor="#A0A5A9"
-                android:layout_marginTop="2dp" />
-        </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer" />
 
         <ImageView
             android:id="@+id/arrowIcon"
