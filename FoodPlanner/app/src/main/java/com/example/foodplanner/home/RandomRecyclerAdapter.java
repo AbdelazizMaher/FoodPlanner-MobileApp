@@ -1,6 +1,5 @@
-package com.example.foodplanner.view;
+package com.example.foodplanner.home;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,19 @@ import com.example.foodplanner.model.MealResponseModel;
 import java.util.ArrayList;
 
 public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAdapter.MyViewHolder> {
-    private ArrayList<MealResponseModel> meals;
+    private ArrayList<MealResponseModel.MealsDTO> meals;
     private OnRandomMealClickListener onMealClickListener;
 
-    public RandomRecyclerAdapter(ArrayList<MealResponseModel> meals) {
+    public RandomRecyclerAdapter(ArrayList<MealResponseModel.MealsDTO> meals) {
         this.meals = meals;
     }
 
     public void setOnMealClickListener(OnRandomMealClickListener onMealClickListener) {
         this.onMealClickListener = onMealClickListener;
+    }
+
+    public void setMeals(ArrayList<MealResponseModel.MealsDTO> meals) {
+        this.meals = meals;
     }
 
     @NonNull
@@ -38,7 +41,7 @@ public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAd
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MealResponseModel meal = meals.get(position);
+        MealResponseModel.MealsDTO meal = meals.get(position);
         holder.bind(meal);
     }
 
@@ -59,11 +62,11 @@ public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAd
             addIngredientsBtn = itemView.findViewById(R.id.addIngredientsBtn);
         }
 
-        public void bind(MealResponseModel meal) {
-            mealName.setText(meal.getMeals().get(0).getStrMeal());
+        public void bind(MealResponseModel.MealsDTO meal) {
+            mealName.setText(meal.getStrMeal());
 
             Glide.with(mealImage.getContext())
-                    .load(meal.getMeals().get(0).getStrMealThumb())
+                    .load(meal.getStrMealThumb())
                     .into(mealImage);
 
             addIngredientsBtn.setOnClickListener(v -> {

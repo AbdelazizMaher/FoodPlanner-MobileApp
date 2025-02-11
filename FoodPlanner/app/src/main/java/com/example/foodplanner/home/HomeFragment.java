@@ -1,28 +1,32 @@
-package com.example.foodplanner;
+package com.example.foodplanner.home;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.foodplanner.R;
+import com.example.foodplanner.database.MealLocalDataSource;
+import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.network.MealRemoteDataSource;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.NetworkCallback;
-import com.example.foodplanner.view.RandomRecyclerAdapter;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements HomeContract.IView{
     private CarouselRecyclerview carouselRecyclerview;
     private RandomRecyclerAdapter adapter;
-    private ArrayList<MealResponseModel> mealList = new ArrayList<>();
+    private ArrayList<MealResponseModel.MealsDTO> mealList = new ArrayList<>();
+    private HomePresenter presenter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -38,6 +42,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        presenter = new HomePresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -49,30 +54,21 @@ public class HomeFragment extends Fragment {
         adapter = new RandomRecyclerAdapter(mealList);
         carouselRecyclerview.setAdapter(adapter);
 
-        fetchRandomMeals();
+        presenter.fetchRandomMeals();
     }
 
-    private void fetchRandomMeals() {
-        mealList.clear();
+    @Override
+    public void showRandomMeals(MealResponseModel.MealsDTO meal) {
+        mealList.add(meal);
+        adapter.setMeals(mealList);
         adapter.notifyDataSetChanged();
-
-        for (int i = 0; i < 3; i++) {
-            MealRemoteDataSource.getInstance().makeNetworkCall(
-                    MealRemoteDataSource.getInstance().getService().getRandomMeal(),
-                    new NetworkCallback<MealResponseModel>() {
-                        @Override
-                        public void onSuccess(MealResponseModel response) {
-                            if (response != null && response.getMeals() != null) {
-                                mealList.add(response);
-                                adapter.notifyDataSetChanged();
-                            }
-                        }
-                        @Override
-                        public void onFailure(String errorMessage) {
-                        }
-                    }
-            );
-        }
     }
 
+    @Override
+    public void showError(String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setMessage(error).setTitle("An Error Occurred");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }
