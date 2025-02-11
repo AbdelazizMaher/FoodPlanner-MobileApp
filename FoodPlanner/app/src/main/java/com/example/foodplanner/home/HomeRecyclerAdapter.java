@@ -16,15 +16,19 @@ import com.example.foodplanner.model.MealResponseModel;
 
 import java.util.ArrayList;
 
-public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAdapter.MyViewHolder> {
+public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapter.MyViewHolder> {
     private ArrayList<MealResponseModel.MealsDTO> meals;
-    private OnRandomMealClickListener onMealClickListener;
+    private OnMealClickListener onMealClickListener;
+    private int layoutType;
+    public static final int LAYOUT_TYPE_RANDOM = 1;
+    public static final int LAYOUT_TYPE_NORMAL = 2;
 
-    public RandomRecyclerAdapter(ArrayList<MealResponseModel.MealsDTO> meals) {
+    public HomeRecyclerAdapter(ArrayList<MealResponseModel.MealsDTO> meals, int layoutType) {
+        this.layoutType = layoutType;
         this.meals = meals;
     }
 
-    public void setOnMealClickListener(OnRandomMealClickListener onMealClickListener) {
+    public void setOnMealClickListener(OnMealClickListener onMealClickListener) {
         this.onMealClickListener = onMealClickListener;
     }
 
@@ -35,8 +39,14 @@ public class RandomRecyclerAdapter extends RecyclerView.Adapter<RandomRecyclerAd
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meal_custom, parent, false);
-        return new MyViewHolder(view);
+        if (layoutType == LAYOUT_TYPE_NORMAL) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meal_small_custom, parent, false);
+            return new MyViewHolder(view);
+        }else if (layoutType == LAYOUT_TYPE_RANDOM) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_meal_custom, parent, false);
+            return new MyViewHolder(view);
+        }
+        return null;
     }
 
     @Override

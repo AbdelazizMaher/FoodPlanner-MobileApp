@@ -17,7 +17,7 @@ public class HomePresenter implements HomeContract.IPresenter {
     @Override
     public void fetchRandomMeals() {
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().getRandomMeal(),new NetworkCallback<MealResponseModel>() {
                 @Override
                 public void onSuccess(MealResponseModel response) {
@@ -31,5 +31,37 @@ public class HomePresenter implements HomeContract.IPresenter {
                 }
             });
         }
+    }
+
+    @Override
+    public void fetchRecommendedMeals() {
+        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().filterByArea("Egyptian"),new NetworkCallback<MealResponseModel>() {
+            @Override
+            public void onSuccess(MealResponseModel response) {
+                if (response != null && response.getMeals() != null) {
+                    view.showRecommendedMeals(response.getMeals());
+                }
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+            }
+        });
+    }
+
+    @Override
+    public void fetchDesserts() {
+        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().filterByCategory("Breakfast"),new NetworkCallback<MealResponseModel>() {
+            @Override
+            public void onSuccess(MealResponseModel response) {
+                if (response != null && response.getMeals() != null) {
+                    view.showDesserts(response.getMeals());
+                }
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+            }
+        });
     }
 }
