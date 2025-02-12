@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.network.MealRemoteDataSource;
-import com.example.foodplanner.network.NetworkCallback;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
 public class MealRepository implements IMealRepository {
@@ -26,7 +26,6 @@ public class MealRepository implements IMealRepository {
         }
         return instance;
     }
-
 
     @Override
     public LiveData<List<MealResponseModel.MealsDTO>> getFavouriteMeals() {
@@ -49,7 +48,32 @@ public class MealRepository implements IMealRepository {
     }
 
     @Override
-    public <T> void makeNetworkCall(Call<T> call, NetworkCallback<T> callback) {
-        remoteDataSource.makeNetworkCall(call, callback);
+    public Single<MealResponseModel> getRandomMeal() {
+        return remoteDataSource.getRandomMeal();
+    }
+
+    @Override
+    public Single<CategoryResponseModel> getMealCategories() {
+        return remoteDataSource.getMealCategories();
+    }
+
+    @Override
+    public Single<AreaResponseModel> getAreas() {
+        return remoteDataSource.getAreas();
+    }
+
+    @Override
+    public Single<IngredientResponseModel> getIngredients() {
+        return remoteDataSource.getIngredients();
+    }
+
+    @Override
+    public Single<MealResponseModel> filterByCategory(String category) {
+        return remoteDataSource.filterByCategory(category);
+    }
+
+    @Override
+    public Single<MealResponseModel> filterByArea(String area) {
+        return remoteDataSource.filterByArea(area);
     }
 }
