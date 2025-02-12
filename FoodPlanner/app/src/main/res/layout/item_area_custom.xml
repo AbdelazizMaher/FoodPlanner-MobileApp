@@ -4,32 +4,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    android:elevation="20dp"
-    app:cardCornerRadius="40dp"
-    >
+    android:layout_margin="12dp"
+    android:elevation="10dp"
+    app:cardCornerRadius="20dp">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_country_card">
 
         <ImageView
             android:id="@+id/countryImage"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_launcher_foreground" />
+            android:background="@drawable/circle_shape"
+            app:srcCompat="@drawable/ic_launcher_foreground"/>
 
         <TextView
             android:id="@+id/countryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/countryImage"
-            android:padding="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
             android:text="@string/dummytext"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/primaryColor"/>
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -7,13 +7,24 @@
     android:layout_margin="8dp"
     android:elevation="10dp"
     app:cardCornerRadius="40dp"
-    app:cardBackgroundColor="@android:color/white">
+    app:cardBackgroundColor="@android:color/transparent">
 
-    <ImageView
-        android:id="@+id/ingredientImage"
+    <FrameLayout
+        android:id="@+id/ingredientImageContainer"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:scaleType="centerCrop"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        android:background="@drawable/rounded_ingredient_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/ingredientImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_launcher_foreground" />
+    </FrameLayout>
 
 </androidx.cardview.widget.CardView>

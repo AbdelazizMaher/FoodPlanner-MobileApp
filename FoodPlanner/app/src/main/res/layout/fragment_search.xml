@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="16dp"
+    android:padding="16dp"
     android:background="@color/white"
     tools:context=".search.SearchFragment">
 
@@ -27,6 +28,14 @@
             android:scaleType="centerCrop"
             android:src="@drawable/profile"
             android:layout_marginEnd="12dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Welcome Abdelaziz Maher"
+            android:textSize="18sp"
+            android:textColor="@color/primaryColor"
+            android:fontFamily="@font/peridotlatin"/>
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -35,7 +44,8 @@
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@+id/topSection"
         android:layout_marginTop="12dp"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:paddingBottom="80dp">
 
 
         <LinearLayout
@@ -44,11 +54,20 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:fontFamily="@font/peridotlatin"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginBottom="16dp"
                 android:background="@color/white">
 
@@ -59,12 +78,6 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp">
-
-                    <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:src="@drawable/search"
-                        android:layout_marginEnd="8dp"/>
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/searchView"
@@ -90,10 +103,11 @@
                 android:id="@+id/ingredientsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:layout_marginTop="12dp"
                 android:scrollbars="horizontal"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                />
+                tools:listitem="@layout/item_ingredient_custom"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -104,12 +118,17 @@
                 android:layout_marginTop="20dp"/>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/popularMealsRecyclerView"
+                android:id="@+id/areasRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:scrollbars="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                android:overScrollMode="never"
+                android:clipToPadding="false"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:listitem="@layout/item_area_custom" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,10 +141,15 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/categoriesRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
                 android:scrollbars="horizontal"
                 android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                tools:listitem="@layout/item_category_custom"
+                app:spanCount="2"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

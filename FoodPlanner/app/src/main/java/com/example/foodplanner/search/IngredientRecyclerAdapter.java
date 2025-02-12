@@ -22,6 +22,10 @@ public class IngredientRecyclerAdapter extends RecyclerView.Adapter<IngredientRe
         this.ingredients = ingredients;
     }
 
+    public void setIngredients(ArrayList<IngredientResponseModel.MealsDTO> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     public void setOnIngredientClickListener(OnIngredientClickListener listener) {
         this.onIngredientClickListener = listener;
     }
