@@ -5,7 +5,9 @@ import com.example.foodplanner.model.CategoryResponseModel;
 import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.network.MealRemoteDataSource;
-import com.example.foodplanner.network.NetworkCallback;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class SearchPresenter implements SearchContract.IPresenter {
 
@@ -19,53 +21,34 @@ public class SearchPresenter implements SearchContract.IPresenter {
 
     @Override
     public void fetchIngredients() {
-        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().getIngredients("list"), new NetworkCallback<IngredientResponseModel>() {
-            @Override
-            public void onSuccess(IngredientResponseModel response) {
-                if (response != null && response.getMeals() != null) {
-                    view.showIngredients(response.getMeals());
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-
-            }
-        });
+        repo.getIngredients()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showIngredients(response.getMeals()),
+                        error -> view.showError(error.getMessage())
+                );
     }
 
     @Override
     public void fetchAreas() {
-        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().getAreas("list"), new NetworkCallback<AreaResponseModel>() {
-
-            @Override
-            public void onSuccess(AreaResponseModel response) {
-                if (response != null && response.getMeals() != null) {
-                    view.showAreas(response.getMeals());
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-
-            }
-        });
+        repo.getAreas()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showAreas(response.getMeals()),
+                        error -> view.showError(error.getMessage())
+                );
     }
 
     @Override
     public void fetchCategories() {
-        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().getMealCategories(), new NetworkCallback<CategoryResponseModel>() {
-            @Override
-            public void onSuccess(CategoryResponseModel response) {
-                if (response != null && response.getCategories() != null) {
-                    view.showCategories(response.getCategories());
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-
-            }
-        });
+        repo.getMealCategories()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showCategories(response.getCategories()),
+                        error -> view.showError(error.getMessage())
+                );
     }
 }

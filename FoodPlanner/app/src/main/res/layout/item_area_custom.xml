@@ -19,9 +19,9 @@
             android:layout_height="60dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:background="@drawable/circle_shape"
-            app:srcCompat="@drawable/ic_launcher_foreground"/>
+            app:src="@drawable/uy"/>
 
         <TextView
             android:id="@+id/countryName"

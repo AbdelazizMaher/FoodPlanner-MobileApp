@@ -5,40 +5,41 @@ import com.example.foodplanner.model.CategoryResponseModel;
 import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealResponseModel;
 
+import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface MealApiService {
-    Call<MealResponseModel> searchMealByName(@Query("s") String mealName);
+    Single<MealResponseModel> searchMealByName(@Query("s") String mealName);
 
     @GET("search.php")
-    Call<MealResponseModel> listMealsByFirstLetter(@Query("f") String firstLetter);
+    Single<MealResponseModel> listMealsByFirstLetter(@Query("f") String firstLetter);
 
     @GET("lookup.php")
-    Call<MealResponseModel> getMealDetailsById(@Query("i") int mealId);
+    Single<MealResponseModel> getMealDetailsById(@Query("i") int mealId);
 
     @GET("random.php")
-    Call<MealResponseModel> getRandomMeal();
+    Single<MealResponseModel> getRandomMeal();
 
     @GET("categories.php")
-    Call<CategoryResponseModel> getMealCategories();
+    Single<CategoryResponseModel> getMealCategories();
 
     @GET("list.php")
-    Call<CategoryResponseModel> getCategories(@Query("c") String list);
+    Single<CategoryResponseModel> getCategories(@Query("c") String list);
 
     @GET("list.php")
-    Call<AreaResponseModel> getAreas(@Query("a") String list);
+    Single<AreaResponseModel> getAreas(@Query("a") String list);
 
     @GET("list.php")
-    Call<IngredientResponseModel> getIngredients(@Query("i") String list);
+    Single<IngredientResponseModel> getIngredients(@Query("i") String list);
 
     @GET("filter.php")
-    Call<MealResponseModel> filterByIngredient(@Query("i") String ingredient);
+    Single<MealResponseModel> filterByIngredient(@Query("i") String ingredient);
 
     @GET("filter.php")
-    Call<MealResponseModel> filterByCategory(@Query("c") String category);
+    Single<MealResponseModel> filterByCategory(@Query("c") String category);
 
     @GET("filter.php")
-    Call<MealResponseModel> filterByArea(@Query("a") String area);
+    Single<MealResponseModel> filterByArea(@Query("a") String area);
 }

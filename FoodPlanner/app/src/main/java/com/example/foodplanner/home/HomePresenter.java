@@ -3,7 +3,9 @@ package com.example.foodplanner.home;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.MealRemoteDataSource;
-import com.example.foodplanner.network.NetworkCallback;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class HomePresenter implements HomeContract.IPresenter {
     private HomeContract.IView view;
@@ -16,52 +18,35 @@ public class HomePresenter implements HomeContract.IPresenter {
 
     @Override
     public void fetchRandomMeals() {
-
-        for (int i = 0; i < 10; i++) {
-            repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().getRandomMeal(),new NetworkCallback<MealResponseModel>() {
-                @Override
-                public void onSuccess(MealResponseModel response) {
-                    if (response != null && response.getMeals() != null) {
-                        view.showRandomMeals(response.getMeals().get(0));
-                    }
-                }
-
-                @Override
-                public void onFailure(String errorMessage) {
-                }
-            });
-        }
+        repo.getRandomMeal()
+                .subscribeOn(Schedulers.io())
+                .repeat(10)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showRandomMeals(response.getMeals().get(0)),
+                        error -> view.showError(error.getMessage())
+                );
     }
 
     @Override
     public void fetchRecommendedMeals() {
-        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().filterByArea("Egyptian"),new NetworkCallback<MealResponseModel>() {
-            @Override
-            public void onSuccess(MealResponseModel response) {
-                if (response != null && response.getMeals() != null) {
-                    view.showRecommendedMeals(response.getMeals());
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-            }
-        });
+        repo.filterByArea("Egyptian")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showRecommendedMeals(response.getMeals()),
+                        error -> view.showError(error.getMessage())
+                );
     }
 
     @Override
     public void fetchDesserts() {
-        repo.makeNetworkCall(MealRemoteDataSource.getInstance().getService().filterByCategory("Breakfast"),new NetworkCallback<MealResponseModel>() {
-            @Override
-            public void onSuccess(MealResponseModel response) {
-                if (response != null && response.getMeals() != null) {
-                    view.showDesserts(response.getMeals());
-                }
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-            }
-        });
+        repo.filterByCategory("Breakfast")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> view.showDesserts(response.getMeals()),
+                        error -> view.showError(error.getMessage())
+                );
     }
 }
