@@ -98,18 +98,12 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
 
     @Override
     public void showRecommendedMeals(List<MealResponseModel.MealsDTO> meals) {
-        for (MealResponseModel.MealsDTO meal : meals) {
-            Log.d("API Response", "Recommended Meal: " + meal.getStrMeal() + ", Instructions: " + meal.getStrInstructions());
-        }
         recommendedAdapter.setMeals(new ArrayList<>(meals));
         recommendedAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void showDesserts(List<MealResponseModel.MealsDTO> meals) {
-        for (MealResponseModel.MealsDTO meal : meals) {
-            Log.d("API Response", "Dessert Meal: " + meal.getStrMeal() + ", Instructions: " + meal.getStrInstructions());
-        }
         breakfastAdapter.setMeals(new ArrayList<>(meals));
         breakfastAdapter.notifyDataSetChanged();
     }

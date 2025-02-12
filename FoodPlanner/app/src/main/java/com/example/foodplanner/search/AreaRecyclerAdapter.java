@@ -17,17 +17,21 @@ import com.example.foodplanner.model.AreaResponseModel;
 import java.util.ArrayList;
 
 public class AreaRecyclerAdapter extends RecyclerView.Adapter<AreaRecyclerAdapter.MyViewHolder> {
-    private Context context;
     private ArrayList<AreaResponseModel.MealsDTO> countries;
     private OnAreaClickListener onAreaClickListener;
 
-    public AreaRecyclerAdapter(Context context, ArrayList<AreaResponseModel.MealsDTO> countries) {
+    public AreaRecyclerAdapter(ArrayList<AreaResponseModel.MealsDTO> countries) {
         this.countries = countries;
     }
 
-    public void setOnCountryClickListener(OnAreaClickListener listener) {
-        this.onAreaClickListener = listener;
+    public void setCountries(ArrayList<AreaResponseModel.MealsDTO> countries) {
+        this.countries = countries;
     }
+
+    public void setOnAreaClickListener(OnAreaClickListener onAreaClickListener) {
+        this.onAreaClickListener = onAreaClickListener;
+    }
+
 
     @NonNull
     @Override
@@ -60,8 +64,9 @@ public class AreaRecyclerAdapter extends RecyclerView.Adapter<AreaRecyclerAdapte
         public void bind(AreaResponseModel.MealsDTO country) {
             countryName.setText(country.getStrArea());
 
+            String flagUrl = CountryFlag.getFlagUrl(country.getStrArea());
             Glide.with(countryImage.getContext())
-                    .load(R.drawable.profile)
+                    .load(flagUrl)
                     .into(countryImage);
 
             itemView.setOnClickListener(v -> {

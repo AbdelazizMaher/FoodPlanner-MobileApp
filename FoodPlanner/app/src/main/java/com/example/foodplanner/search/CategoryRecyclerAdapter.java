@@ -23,6 +23,10 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         this.categories = categories;
     }
 
+    public void setCategories(ArrayList<CategoryResponseModel.CategoriesDTO> categories) {
+        this.categories = categories;
+    }
+
     public void setOnCategoryClickListener(OnCategoryClickListener listener) {
         this.onCategoryClickListener = listener;
     }

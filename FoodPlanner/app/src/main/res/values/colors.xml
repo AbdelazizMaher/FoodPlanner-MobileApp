@@ -7,4 +7,9 @@
     <color name="facebook_blue">#3B5998</color>
     <color name="primaryColor">#01404f</color>
     <color name="hintColor">#787a82</color>
+    <color name="dark_blue">#003C5F</color>
+    <color name="light_blue">#A8DADC</color>
+    <color name="dark_red">#7A1C36</color>
+    <color name="light_pink">#F7C8D7</color>
+
 </resources>
