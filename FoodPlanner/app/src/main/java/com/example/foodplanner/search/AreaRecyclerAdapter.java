@@ -1,6 +1,7 @@
 package com.example.foodplanner.search;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.model.AreaResponseModel;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AreaRecyclerAdapter extends RecyclerView.Adapter<AreaRecyclerAdapter.MyViewHolder> {
     private ArrayList<AreaResponseModel.MealsDTO> countries;

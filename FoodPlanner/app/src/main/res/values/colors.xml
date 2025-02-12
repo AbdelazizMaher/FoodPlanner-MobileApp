@@ -11,5 +11,6 @@
     <color name="light_blue">#A8DADC</color>
     <color name="dark_red">#7A1C36</color>
     <color name="light_pink">#F7C8D7</color>
+    <color name="red">#FF0000</color>
 
 </resources>
