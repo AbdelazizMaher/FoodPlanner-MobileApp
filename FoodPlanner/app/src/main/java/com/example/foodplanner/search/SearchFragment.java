@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.database.MealLocalDataSource;
+import com.example.foodplanner.home.HomeFragmentDirections;
 import com.example.foodplanner.model.AreaResponseModel;
 import com.example.foodplanner.model.CategoryResponseModel;
 import com.example.foodplanner.model.IngredientResponseModel;
@@ -62,12 +64,24 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
 
         ingredientsAdapter = new IngredientRecyclerAdapter(new ArrayList<>());
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
+        ingredientsAdapter.setOnIngredientClickListener(ingredient -> {
+            SearchFragmentDirections.ActionSearchFragmentToAllMealsFragment action = SearchFragmentDirections.actionSearchFragmentToAllMealsFragment(ingredient.getStrIngredient(), 1);
+            Navigation.findNavController(requireView()).navigate(action);
+        });
 
         areasAdapter = new AreaRecyclerAdapter(new ArrayList<>());
         areasRecyclerView.setAdapter(areasAdapter);
+        areasAdapter.setOnAreaClickListener(area -> {
+            SearchFragmentDirections.ActionSearchFragmentToAllMealsFragment action = SearchFragmentDirections.actionSearchFragmentToAllMealsFragment(area.getStrArea(), 2);
+            Navigation.findNavController(requireView()).navigate(action);
+        });
 
         categoriesAdapter = new CategoryRecyclerAdapter(new ArrayList<>());
         categoriesRecyclerView.setAdapter(categoriesAdapter);
+        categoriesAdapter.setOnCategoryClickListener(category -> {
+            SearchFragmentDirections.ActionSearchFragmentToAllMealsFragment action = SearchFragmentDirections.actionSearchFragmentToAllMealsFragment(category.getStrCategory(), 3);
+            Navigation.findNavController(requireView()).navigate(action);
+        });
 
         presenter.fetchIngredients();
         presenter.fetchAreas();

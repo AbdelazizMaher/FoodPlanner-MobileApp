@@ -2,7 +2,7 @@ package com.example.foodplanner.aboutmeal;
 
 import com.example.foodplanner.model.MealResponseModel;
 
-public class AboutMealContract {
+public interface AboutMealContract {
     interface IView {
         void showMealDetails(MealResponseModel.MealsDTO meal);
         void showError(String error);
