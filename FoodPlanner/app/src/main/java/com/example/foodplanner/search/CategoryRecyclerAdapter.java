@@ -12,19 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.CategoryResponseModel;
+import com.example.foodplanner.model.IngredientResponseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecyclerAdapter.MyViewHolder> {
     private ArrayList<CategoryResponseModel.CategoriesDTO> categories;
+    private ArrayList<CategoryResponseModel.CategoriesDTO> fullList;
     private OnCategoryClickListener onCategoryClickListener;
 
     public CategoryRecyclerAdapter(ArrayList<CategoryResponseModel.CategoriesDTO> categories) {
         this.categories = categories;
+        this.fullList = new ArrayList<>(categories);
     }
 
     public void setCategories(ArrayList<CategoryResponseModel.CategoriesDTO> categories) {
         this.categories = categories;
+        this.fullList = new ArrayList<>(categories);
     }
 
     public void setOnCategoryClickListener(OnCategoryClickListener listener) {
@@ -72,5 +77,17 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
                 }
             });
         }
+    }
+
+    public void filter(String query) {
+        List<CategoryResponseModel.CategoriesDTO> filteredList = new ArrayList<>();
+        for (CategoryResponseModel.CategoriesDTO item : fullList) {
+            if (item.getStrCategory().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        categories.clear();
+        categories.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }

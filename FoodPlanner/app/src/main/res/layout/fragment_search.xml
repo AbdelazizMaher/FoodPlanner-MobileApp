@@ -90,9 +90,43 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="8dp"
+                app:singleSelection="true"
+                app:layout_constraintTop_toBottomOf="@id/searchView">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipIngredients"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingredients"
+                    app:checkedIconVisible="false"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAreas"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Areas"
+                    app:checkedIconVisible="false"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipCategories"
+                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Categories"
+                    app:checkedIconVisible="false"/>
+            </com.google.android.material.chip.ChipGroup>
 
 
             <TextView
+                android:id="@+id/ingredientsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Ingredients"
@@ -110,6 +144,7 @@
                 tools:listitem="@layout/item_ingredient_custom"/>
 
             <TextView
+                id="@+id/areasTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Popular Meals"
@@ -131,6 +166,7 @@
                 tools:listitem="@layout/item_area_custom" />
 
             <TextView
+                android:id="@+id/categoriesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Categories"
