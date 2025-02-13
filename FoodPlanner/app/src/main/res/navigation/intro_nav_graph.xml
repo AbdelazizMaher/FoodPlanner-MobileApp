@@ -74,9 +74,28 @@
         android:id="@+id/searchFragment"
         android:name="com.example.foodplanner.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_allMealsFragment"
+            app:destination="@id/allMealsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.foodplanner.profile.ProfileFragment"
         android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/allMealsFragment"
+        android:name="com.example.foodplanner.allMeals.AllMealsFragment"
+        android:label="fragment_all_meals"
+        tools:layout="@layout/fragment_all_meals" >
+        <action
+            android:id="@+id/action_allMealsFragment_to_aboutMealFragment"
+            app:destination="@id/aboutMealFragment" />
+        <argument
+            android:name="searchID"
+            app:argType="string" />
+        <argument
+            android:name="type"
+            app:argType="integer" />
+    </fragment>
 </navigation>

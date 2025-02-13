@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
+import retrofit2.http.Query;
 
 public class MealRepository implements IMealRepository {
     private MealLocalDataSource localDataSource;
@@ -77,6 +78,10 @@ public class MealRepository implements IMealRepository {
         return remoteDataSource.filterByArea(area);
     }
 
+    @Override
+    public Single<MealResponseModel> filterByIngredient(String ingredient) {
+        return remoteDataSource.filterByIngredient(ingredient);
+    }
     @Override
     public Single<MealResponseModel> getMealDetailsById(int mealId) {
         return remoteDataSource.getMealDetailsById(mealId);
