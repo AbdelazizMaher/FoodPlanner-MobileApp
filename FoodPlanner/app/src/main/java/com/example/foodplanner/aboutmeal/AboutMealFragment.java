@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,21 +23,26 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
+import com.example.foodplanner.database.MealLocalDataSource;
+import com.example.foodplanner.home.HomePresenter;
+import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
+import com.example.foodplanner.network.MealRemoteDataSource;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AboutMealFragment extends Fragment {
+public class AboutMealFragment extends Fragment implements AboutMealContract.IView {
 
     private ImageView mealImage;
     private TextView mealName, mealOrigin, mealSteps;
     private RecyclerView ingredientsRecyclerView;
     private WebView youtubePlayer;
     private Button addToFavorites, removeFromFavorites;
-
     private MealResponseModel.MealsDTO meal;
+    private int mealID;
+    private AboutMealPresenter presenter;
 
     public AboutMealFragment() {
         // Required empty public constructor
@@ -52,6 +58,7 @@ public class AboutMealFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        presenter = new AboutMealPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
         return inflater.inflate(R.layout.fragment_about_meal, container, false);
     }
 
@@ -71,14 +78,15 @@ public class AboutMealFragment extends Fragment {
         if (getArguments() != null) {
             AboutMealFragmentArgs args = AboutMealFragmentArgs.fromBundle(getArguments());
             meal = args.getMealInfo();
+            mealID = args.getMealID();
         }
-        if (meal != null) {
-            displayMealDetails();
+        if (meal != null && mealID != 0) {
+            presenter.getMealById(mealID);
         }
     }
 
     @SuppressLint("SetTextI18n")
-    private void displayMealDetails() {
+    private void displayMealDetails(MealResponseModel.MealsDTO meal) {
         Glide.with(requireContext()).load(meal.getStrMealThumb()).into(mealImage);
 
         mealName.setText(meal.getStrMeal());
@@ -94,6 +102,20 @@ public class AboutMealFragment extends Fragment {
         loadYouTubeVideo(meal.getStrYoutube());
 
     }
+
+    @Override
+    public void showMealDetails(MealResponseModel.MealsDTO meal) {
+        displayMealDetails(meal);
+    }
+
+    @Override
+    public void showError(String error) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setMessage(error).setTitle("An Error Occurred");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     public class IngredientModel {
         private String name;
         private String quantity;

@@ -70,15 +70,15 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         breakfastRecyclerView.setAdapter(breakfastAdapter);
 
         randomAdapter.setOnMealClickListener(meal-> {
-            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal);
+            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
             Navigation.findNavController(requireView()).navigate(action);
         });
         breakfastAdapter.setOnMealClickListener(meal-> {
-            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal);
+            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
             Navigation.findNavController(requireView()).navigate(action);
         });
         recommendedAdapter.setOnMealClickListener(meal-> {
-            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal);
+            HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
             Navigation.findNavController(requireView()).navigate(action);
         });
 
