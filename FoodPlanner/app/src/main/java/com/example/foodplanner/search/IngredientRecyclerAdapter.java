@@ -13,17 +13,21 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.model.IngredientResponseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngredientRecyclerAdapter extends RecyclerView.Adapter<IngredientRecyclerAdapter.MyViewHolder> {
     private ArrayList<IngredientResponseModel.MealsDTO> ingredients;
+    private ArrayList<IngredientResponseModel.MealsDTO> fullList;
     private OnIngredientClickListener onIngredientClickListener;
 
     public IngredientRecyclerAdapter(ArrayList<IngredientResponseModel.MealsDTO> ingredients) {
         this.ingredients = ingredients;
+        this.fullList = new ArrayList<>(ingredients);
     }
 
     public void setIngredients(ArrayList<IngredientResponseModel.MealsDTO> ingredients) {
         this.ingredients = ingredients;
+        this.fullList = new ArrayList<>(ingredients);
     }
 
     public void setOnIngredientClickListener(OnIngredientClickListener listener) {
@@ -67,5 +71,17 @@ public class IngredientRecyclerAdapter extends RecyclerView.Adapter<IngredientRe
                 }
             });
         }
+    }
+
+    public void filter(String query) {
+        List<IngredientResponseModel.MealsDTO> filteredList = new ArrayList<>();
+        for (IngredientResponseModel.MealsDTO item : fullList) {
+            if (item.getStrIngredient().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        ingredients.clear();
+        ingredients.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }

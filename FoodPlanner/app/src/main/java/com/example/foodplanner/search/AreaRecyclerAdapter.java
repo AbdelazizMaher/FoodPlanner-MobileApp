@@ -14,20 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.model.AreaResponseModel;
+import com.example.foodplanner.model.IngredientResponseModel;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class AreaRecyclerAdapter extends RecyclerView.Adapter<AreaRecyclerAdapter.MyViewHolder> {
     private ArrayList<AreaResponseModel.MealsDTO> countries;
+    private ArrayList<AreaResponseModel.MealsDTO> fullList;
     private OnAreaClickListener onAreaClickListener;
 
     public AreaRecyclerAdapter(ArrayList<AreaResponseModel.MealsDTO> countries) {
         this.countries = countries;
+        this.fullList = new ArrayList<>(countries);
     }
 
     public void setCountries(ArrayList<AreaResponseModel.MealsDTO> countries) {
         this.countries = countries;
+        this.fullList = new ArrayList<>(countries);
     }
 
     public void setOnAreaClickListener(OnAreaClickListener onAreaClickListener) {
@@ -77,5 +82,17 @@ public class AreaRecyclerAdapter extends RecyclerView.Adapter<AreaRecyclerAdapte
                 }
             });
         }
+    }
+
+    public void filter(String query) {
+        List<AreaResponseModel.MealsDTO> filteredList = new ArrayList<>();
+        for (AreaResponseModel.MealsDTO item : fullList) {
+            if (item.getStrArea().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(item);
+            }
+        }
+        countries.clear();
+        countries.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }
