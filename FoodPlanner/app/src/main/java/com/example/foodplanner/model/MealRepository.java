@@ -76,4 +76,9 @@ public class MealRepository implements IMealRepository {
     public Single<MealResponseModel> filterByArea(String area) {
         return remoteDataSource.filterByArea(area);
     }
+
+    @Override
+    public Single<MealResponseModel> getMealDetailsById(int mealId) {
+        return remoteDataSource.getMealDetailsById(mealId);
+    }
 }

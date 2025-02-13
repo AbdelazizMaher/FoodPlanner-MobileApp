@@ -69,4 +69,9 @@ public class MealRemoteDataSource implements IMealRemoteDataSource {
     public Single<MealResponseModel> filterByArea(String area) {
         return service.filterByArea(area);
     }
+
+    @Override
+    public Single<MealResponseModel> getMealDetailsById(int mealId) {
+        return service.getMealDetailsById(mealId);
+    }
 }

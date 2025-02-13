@@ -66,6 +66,9 @@
             android:name="mealInfo"
             app:argType="com.example.foodplanner.model.MealResponseModel$MealsDTO"
             app:nullable="true" />
+        <argument
+            android:name="mealID"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"

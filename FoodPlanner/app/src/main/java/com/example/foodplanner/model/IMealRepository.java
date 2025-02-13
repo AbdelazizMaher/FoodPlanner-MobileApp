@@ -18,4 +18,5 @@ public interface IMealRepository {
     public Single<IngredientResponseModel> getIngredients();
     public Single<MealResponseModel> filterByCategory(String category);
     public Single<MealResponseModel> filterByArea(String area);
+    public Single<MealResponseModel> getMealDetailsById(int mealId);
 }

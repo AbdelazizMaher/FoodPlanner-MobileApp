@@ -21,7 +21,7 @@
             android:layout_marginTop="20dp"
             android:scaleType="fitXY"
             android:background="@drawable/circle_shape"
-            app:src="@drawable/uy"/>
+            app:srcCompat="@drawable/ic_launcher_foreground"/>
 
         <TextView
             android:id="@+id/countryName"
