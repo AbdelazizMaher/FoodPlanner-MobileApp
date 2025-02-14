@@ -98,4 +98,9 @@
             android:name="type"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/mealPlanFragment"
+        android:name="com.example.foodplanner.mealPlan.MealPlanFragment"
+        android:label="fragment_meal_plan"
+        tools:layout="@layout/fragment_meal_plan" />
 </navigation>
