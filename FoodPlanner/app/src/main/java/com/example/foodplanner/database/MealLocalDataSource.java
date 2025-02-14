@@ -32,7 +32,7 @@ public class MealLocalDataSource implements IMealLocalDataSource {
     }
 
     @Override
-    public Observable<List<MealDTO>> gePlannedMeals(String idUser, String date) {
+    public Observable<List<MealDTO>> getPlannedMeals(String idUser, String date) {
         return dao.getPlannedMeals(idUser, date);
     }
 

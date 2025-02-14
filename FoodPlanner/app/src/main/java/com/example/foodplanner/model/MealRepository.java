@@ -36,8 +36,8 @@ public class MealRepository implements IMealRepository {
     }
 
     @Override
-    public Observable<List<MealDTO>> gePlannedMeals(String idUser, String date) {
-        return localDataSource.gePlannedMeals(idUser, date);
+    public Observable<List<MealDTO>> getPlannedMeals(String idUser, String date) {
+        return localDataSource.getPlannedMeals(idUser, date);
     }
 
     @Override
