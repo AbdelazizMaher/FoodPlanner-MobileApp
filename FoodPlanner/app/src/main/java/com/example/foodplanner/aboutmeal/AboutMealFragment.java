@@ -79,6 +79,16 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         addToFavorites = view.findViewById(R.id.addToFavorites);
         addToPlan = view.findViewById(R.id.addToPlan);
 
+        addToFavorites.setOnClickListener(v -> {
+            MealDTO favoriteMeal = new MealDTO(meal);
+            favoriteMeal.setFavorite(true);
+            favoriteMeal.setPlanned(false);
+            favoriteMeal.setIdUser("1");
+            favoriteMeal.setDate("0");
+            favoriteMeal.setIdMeal(meal.getIdMeal());
+            presenter.storeMeal(favoriteMeal);
+        });
+
         addToPlan.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
 

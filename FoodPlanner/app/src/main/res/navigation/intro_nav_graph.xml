@@ -103,4 +103,9 @@
         android:name="com.example.foodplanner.mealPlan.MealPlanFragment"
         android:label="fragment_meal_plan"
         tools:layout="@layout/fragment_meal_plan" />
+    <fragment
+        android:id="@+id/mealFavouriteFragment"
+        android:name="com.example.foodplanner.mealfavourite.MealFavouriteFragment"
+        android:label="fragment_meal_favourite"
+        tools:layout="@layout/fragment_meal_favourite" />
 </navigation>
