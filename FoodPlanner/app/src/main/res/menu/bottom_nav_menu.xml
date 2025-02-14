@@ -16,7 +16,7 @@
         android:title="Plan" />
 
     <item
-        android:id="@+id/favorites"
+        android:id="@+id/mealFavouriteFragment"
         android:icon="@drawable/favourite"
         android:title="Favorites" />
 </menu>
