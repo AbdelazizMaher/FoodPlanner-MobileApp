@@ -11,9 +11,9 @@
         android:title="Search" />
 
     <item
-        android:id="@+id/calendar"
+        android:id="@+id/mealPlanFragment"
         android:icon="@drawable/calendar"
-        android:title="Calendar" />
+        android:title="Plan" />
 
     <item
         android:id="@+id/favorites"

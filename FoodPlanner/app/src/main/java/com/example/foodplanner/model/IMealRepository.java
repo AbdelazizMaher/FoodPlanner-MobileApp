@@ -11,7 +11,7 @@ import retrofit2.Call;
 
 public interface IMealRepository {
     public Observable<List<MealDTO>> getFavouriteMeals(String idUser);
-    public Observable<List<MealDTO>> gePlannedMeals(String idUser, String date);
+    public Observable<List<MealDTO>> getPlannedMeals(String idUser, String date);
     public Completable insertMeal(MealDTO meal);
     public Completable deleteMeal(MealDTO meal);
     public Single<MealResponseModel> getRandomMeal() ;
