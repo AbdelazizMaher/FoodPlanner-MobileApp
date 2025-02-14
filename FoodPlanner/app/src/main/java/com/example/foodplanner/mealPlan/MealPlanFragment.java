@@ -58,6 +58,9 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
 
         adapter = new MealPlanRecyclerAdapter(new ArrayList<>());
         mealPlanRecyclerView.setAdapter(adapter);
+        adapter.setOnRemoveButtonClickListener(meal->{
+            presenter.removeMealFromPlan(meal);
+        });
 
         setWeekRange();
         calendarView.setMinDate(weekStart);

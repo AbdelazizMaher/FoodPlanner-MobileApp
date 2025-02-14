@@ -1,5 +1,6 @@
 package com.example.foodplanner.mealPlan;
 
+import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -22,5 +23,13 @@ public class MealPlanPresenter implements MealPlanContract.IPresenter {
                 .subscribe(meals -> {
                     view.showPlannedMeals(meals);
                 });
+    }
+
+    @Override
+    public void removeMealFromPlan(MealDTO meal) {
+        repo.deleteMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
     }
 }

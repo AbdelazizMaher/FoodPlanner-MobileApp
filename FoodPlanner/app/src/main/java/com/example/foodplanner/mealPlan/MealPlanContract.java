@@ -11,5 +11,6 @@ public interface MealPlanContract {
 
     interface IPresenter {
         void fetchPlannedMeals(String idUser, String date);
+        void removeMealFromPlan(MealDTO meal);
     }
 }
