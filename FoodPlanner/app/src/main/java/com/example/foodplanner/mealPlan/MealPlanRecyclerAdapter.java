@@ -21,6 +21,7 @@ import java.util.List;
 public class MealPlanRecyclerAdapter extends RecyclerView.Adapter<MealPlanRecyclerAdapter.MyViewHolder> {
     private List<MealDTO> meals;
     private OnMealClickListener onMealClickListener;
+    private OnRemoveButtonClickListener onRemoveButtonClickListener;
 
     public MealPlanRecyclerAdapter(List<MealDTO> meals) {
         this.meals = meals;
@@ -28,6 +29,9 @@ public class MealPlanRecyclerAdapter extends RecyclerView.Adapter<MealPlanRecycl
 
     public void setOnMealClickListener(OnMealClickListener onMealClickListener) {
         this.onMealClickListener = onMealClickListener;
+    }
+    public void setOnRemoveButtonClickListener(OnRemoveButtonClickListener onRemoveButtonClickListener){
+        this.onRemoveButtonClickListener = onRemoveButtonClickListener;
     }
 
     public void setMeals(List<MealDTO> meals) {
@@ -44,7 +48,7 @@ public class MealPlanRecyclerAdapter extends RecyclerView.Adapter<MealPlanRecycl
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         MealDTO meal = meals.get(position);
-        holder.bind(meal.getMeal());
+        holder.bind(meal);
     }
 
     @Override
@@ -64,20 +68,20 @@ public class MealPlanRecyclerAdapter extends RecyclerView.Adapter<MealPlanRecycl
             addIngredientsBtn = itemView.findViewById(R.id.addIngredientsBtn);
         }
 
-        public void bind(MealResponseModel.MealsDTO meal) {
-            mealName.setText(meal.getStrMeal());
+        public void bind(MealDTO meal) {
+            mealName.setText(meal.getMeal().getStrMeal());
             addIngredientsBtn.setText("Remove From Plan");
 
             Glide.with(mealImage.getContext())
-                    .load(meal.getStrMealThumb())
+                    .load(meal.getMeal().getStrMealThumb())
                     .into(mealImage);
 
             mealImage.setOnClickListener(v -> {
-                onMealClickListener.showMealDetails(meal);
+                onMealClickListener.showMealDetails(meal.getMeal());
             });
 
             addIngredientsBtn.setOnClickListener(v -> {
-
+                onRemoveButtonClickListener.onRemoveButtonClick(meal);
             });
         }
     }
