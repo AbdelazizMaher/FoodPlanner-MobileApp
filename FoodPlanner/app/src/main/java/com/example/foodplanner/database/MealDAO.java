@@ -8,26 +8,28 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealResponseModel;
 
+import java.io.ObjectStreamException;
 import java.util.List;
+
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 
 @Dao
 public interface MealDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertMeal(MealResponseModel.MealsDTO meal);
+    Completable insertMeal(MealDTO meal);
 
     @Delete
-    void deleteMeal(MealResponseModel.MealsDTO meal);
+    Completable deleteMeal(MealDTO meal);
 
     @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND isFavorite = 1")
-    LiveData<List<MealResponseModel.MealsDTO>> getFavoriteMeals(String idUser);
+    Observable<List<MealDTO>> getFavoriteMeals(String idUser);
 
-    @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND idMeal = :idMeal AND isPlanned = 1")
-    LiveData<MealResponseModel.MealsDTO> getPlannedMeal(String idUser, String idMeal);
-
-    @Query("SELECT * FROM meals_table WHERE idMeal = :idMeal")
-    LiveData<MealResponseModel.MealsDTO> getMealById(String idMeal);
+    @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND date = :date AND isPlanned = 1")
+    Observable<List<MealDTO>> getPlannedMeals(String idUser, String date);
 
 }

@@ -4,14 +4,16 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 
 public interface IMealRepository {
-    public LiveData<List<MealResponseModel.MealsDTO>> getFavouriteMeals();
-    public LiveData<List<MealResponseModel.MealsDTO>> gePlannedMeals();
-    public void insertMeal(MealResponseModel.MealsDTO meal);
-    public void deleteMeal(MealResponseModel.MealsDTO meal);
+    public Observable<List<MealDTO>> getFavouriteMeals(String idUser);
+    public Observable<List<MealDTO>> gePlannedMeals(String idUser, String date);
+    public Completable insertMeal(MealDTO meal);
+    public Completable deleteMeal(MealDTO meal);
     public Single<MealResponseModel> getRandomMeal() ;
     public Single<CategoryResponseModel> getMealCategories();
     public Single<AreaResponseModel> getAreas();

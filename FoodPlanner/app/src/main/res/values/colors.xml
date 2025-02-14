@@ -12,5 +12,7 @@
     <color name="dark_red">#7A1C36</color>
     <color name="light_pink">#F7C8D7</color>
     <color name="red">#FF0000</color>
+    <color name="light_orange">#FFE5B4</color>
+    <color name="dark_orange">#FF8C00</color>
 
 </resources>

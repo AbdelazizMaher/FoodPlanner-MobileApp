@@ -90,7 +90,6 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
             public boolean onQueryTextChange(String newText) {
                 filterMeals(newText);
 
-                // Show clear button only when text is entered
                 if (!TextUtils.isEmpty(newText)) {
                     backArrow.setVisibility(View.VISIBLE);
                 } else {

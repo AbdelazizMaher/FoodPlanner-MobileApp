@@ -1,5 +1,6 @@
 package com.example.foodplanner.aboutmeal;
 
+import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -14,6 +15,12 @@ public class AboutMealPresenter implements AboutMealContract.IPresenter {
         this.repo = repository;
     }
 
+    public void storeMeal(MealDTO meal) {
+        repo.insertMeal(meal)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
+    }
 
     @Override
     public void getMealById(int mealID) {

@@ -1,6 +1,7 @@
 package com.example.foodplanner.aboutmeal;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,17 +21,20 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.home.HomePresenter;
+import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.MealRemoteDataSource;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AboutMealFragment extends Fragment implements AboutMealContract.IView {
@@ -39,7 +43,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
     private TextView mealName, mealOrigin, mealSteps;
     private RecyclerView ingredientsRecyclerView;
     private WebView youtubePlayer;
-    private Button addToFavorites, removeFromFavorites;
+    private Button addToFavorites, addToPlan;
     private MealResponseModel.MealsDTO meal;
     private int mealID;
     private AboutMealPresenter presenter;
@@ -73,7 +77,54 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         ingredientsRecyclerView = view.findViewById(R.id.ingredientsRecyclerView);
         youtubePlayer = view.findViewById(R.id.youtubePlayer);
         addToFavorites = view.findViewById(R.id.addToFavorites);
-        removeFromFavorites = view.findViewById(R.id.removeFromFavorites);
+        addToPlan = view.findViewById(R.id.addToPlan);
+
+        addToPlan.setOnClickListener(v -> {
+            Calendar calendar = Calendar.getInstance();
+
+            int today = calendar.get(Calendar.DAY_OF_WEEK);
+
+            if (today != Calendar.SATURDAY) {
+                calendar.add(Calendar.DAY_OF_WEEK, Calendar.SATURDAY - today);
+            }
+            long weekStart = calendar.getTimeInMillis();
+
+            calendar.add(Calendar.DAY_OF_WEEK, 6);
+            long weekEnd = calendar.getTimeInMillis();
+
+            calendar = Calendar.getInstance();
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    requireContext(),
+                    (views, selectedYear, selectedMonth, selectedDay) -> {
+                        Calendar selectedDate = Calendar.getInstance();
+                        selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                        if (selectedDate.getTimeInMillis() >= weekStart && selectedDate.getTimeInMillis() <= weekEnd) {
+                            String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                            MealDTO planMeal = new MealDTO(meal);
+                            planMeal.setDate(formattedDate);
+                            planMeal.setPlanned(true);
+                            planMeal.setFavorite(false);
+                            planMeal.setIdUser("1");
+                            planMeal.setIdMeal(meal.getIdMeal());
+                            presenter.storeMeal(planMeal);
+                        } else {
+                            Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
+                        }
+                    },
+                    year, month, day
+            );
+
+            // Restrict selectable dates to the current week
+            datePickerDialog.getDatePicker().setMinDate(weekStart);
+            datePickerDialog.getDatePicker().setMaxDate(weekEnd);
+
+            datePickerDialog.show();
+        });
 
         if (getArguments() != null) {
             AboutMealFragmentArgs args = AboutMealFragmentArgs.fromBundle(getArguments());

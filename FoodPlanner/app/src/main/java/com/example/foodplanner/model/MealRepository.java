@@ -7,6 +7,8 @@ import com.example.foodplanner.network.MealRemoteDataSource;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.Call;
 import retrofit2.http.Query;
@@ -29,23 +31,23 @@ public class MealRepository implements IMealRepository {
     }
 
     @Override
-    public LiveData<List<MealResponseModel.MealsDTO>> getFavouriteMeals() {
-        return localDataSource.getFavouriteMeals();
+    public Observable<List<MealDTO>> getFavouriteMeals(String idUser) {
+        return localDataSource.getFavouriteMeals(idUser);
     }
 
     @Override
-    public LiveData<List<MealResponseModel.MealsDTO>> gePlannedMeals() {
-        return localDataSource.gePlannedMeals();
+    public Observable<List<MealDTO>> gePlannedMeals(String idUser, String date) {
+        return localDataSource.gePlannedMeals(idUser, date);
     }
 
     @Override
-    public void insertMeal(MealResponseModel.MealsDTO meal) {
-        localDataSource.insertMeal(meal);
+    public Completable insertMeal(MealDTO meal) {
+        return localDataSource.insertMeal(meal);
     }
 
     @Override
-    public void deleteMeal(MealResponseModel.MealsDTO meal) {
-        localDataSource.deleteMeal(meal);
+    public Completable deleteMeal(MealDTO meal) {
+        return localDataSource.deleteMeal(meal);
     }
 
     @Override
