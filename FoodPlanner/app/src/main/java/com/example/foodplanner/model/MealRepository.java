@@ -1,31 +1,34 @@
 package com.example.foodplanner.model;
 
-import androidx.lifecycle.LiveData;
+import android.util.Log;
 
 import com.example.foodplanner.database.MealLocalDataSource;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
-import retrofit2.http.Query;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealRepository implements IMealRepository {
     private MealLocalDataSource localDataSource;
-    private MealRemoteDataSource remoteDataSource;
+    private MealRemoteApiDataSource remoteDataSource;
+    private MealRemoteSyncDataSource syncDataSource;
     private static MealRepository instance = null;
 
-    private MealRepository(MealLocalDataSource localDataSource, MealRemoteDataSource remoteDataSource) {
+    private MealRepository(MealLocalDataSource localDataSource, MealRemoteApiDataSource remoteDataSource, MealRemoteSyncDataSource syncDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
+        this.syncDataSource = syncDataSource;
     }
 
-    public static MealRepository getInstance(MealLocalDataSource localDataSource, MealRemoteDataSource remoteDataSource) {
+    public static MealRepository getInstance(MealLocalDataSource localDataSource, MealRemoteApiDataSource remoteDataSource, MealRemoteSyncDataSource syncDataSource) {
         if (instance == null) {
-            instance = new MealRepository(localDataSource, remoteDataSource);
+            instance = new MealRepository(localDataSource, remoteDataSource, syncDataSource);
         }
         return instance;
     }
@@ -42,12 +45,18 @@ public class MealRepository implements IMealRepository {
 
     @Override
     public Completable insertMeal(MealDTO meal) {
-        return localDataSource.insertMeal(meal);
+        return Completable.mergeArray(
+                localDataSource.insertMeal(meal),
+                syncDataSource.insertMeal(meal)
+        );
     }
 
     @Override
     public Completable deleteMeal(MealDTO meal) {
-        return localDataSource.deleteMeal(meal);
+        return Completable.mergeArray(
+                localDataSource.deleteMeal(meal),
+                syncDataSource.deleteMeal(meal)
+        );
     }
 
     @Override
@@ -87,5 +96,52 @@ public class MealRepository implements IMealRepository {
     @Override
     public Single<MealResponseModel> getMealDetailsById(int mealId) {
         return remoteDataSource.getMealDetailsById(mealId);
+    }
+
+    public Single<List<MealDTO>> getAllMeals() {
+        return localDataSource.getAllMeals();
+    }
+
+    public Completable syncMealsFromRemoteToLocal() {
+        Single<List<MealDTO>> firebaseMealsSingle = syncDataSource.getAllMeals()
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(meals -> Log.d("DEBUG", "Firebase Meals: " + meals.size()));
+
+        Single<List<MealDTO>> roomMealsSingle = localDataSource.getAllMeals()
+                .subscribeOn(Schedulers.io())
+                .doOnSuccess(meals -> Log.d("DEBUG", "Room Meals: " + meals.size()));
+
+        return Single.concat(firebaseMealsSingle, roomMealsSingle)
+                .toList()
+                .flatMapCompletable(lists -> {
+                    List<MealDTO> firebaseMeals = lists.get(0);
+                    List<MealDTO> roomMeals = lists.get(1);
+
+                    List<MealDTO> mealsToInsert = getMealsNotInRoom(firebaseMeals, roomMeals);
+                    Log.d("DEBUG", "Meals to Insert: " + mealsToInsert.size());
+
+                    return insertMealsIntoRoom(mealsToInsert);
+                })
+                .subscribeOn(Schedulers.io());
+    }
+
+    private Completable insertMealsIntoRoom(List<MealDTO> meals) {
+        return Completable.fromAction(() -> {
+            Log.d("DEBUG", "Inserting " + meals.size() + " meals into Room DB");
+        }).andThen(Completable.mergeArray(
+                meals.stream()
+                        .peek(meal -> Log.d("DEBUG", "Inserting meal: " + meal.getIdMeal()))
+                        .map(localDataSource::insertMeal)
+                        .toArray(Completable[]::new)
+        ));
+    }
+    private List<MealDTO> getMealsNotInRoom(List<MealDTO> firebaseMeals, List<MealDTO> localMeals) {
+        List<MealDTO> missingMeals = new ArrayList<>();
+        for (MealDTO meal : firebaseMeals) {
+            if (!localMeals.contains(meal)) {
+                missingMeals.add(meal);
+            }
+        }
+        return missingMeals;
     }
 }

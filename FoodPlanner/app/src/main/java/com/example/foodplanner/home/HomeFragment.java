@@ -16,8 +16,9 @@ import android.view.ViewGroup;
 import com.example.foodplanner.R;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.model.MealResponseModel;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 import com.jackandphantom.carouselrecyclerview.CarouselRecyclerview;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        presenter = new HomePresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new HomePresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
             Navigation.findNavController(requireView()).navigate(action);
         });
 
+        presenter.syncMeals();
         presenter.fetchRandomMeals();
         presenter.fetchRecommendedMeals();
         presenter.fetchDesserts();

@@ -1,4 +1,4 @@
-package com.example.foodplanner.network;
+package com.example.foodplanner.network.api;
 
 import com.example.foodplanner.model.AreaResponseModel;
 import com.example.foodplanner.model.CategoryResponseModel;
@@ -6,9 +6,8 @@ import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealResponseModel;
 
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
 
-public interface IMealRemoteDataSource {
+public interface IMealRemoteApiDataSource {
     public Single<MealResponseModel> getRandomMeal();
     public Single<CategoryResponseModel> getMealCategories();
     public Single<AreaResponseModel> getAreas();

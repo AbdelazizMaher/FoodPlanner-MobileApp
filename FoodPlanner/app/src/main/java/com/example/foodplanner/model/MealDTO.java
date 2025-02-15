@@ -18,6 +18,9 @@ public class MealDTO {
     private Boolean isFavorite;
     private Boolean isPlanned;
 
+    public MealDTO() {
+    }
+
     public MealDTO(MealResponseModel.MealsDTO meal) {
         this.meal = meal;
     }

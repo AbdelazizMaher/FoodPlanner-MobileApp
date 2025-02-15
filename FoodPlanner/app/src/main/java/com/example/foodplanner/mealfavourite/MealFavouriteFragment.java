@@ -12,11 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.authentication.registration.RegistrationPresenter;
 import com.example.foodplanner.database.MealLocalDataSource;
-import com.example.foodplanner.mealPlan.MealPlanPresenter;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +41,7 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        presenter = new MealFavouritePresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new MealFavouritePresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_meal_favourite, container, false);
     }
@@ -56,7 +57,7 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
             presenter.removeMealFromFavourite(meal);
         });
 
-        presenter.fetchFavouriteMeals("1");
+        presenter.fetchFavouriteMeals(RegistrationPresenter.userID);
 
     }
 

@@ -25,17 +25,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
+import com.example.foodplanner.authentication.registration.RegistrationPresenter;
 import com.example.foodplanner.database.MealLocalDataSource;
-import com.example.foodplanner.home.HomePresenter;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public class AboutMealFragment extends Fragment implements AboutMealContract.IView {
 
@@ -62,7 +62,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        presenter = new AboutMealPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new AboutMealPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         return inflater.inflate(R.layout.fragment_about_meal, container, false);
     }
 
@@ -83,7 +83,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
             MealDTO favoriteMeal = new MealDTO(meal);
             favoriteMeal.setFavorite(true);
             favoriteMeal.setPlanned(false);
-            favoriteMeal.setIdUser("1");
+            favoriteMeal.setIdUser(RegistrationPresenter.userID);
             favoriteMeal.setDate("0");
             favoriteMeal.setIdMeal(meal.getIdMeal());
             presenter.storeMeal(favoriteMeal);
@@ -119,7 +119,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                             planMeal.setDate(formattedDate);
                             planMeal.setPlanned(true);
                             planMeal.setFavorite(false);
-                            planMeal.setIdUser("1");
+                            planMeal.setIdUser(RegistrationPresenter.userID);
                             planMeal.setIdMeal(meal.getIdMeal());
                             presenter.storeMeal(planMeal);
                         } else {
@@ -129,7 +129,6 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                     year, month, day
             );
 
-            // Restrict selectable dates to the current week
             datePickerDialog.getDatePicker().setMinDate(weekStart);
             datePickerDialog.getDatePicker().setMaxDate(weekEnd);
 

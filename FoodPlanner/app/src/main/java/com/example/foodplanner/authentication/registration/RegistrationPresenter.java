@@ -15,6 +15,7 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
     private AuthenticationRepository repository;
     private FirebaseAuth mAuth;
     private GoogleSignInClient googleSignInClient;
+    public static String userID;
 
     public RegistrationPresenter(RegistrationContract.IView view) {
         this.view = view;
@@ -80,6 +81,7 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
     public void checkIfUserIsLoggedIn() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
+            userID = currentUser.getUid();
             view.navigateToHome();
         }
     }

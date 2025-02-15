@@ -18,11 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.aboutmeal.AboutMealFragmentArgs;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        presenter = new AllMealsPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new AllMealsPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_all_meals, container, false);
     }

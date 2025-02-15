@@ -1,4 +1,4 @@
-package com.example.foodplanner.network;
+package com.example.foodplanner.network.api;
 
 
 import com.example.foodplanner.model.AreaResponseModel;
@@ -7,20 +7,16 @@ import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealResponseModel;
 
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Query;
 
-public class MealRemoteDataSource implements IMealRemoteDataSource {
+public class MealRemoteApiDataSource implements IMealRemoteApiDataSource {
     private static String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     private MealApiService service;
-    private static MealRemoteDataSource instance = null;
+    private static MealRemoteApiDataSource instance = null;
 
-    private MealRemoteDataSource() {
+    private MealRemoteApiDataSource() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -29,9 +25,9 @@ public class MealRemoteDataSource implements IMealRemoteDataSource {
         service = retrofit.create(MealApiService.class);
     }
 
-    public static MealRemoteDataSource getInstance() {
+    public static MealRemoteApiDataSource getInstance() {
         if (instance == null) {
-            instance = new MealRemoteDataSource();
+            instance = new MealRemoteApiDataSource();
         }
         return instance;
     }

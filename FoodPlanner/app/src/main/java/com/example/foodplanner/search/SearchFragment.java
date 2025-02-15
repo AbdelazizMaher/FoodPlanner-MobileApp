@@ -17,12 +17,12 @@ import android.widget.TextView;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.database.MealLocalDataSource;
-import com.example.foodplanner.home.HomeFragmentDirections;
 import com.example.foodplanner.model.AreaResponseModel;
 import com.example.foodplanner.model.CategoryResponseModel;
 import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
@@ -55,7 +55,7 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        presenter = new SearchPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new SearchPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false);
     }
@@ -177,4 +177,5 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 }
