@@ -131,6 +131,8 @@ public class MealResponseModel {
         @SerializedName("dateModified")
         private String dateModified;
 
+        public MealsDTO() {
+        }
         public String getIdMeal() {
             return idMeal;
         }

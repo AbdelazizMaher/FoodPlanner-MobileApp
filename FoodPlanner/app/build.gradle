@@ -40,6 +40,7 @@ dependencies {
     androidTestImplementation libs.espresso.core
 
     implementation 'com.google.firebase:firebase-auth:23.1.0'
+    implementation 'com.google.firebase:firebase-database:20.2.2'
     implementation 'com.google.android.gms:play-services-auth:21.3.0'
 
     implementation 'com.facebook.android:facebook-android-sdk:18.0.1'

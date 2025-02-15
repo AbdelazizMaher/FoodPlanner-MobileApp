@@ -1,8 +1,6 @@
 package com.example.foodplanner.home;
 
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.model.MealResponseModel;
-import com.example.foodplanner.network.MealRemoteDataSource;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -46,6 +44,16 @@ public class HomePresenter implements HomeContract.IPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         response -> view.showDesserts(response.getMeals()),
+                        error -> view.showError(error.getMessage())
+                );
+    }
+
+    public void syncMeals() {
+        repo.syncMealsFromRemoteToLocal()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        () -> {},
                         error -> view.showError(error.getMessage())
                 );
     }

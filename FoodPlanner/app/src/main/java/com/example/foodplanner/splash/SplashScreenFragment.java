@@ -41,13 +41,6 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-//        ImageView imageView = view.findViewById(R.id.backgroundImage);
-//        Glide.with(this)
-//                .load(R.drawable.background_image)
-//                .transform(new BlurTransformation(25, 3))
-//                .into(imageView);
-
         lottieAnimationView = view.findViewById(R.id.lottieAnimationView);
 
         lottieAnimationView.setAnimation(R.raw.a);

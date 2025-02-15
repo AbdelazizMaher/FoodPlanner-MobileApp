@@ -14,11 +14,12 @@ import android.widget.CalendarView;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.aboutmeal.AboutMealPresenter;
+import com.example.foodplanner.authentication.registration.RegistrationPresenter;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.MealRemoteDataSource;
+import com.example.foodplanner.network.api.MealRemoteApiDataSource;
+import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,7 +45,7 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        presenter = new MealPlanPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteDataSource.getInstance()));
+        presenter = new MealPlanPresenter(this, MealRepository.getInstance(MealLocalDataSource.getInstance(requireContext()), MealRemoteApiDataSource.getInstance(), MealRemoteSyncDataSource.getInstance()));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_meal_plan, container, false);
     }
@@ -68,7 +69,7 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             if (isWithinCurrentWeek(year, month, dayOfMonth)){
                 String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                presenter.fetchPlannedMeals("1", selectedDate);
+                presenter.fetchPlannedMeals(RegistrationPresenter.userID, selectedDate);
             }else {
                 Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
             }

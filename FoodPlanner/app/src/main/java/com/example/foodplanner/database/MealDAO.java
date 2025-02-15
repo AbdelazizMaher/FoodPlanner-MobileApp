@@ -16,6 +16,7 @@ import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface MealDAO {
@@ -31,5 +32,8 @@ public interface MealDAO {
 
     @Query("SELECT * FROM meals_table WHERE idUser = :idUser AND date = :date AND isPlanned = 1")
     Observable<List<MealDTO>> getPlannedMeals(String idUser, String date);
+
+    @Query("SELECT * FROM meals_table")
+    Single<List<MealDTO>> getAllMeals();
 
 }

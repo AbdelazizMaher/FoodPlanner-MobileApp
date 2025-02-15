@@ -1,16 +1,20 @@
 package com.example.foodplanner.database;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealResponseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealLocalDataSource implements IMealLocalDataSource {
     private Context context;
@@ -45,6 +49,12 @@ public class MealLocalDataSource implements IMealLocalDataSource {
         return dao.deleteMeal(meal);
     }
 
+    public Single<List<MealDTO>> getAllMeals() {
+        Log.d("DEBUG", "Getting Room Meals");
+        return dao.getAllMeals()
+                .doOnSuccess(meals -> Log.d("DEBUG", "Room Meals Retrieved: " + meals.size()))
+                .doOnError(error -> Log.e("DEBUG", "Room Meals Error: " + error.getMessage()));
+    }
     private MealLocalDataSource(Context context) {
         this.context = context;
         dao = AppDataBase.getInstance(context).getMealDao();

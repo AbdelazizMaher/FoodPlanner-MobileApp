@@ -1,10 +1,6 @@
 package com.example.foodplanner.search;
 
-import com.example.foodplanner.model.AreaResponseModel;
-import com.example.foodplanner.model.CategoryResponseModel;
-import com.example.foodplanner.model.IngredientResponseModel;
 import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.MealRemoteDataSource;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.schedulers.Schedulers;
