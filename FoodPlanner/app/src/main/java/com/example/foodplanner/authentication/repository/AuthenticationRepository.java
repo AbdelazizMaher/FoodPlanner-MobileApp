@@ -1,6 +1,8 @@
 package com.example.foodplanner.authentication.repository;
 
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.facebook.AccessToken;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;

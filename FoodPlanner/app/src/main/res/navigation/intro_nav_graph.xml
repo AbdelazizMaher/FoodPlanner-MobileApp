@@ -14,6 +14,9 @@
             app:destination="@id/registrationFragment"
             app:popUpTo="@id/registrationFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashScreenFragment_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -57,6 +60,9 @@
         <action
             android:id="@+id/action_homeFragment2_to_aboutMealFragment"
             app:destination="@id/aboutMealFragment" />
+        <action
+            android:id="@+id/action_homeFragment2_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutMealFragment"
@@ -78,6 +84,9 @@
         <action
             android:id="@+id/action_searchFragment_to_allMealsFragment"
             app:destination="@id/allMealsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

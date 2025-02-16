@@ -2,6 +2,7 @@ package com.example.foodplanner.authentication.signup;
 
 import com.example.foodplanner.authentication.repository.AuthenticationCallback;
 import com.example.foodplanner.authentication.repository.AuthenticationRepository;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignUpPresenter implements SignUpContract.IPresenter {
@@ -20,6 +21,7 @@ public class SignUpPresenter implements SignUpContract.IPresenter {
             @Override
             public void onSuccess(FirebaseUser user) {
                 view.hideProgress();
+                casheUser(user);
                 view.showSignUpSuccess();
             }
 
@@ -29,5 +31,9 @@ public class SignUpPresenter implements SignUpContract.IPresenter {
                 view.showSignUpError(errorMessage);
             }
         });
+    }
+
+    private void casheUser(FirebaseUser user) {
+        SharedPreferenceCashing.getInstance().cacheUser(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString());
     }
 }

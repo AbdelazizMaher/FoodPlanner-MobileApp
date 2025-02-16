@@ -1,8 +1,10 @@
 package com.example.foodplanner.authentication.registration;
 
 
+import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.repository.AuthenticationCallback;
 import com.example.foodplanner.authentication.repository.AuthenticationRepository;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -13,20 +15,17 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegistrationPresenter implements RegistrationContract.IPresenter {
     private RegistrationContract.IView view;
     private AuthenticationRepository repository;
-    private FirebaseAuth mAuth;
     private GoogleSignInClient googleSignInClient;
-    public static String userID;
 
-    public RegistrationPresenter(RegistrationContract.IView view) {
+    public RegistrationPresenter(RegistrationContract.IView view, String clientID) {
         this.view = view;
         this.repository = new AuthenticationRepository();
-        this.mAuth = FirebaseAuth.getInstance();
-        initGoogleSignIn();
+        initGoogleSignIn(clientID);
     }
 
-    private void initGoogleSignIn() {
+    private void initGoogleSignIn(String clientID) {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("YOUR_CLIENT_ID")
+                .requestIdToken(clientID)
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(FirebaseAuth.getInstance().getApp().getApplicationContext(), gso);
@@ -44,19 +43,24 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
 
     @Override
     public void onGoogleSignInClicked() {
+        view.showProgress();
         view.showGoogleSignInIntent(googleSignInClient);
     }
 
     @Override
     public void handleGoogleSignInResult(String idToken) {
+        view.showProgress();
         repository.signInWithGoogle(idToken, new AuthenticationCallback() {
             @Override
             public void onSuccess(FirebaseUser user) {
+                view.hideProgress();
+                casheUser(user);
                 view.navigateToHome();
             }
 
             @Override
             public void onFailure(String errorMessage) {
+                view.hideProgress();
                 view.showLoginError(errorMessage);
             }
         });
@@ -67,6 +71,7 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
         repository.signInWithFacebook(token, new AuthenticationCallback() {
             @Override
             public void onSuccess(FirebaseUser user) {
+                casheUser(user);
                 view.navigateToHome();
             }
 
@@ -77,12 +82,8 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
         });
     }
 
-    @Override
-    public void checkIfUserIsLoggedIn() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            userID = currentUser.getUid();
-            view.navigateToHome();
-        }
+
+    private void casheUser(FirebaseUser user) {
+        SharedPreferenceCashing.getInstance().cacheUser(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString());
     }
 }

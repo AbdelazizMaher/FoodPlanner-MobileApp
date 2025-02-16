@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.registration.RegistrationPresenter;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
@@ -83,7 +84,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
             MealDTO favoriteMeal = new MealDTO(meal);
             favoriteMeal.setFavorite(true);
             favoriteMeal.setPlanned(false);
-            favoriteMeal.setIdUser(RegistrationPresenter.userID);
+            favoriteMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
             favoriteMeal.setDate("0");
             favoriteMeal.setIdMeal(meal.getIdMeal());
             presenter.storeMeal(favoriteMeal);
@@ -119,7 +120,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                             planMeal.setDate(formattedDate);
                             planMeal.setPlanned(true);
                             planMeal.setFavorite(false);
-                            planMeal.setIdUser(RegistrationPresenter.userID);
+                            planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
                             planMeal.setIdMeal(meal.getIdMeal());
                             presenter.storeMeal(planMeal);
                         } else {

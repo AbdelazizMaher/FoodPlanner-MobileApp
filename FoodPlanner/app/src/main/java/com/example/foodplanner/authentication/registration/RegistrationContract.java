@@ -5,6 +5,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 
 public interface RegistrationContract {
     interface IView {
+        void showProgress();
+        void hideProgress();
         void showToast(String message);
         void navigateToSignUp();
         void navigateToSignIn();
@@ -19,6 +21,5 @@ public interface RegistrationContract {
         void onGoogleSignInClicked();
         void handleGoogleSignInResult(String idToken);
         void handleFacebookSignIn(AccessToken token);
-        void checkIfUserIsLoggedIn();
     }
 }
