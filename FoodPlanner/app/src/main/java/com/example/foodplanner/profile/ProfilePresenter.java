@@ -55,6 +55,7 @@ public class ProfilePresenter implements ProfileContract.IPresenter {
         mAuth.signOut();
         googleSignInClient.signOut();
         SharedPreferenceCashing.getInstance().clearUserCache();
+        view.navigateToRegistration();
     }
 
     private void initGoogleSignIn(String clientID) {

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +94,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.IView {
     @Override
     public void navigateToEditProfile() {
 
+    }
+
+    @Override
+    public void navigateToRegistration() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_registrationFragment);
     }
 
     @Override

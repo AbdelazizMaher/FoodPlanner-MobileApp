@@ -91,7 +91,11 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.foodplanner.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+    </fragment>
     <fragment
         android:id="@+id/allMealsFragment"
         android:name="com.example.foodplanner.allMeals.AllMealsFragment"

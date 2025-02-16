@@ -96,8 +96,9 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
             int today = calendar.get(Calendar.DAY_OF_WEEK);
 
             if (today != Calendar.SATURDAY) {
-                calendar.add(Calendar.DAY_OF_WEEK, Calendar.SATURDAY - today);
+                calendar.add(Calendar.DAY_OF_WEEK, -(today % Calendar.SATURDAY));
             }
+
             long weekStart = calendar.getTimeInMillis();
 
             calendar.add(Calendar.DAY_OF_WEEK, 6);

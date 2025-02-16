@@ -7,6 +7,7 @@ public interface ProfileContract {
         void navigateToFoodPreferences();
         void navigateToSettings();
         void navigateToEditProfile();
+        void navigateToRegistration();
         void showAboutDialog();
         void showLogoutDialog();
     }
