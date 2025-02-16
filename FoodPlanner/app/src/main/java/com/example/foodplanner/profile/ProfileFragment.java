@@ -23,7 +23,7 @@ import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 
 public class ProfileFragment extends Fragment implements ProfileContract.IView {
 
-    private ImageView settingsNav, profileNav, aboutNav, logoutNav;
+    private ImageView settingsNav, profileNav, aboutNav, logoutNav, backToHome;
     private ProfilePresenter presenter;
 
     public ProfileFragment() {
@@ -52,6 +52,11 @@ public class ProfileFragment extends Fragment implements ProfileContract.IView {
         profileNav = view.findViewById(R.id.profileNav);
         aboutNav = view.findViewById(R.id.aboutNav);
         logoutNav = view.findViewById(R.id.logoutNav);
+        backToHome = view.findViewById(R.id.backToHome);
+
+        backToHome.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_homeFragment2);
+        });
 
         settingsNav.setOnClickListener(v -> {
 

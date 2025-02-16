@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
     private EditText etDisplayName, etEmail, etPassword, etConfirmPassword;
     private CheckBox checkBoxSubscribe;
     private Button btnNext;
+    private ImageView backArrow;
     RelativeLayout progressOverlay;
 
     public SignUpFragment() {
@@ -60,6 +62,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
         setupWatcher();
 
         btnNext.setOnClickListener(v -> registerUser());
+        backArrow.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_signUpFragment_to_registrationFragment));
     }
 
     @Override
@@ -92,6 +95,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
         checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
         btnNext = view.findViewById(R.id.btn_next);
         progressOverlay = view.findViewById(R.id.progress_overlay);
+        backArrow = view.findViewById(R.id.back_arrow);
     }
 
     private void setupWatcher() {

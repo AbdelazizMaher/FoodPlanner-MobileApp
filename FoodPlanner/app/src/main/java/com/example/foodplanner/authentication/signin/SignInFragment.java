@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -30,6 +31,7 @@ public class SignInFragment extends Fragment implements SignInContract.IView {
     private EditText etEmail, etPassword;
     private Button btnNext;
     private CheckBox checkBoxSubscribe;
+    private ImageView backArrow;
     RelativeLayout progressOverlay;
 
     public SignInFragment() {
@@ -59,6 +61,11 @@ public class SignInFragment extends Fragment implements SignInContract.IView {
         btnNext = view.findViewById(R.id.btn_next);
         checkBoxSubscribe = view.findViewById(R.id.checkbox_subscribe);
         progressOverlay = view.findViewById(R.id.progress_overlay);
+        backArrow = view.findViewById(R.id.back_arrow);
+
+        backArrow.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_signInFragment_to_registrationFragment);
+        });
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override

@@ -31,7 +31,7 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
 
     private TextView typeMeals;
     SearchView searchView;
-    ImageView backArrow;
+    ImageView backArrow, backToSearch;
     private RecyclerView mealsRecyclerView;
     private AllMealsRecyclerAdapter adapter;
     private List<MealResponseModel.MealsDTO> sharedMeals = new ArrayList<>();
@@ -64,6 +64,11 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
         mealsRecyclerView = view.findViewById(R.id.rvMeals);
         searchView = view.findViewById(R.id.searchView);
         backArrow = view.findViewById(R.id.ivBackArrow);
+        backToSearch = view.findViewById(R.id.backToSearch);
+
+        backToSearch.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_allMealsFragment_to_searchFragment);
+        });
 
         adapter = new AllMealsRecyclerAdapter(new ArrayList<>());
         mealsRecyclerView.setAdapter(adapter);

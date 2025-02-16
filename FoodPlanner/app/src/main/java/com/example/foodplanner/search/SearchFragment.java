@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodplanner.R;
@@ -32,6 +33,7 @@ import java.util.List;
 public class SearchFragment extends Fragment implements SearchContract.IView {
 
     TextView ingredientsTitle, areasTitle, categoriesTitle;
+    ImageView profileImage;
     ChipGroup chipGroup;
     SearchView searchView;
     RecyclerView ingredientsRecyclerView;
@@ -72,6 +74,9 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         ingredientsTitle = view.findViewById(R.id.ingredientsTitle);
         areasTitle = view.findViewById(R.id.areasTitle);
         categoriesTitle = view.findViewById(R.id.categoriesTitle);
+        profileImage = view.findViewById(R.id.profileImage);
+
+        profileImage.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_profileFragment));
 
         ingredientsAdapter = new IngredientRecyclerAdapter(new ArrayList<>());
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);

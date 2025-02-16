@@ -10,6 +10,15 @@
     android:background="@color/white"
     tools:context=".allMeals.AllMealsFragment">
 
+    <ImageView
+        android:id="@+id/backToSearch"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="1dp"
+        android:src="@drawable/arrowback"
+        android:layout_marginBottom="16dp"/>
+
     <TextView
         android:id="@+id/typeMeals"
         android:layout_width="wrap_content"
@@ -19,6 +28,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/peridotlatin"
         android:textColor="@color/primaryColor"
+        android:layout_marginTop="12dp"
         android:paddingBottom="8dp" />
 
     <androidx.cardview.widget.CardView
@@ -65,6 +75,6 @@
         android:scrollbars="vertical"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         tools:listitem="@layout/item_all_meals_custom"
-        app:spanCount="2"/>
+        app:spanCount="1"/>
 
 </LinearLayout>

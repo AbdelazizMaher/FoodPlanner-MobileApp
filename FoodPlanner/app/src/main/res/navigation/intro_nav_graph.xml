@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_signUpFragment_to_homeFragment2"
             app:destination="@id/homeFragment2" />
+        <action
+            android:id="@+id/action_signUpFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -51,6 +54,9 @@
         <action
             android:id="@+id/action_signInFragment_to_homeFragment2"
             app:destination="@id/homeFragment2" />
+        <action
+            android:id="@+id/action_signInFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment2"
@@ -95,6 +101,9 @@
         <action
             android:id="@+id/action_profileFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment2"
+            app:destination="@id/homeFragment2" />
     </fragment>
     <fragment
         android:id="@+id/allMealsFragment"
@@ -110,6 +119,9 @@
         <argument
             android:name="type"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_allMealsFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
     <fragment
         android:id="@+id/mealPlanFragment"
