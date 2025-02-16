@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.registration.RegistrationPresenter;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
@@ -69,7 +70,7 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             if (isWithinCurrentWeek(year, month, dayOfMonth)){
                 String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                presenter.fetchPlannedMeals(RegistrationPresenter.userID, selectedDate);
+                presenter.fetchPlannedMeals(SharedPreferenceCashing.getInstance().getUserId(), selectedDate);
             }else {
                 Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
             }
@@ -87,7 +88,7 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
         int today = calendar.get(Calendar.DAY_OF_WEEK);
 
         if (today != Calendar.SATURDAY) {
-            calendar.add(Calendar.DAY_OF_WEEK, Calendar.SATURDAY - today);
+            calendar.add(Calendar.DAY_OF_WEEK, -(today % Calendar.SATURDAY));
         }
         weekStart = calendar.getTimeInMillis();
 

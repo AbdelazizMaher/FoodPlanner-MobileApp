@@ -5,6 +5,7 @@
     <string name="facebook_app_id">1686966208525457</string>
     <string name="fb_login_protocol_scheme">fb1686966208525457</string>
     <string name="facebook_client_token">380703e24798ab4c078909990bca289f</string>
+
     <string name="the_kitchen">The Kitchen</string>
     <string name="skip">SKIP</string>
     <string name="cook_with_confidence">Cook with Confidence</string>

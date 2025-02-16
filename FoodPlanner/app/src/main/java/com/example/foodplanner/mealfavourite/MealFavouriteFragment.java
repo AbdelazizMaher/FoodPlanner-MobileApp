@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.registration.RegistrationPresenter;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
@@ -57,7 +58,7 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
             presenter.removeMealFromFavourite(meal);
         });
 
-        presenter.fetchFavouriteMeals(RegistrationPresenter.userID);
+        presenter.fetchFavouriteMeals(SharedPreferenceCashing.getInstance().getUserId());
 
     }
 

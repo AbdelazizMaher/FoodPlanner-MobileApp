@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.foodplanner.R;
 import com.example.foodplanner.database.MealLocalDataSource;
@@ -34,6 +35,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
     private HomeRecyclerAdapter breakfastAdapter;
     private ArrayList<MealResponseModel.MealsDTO> mealList = new ArrayList<>();
     private HomePresenter presenter;
+    ImageView profileImage;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -60,6 +62,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         carouselRecyclerview = view.findViewById(R.id.carouselRecyclerview);
         recommendedRecyclerView = view.findViewById(R.id.recommendedRecyclerView);
         breakfastRecyclerView = view.findViewById(R.id.breakfastRecyclerView);
+        profileImage = view.findViewById(R.id.profileImage);
 
         randomAdapter = new HomeRecyclerAdapter(mealList, HomeRecyclerAdapter.LAYOUT_TYPE_RANDOM);
         carouselRecyclerview.setAdapter(randomAdapter);
@@ -81,6 +84,10 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         recommendedAdapter.setOnMealClickListener(meal-> {
             HomeFragmentDirections.ActionHomeFragment2ToAboutMealFragment action = HomeFragmentDirections.actionHomeFragment2ToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
             Navigation.findNavController(requireView()).navigate(action);
+        });
+
+        profileImage.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment2_to_profileFragment);
         });
 
         presenter.syncMeals();

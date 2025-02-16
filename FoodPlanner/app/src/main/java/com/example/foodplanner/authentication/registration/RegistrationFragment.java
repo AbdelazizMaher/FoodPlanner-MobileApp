@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,18 +19,23 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 
 import java.util.Arrays;
 
 public class RegistrationFragment extends Fragment implements RegistrationContract.IView {
     private RegistrationContract.IPresenter presenter;
     private CallbackManager callbackManager;
+    RelativeLayout progressOverlay;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new RegistrationPresenter(this);
+        presenter = new RegistrationPresenter(this, getString(R.string.client_id));
         callbackManager = CallbackManager.Factory.create();
     }
 
@@ -41,6 +47,8 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressOverlay = view.findViewById(R.id.progress_overlay);
 
         view.findViewById(R.id.emailSignUpButton).setOnClickListener(v -> presenter.onEmailSignUpClicked());
         view.findViewById(R.id.loginText).setOnClickListener(v -> presenter.onSignInClicked());
@@ -65,7 +73,16 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
             }
         });
 
-        presenter.checkIfUserIsLoggedIn();
+    }
+
+    @Override
+    public void showProgress() {
+        progressOverlay.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressOverlay.setVisibility(View.GONE);
     }
 
     @Override
@@ -102,6 +119,24 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 9001) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if (account != null) {
+                    String idToken = account.getIdToken();
+                    if (idToken != null) {
+                        presenter.handleGoogleSignInResult(idToken);
+                    } else {
+                        showToast("Google Sign-In failed: No ID Token received.");
+                    }
+                }
+            } catch (ApiException e) {
+                showToast("Google Sign-In failed: " + e.getMessage());
+            }
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

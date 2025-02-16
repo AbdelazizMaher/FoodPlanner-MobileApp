@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 
 
 public class SplashScreenFragment extends Fragment {
@@ -64,7 +65,13 @@ public class SplashScreenFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_registrationFragment);
+                SharedPreferenceCashing.setInstance(getContext());
+                String userId = SharedPreferenceCashing.getInstance().getUserId();
+                if (userId == null) {
+                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_registrationFragment);
+                } else {
+                    Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_homeFragment2);
+                }
             }
         }, 10000);
     }

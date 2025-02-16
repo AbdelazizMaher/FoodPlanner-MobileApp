@@ -50,10 +50,7 @@ public class MealLocalDataSource implements IMealLocalDataSource {
     }
 
     public Single<List<MealDTO>> getAllMeals() {
-        Log.d("DEBUG", "Getting Room Meals");
-        return dao.getAllMeals()
-                .doOnSuccess(meals -> Log.d("DEBUG", "Room Meals Retrieved: " + meals.size()))
-                .doOnError(error -> Log.e("DEBUG", "Room Meals Error: " + error.getMessage()));
+        return dao.getAllMeals();
     }
     private MealLocalDataSource(Context context) {
         this.context = context;
