@@ -35,7 +35,7 @@
             android:id="@+id/categoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="120 mL"
+            android:text="@string/categories"
             android:textSize="14sp"
             android:textColor="@color/primaryColor"
             android:layout_marginStart="12dp"

@@ -23,7 +23,7 @@
                 android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Week Plan:"
+                android:text="@string/your_week_plan_in_plan_page"
                 android:fontFamily="@font/peridotlatin"
                 android:textSize="24sp"
                 android:textStyle="bold"
