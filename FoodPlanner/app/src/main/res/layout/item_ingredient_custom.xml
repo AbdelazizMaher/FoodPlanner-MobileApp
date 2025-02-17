@@ -1,30 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    android:elevation="10dp"
-    app:cardCornerRadius="40dp"
-    app:cardBackgroundColor="@android:color/transparent">
+    app:cardCornerRadius="18dp"
+    app:cardElevation="20dp"
+    app:cardBackgroundColor="@android:color/white">
 
-    <FrameLayout
-        android:id="@+id/ingredientImageContainer"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="@drawable/rounded_ingredient_background"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/ingredientImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_launcher_foreground" />
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/ingredientImageContainer"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/rounded_ingredient_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <ImageView
+                android:id="@+id/ingredientImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/ingredientQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="120 mL"
+            android:textSize="14sp"
+            android:textColor="@color/primaryColor"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/ingredientImageContainer"
+            app:layout_constraintTop_toTopOf="@id/ingredientImageContainer"
+            app:layout_constraintBottom_toBottomOf="@id/ingredientImageContainer" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

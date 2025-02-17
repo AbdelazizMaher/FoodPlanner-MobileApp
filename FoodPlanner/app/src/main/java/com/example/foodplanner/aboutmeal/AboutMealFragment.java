@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
@@ -40,7 +41,7 @@ import java.util.Calendar;
 
 public class AboutMealFragment extends Fragment implements AboutMealContract.IView {
 
-    private ImageView mealImage;
+    private ImageView mealImage, backToHome;
     private TextView mealName, mealOrigin, mealSteps;
     private RecyclerView ingredientsRecyclerView;
     private WebView youtubePlayer;
@@ -72,6 +73,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         super.onViewCreated(view, savedInstanceState);
 
         mealImage = view.findViewById(R.id.mealImage);
+        backToHome = view.findViewById(R.id.backNav);
         mealName = view.findViewById(R.id.mealName);
         mealOrigin = view.findViewById(R.id.mealOrigin);
         mealSteps = view.findViewById(R.id.mealSteps);
@@ -80,61 +82,91 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         addToFavorites = view.findViewById(R.id.addToFavorites);
         addToPlan = view.findViewById(R.id.addToPlan);
 
+        backToHome.setOnClickListener(v -> {
+            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_homeFragment2);
+        });
+
         addToFavorites.setOnClickListener(v -> {
-            MealDTO favoriteMeal = new MealDTO(meal);
-            favoriteMeal.setFavorite(true);
-            favoriteMeal.setPlanned(false);
-            favoriteMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
-            favoriteMeal.setDate("0");
-            favoriteMeal.setIdMeal(meal.getIdMeal());
-            presenter.storeMeal(favoriteMeal);
+            if(SharedPreferenceCashing.getInstance().getUserId() != null) {
+                MealDTO favoriteMeal = new MealDTO(meal);
+                favoriteMeal.setFavorite(true);
+                favoriteMeal.setPlanned(false);
+                favoriteMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
+                favoriteMeal.setDate("0");
+                favoriteMeal.setIdMeal(meal.getIdMeal());
+                presenter.storeMeal(favoriteMeal);
+            }else {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Sign Up Required")
+                        .setMessage("You need to sign up or log in to access your profile.")
+                        .setPositiveButton("Sign Up", (dialog, which) -> {
+                            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
         });
 
         addToPlan.setOnClickListener(v -> {
-            Calendar calendar = Calendar.getInstance();
+            if(SharedPreferenceCashing.getInstance().getUserId() == null) {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Sign Up Required")
+                        .setMessage("You need to sign up or log in to access your profile.")
+                        .setPositiveButton("Sign Up", (dialog, which) -> {
+                            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }else {
+                Calendar calendar = Calendar.getInstance();
 
-            int today = calendar.get(Calendar.DAY_OF_WEEK);
+                int today = calendar.get(Calendar.DAY_OF_WEEK);
 
-            if (today != Calendar.SATURDAY) {
-                calendar.add(Calendar.DAY_OF_WEEK, -(today % Calendar.SATURDAY));
+                if (today != Calendar.SATURDAY) {
+                    calendar.add(Calendar.DAY_OF_WEEK, -(today % Calendar.SATURDAY));
+                }
+
+                long weekStart = calendar.getTimeInMillis();
+
+                calendar.add(Calendar.DAY_OF_WEEK, 6);
+                long weekEnd = calendar.getTimeInMillis();
+
+                calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(
+                        requireContext(),
+                        (views, selectedYear, selectedMonth, selectedDay) -> {
+                            Calendar selectedDate = Calendar.getInstance();
+                            selectedDate.set(selectedYear, selectedMonth, selectedDay);
+
+                            if (selectedDate.getTimeInMillis() >= weekStart && selectedDate.getTimeInMillis() <= weekEnd) {
+                                String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                                MealDTO planMeal = new MealDTO(meal);
+                                planMeal.setDate(formattedDate);
+                                planMeal.setPlanned(true);
+                                planMeal.setFavorite(false);
+                                planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
+                                planMeal.setIdMeal(meal.getIdMeal());
+                                presenter.storeMeal(planMeal);
+                            } else {
+                                Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        year, month, day
+                );
+
+                datePickerDialog.getDatePicker().setMinDate(weekStart);
+                datePickerDialog.getDatePicker().setMaxDate(weekEnd);
+
+                datePickerDialog.show();
             }
-
-            long weekStart = calendar.getTimeInMillis();
-
-            calendar.add(Calendar.DAY_OF_WEEK, 6);
-            long weekEnd = calendar.getTimeInMillis();
-
-            calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    requireContext(),
-                    (views, selectedYear, selectedMonth, selectedDay) -> {
-                        Calendar selectedDate = Calendar.getInstance();
-                        selectedDate.set(selectedYear, selectedMonth, selectedDay);
-
-                        if (selectedDate.getTimeInMillis() >= weekStart && selectedDate.getTimeInMillis() <= weekEnd) {
-                            String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-                            MealDTO planMeal = new MealDTO(meal);
-                            planMeal.setDate(formattedDate);
-                            planMeal.setPlanned(true);
-                            planMeal.setFavorite(false);
-                            planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
-                            planMeal.setIdMeal(meal.getIdMeal());
-                            presenter.storeMeal(planMeal);
-                        } else {
-                            Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
-                        }
-                    },
-                    year, month, day
-            );
-
-            datePickerDialog.getDatePicker().setMinDate(weekStart);
-            datePickerDialog.getDatePicker().setMaxDate(weekEnd);
-
-            datePickerDialog.show();
         });
 
         if (getArguments() != null) {

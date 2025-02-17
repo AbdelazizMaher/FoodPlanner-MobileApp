@@ -30,6 +30,19 @@
                 android:src="@drawable/ic_launcher_foreground"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/backNav"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/arrowback"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:scaleType="centerInside"
+                android:contentDescription="Back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="16dp"/>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/mealCard"
                 android:layout_width="0dp"
@@ -150,6 +163,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add to Plan"
+            android:textSize="18sp"
+            android:elevation="20dp"
             android:backgroundTint="@color/white"
             android:textColor="@color/primaryColor"
             android:layout_marginEnd="8dp"/>
@@ -159,6 +174,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Add to Favourites"
+            android:elevation="20dp"
+            android:textSize="18sp"
             android:backgroundTint="@color/primaryColor"
             android:textColor="@android:color/white"/>
     </LinearLayout>

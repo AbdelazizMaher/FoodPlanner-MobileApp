@@ -63,17 +63,20 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView mealImage;
         private TextView mealName;
-        private Button addIngredientsBtn;
+        private Button addFavouritesBtn;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             mealImage = itemView.findViewById(R.id.mealImage);
             mealName = itemView.findViewById(R.id.mealName);
-            addIngredientsBtn = itemView.findViewById(R.id.addIngredientsBtn);
+            addFavouritesBtn = itemView.findViewById(R.id.addFavouritesBtn);
         }
 
         public void bind(MealResponseModel.MealsDTO meal) {
             mealName.setText(meal.getStrMeal());
+            mealName.setVisibility(View.GONE);
+            addFavouritesBtn.setTextSize(20.0F);
+            addFavouritesBtn.setText(meal.getStrMeal());
 
             Glide.with(mealImage.getContext())
                     .load(meal.getStrMealThumb())
@@ -83,11 +86,6 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<HomeRecyclerAdapte
                 onMealClickListener.showMealDetails(meal);
             });
 
-            addIngredientsBtn.setOnClickListener(v -> {
-                if (onMealClickListener != null) {
-
-                }
-            });
         }
     }
 }

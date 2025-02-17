@@ -9,18 +9,17 @@
     app:cardCornerRadius="20dp">
 
     <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_country_card">
 
         <ImageView
             android:id="@+id/countryImage"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:scaleType="fitXY"
-            android:background="@drawable/circle_shape"
             app:srcCompat="@drawable/ic_launcher_foreground"/>
 
         <TextView
@@ -33,7 +32,7 @@
             android:text="@string/dummytext"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textColor="@color/primaryColor"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
