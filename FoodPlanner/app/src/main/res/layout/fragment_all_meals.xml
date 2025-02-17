@@ -23,7 +23,7 @@
         android:id="@+id/typeMeals"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type Meals:"
+        android:text="@string/type_meals_in_meals_page"
         android:textSize="28sp"
         android:textStyle="bold"
         android:fontFamily="@font/peridotlatin"
@@ -54,7 +54,7 @@
                 android:layout_height="26dp"
                 android:src="@drawable/arrowback"
                 android:visibility="gone"
-                android:contentDescription="Back"
+                android:contentDescription="@string/back_in_meals_page"
                 android:padding="4dp" />
 
             <androidx.appcompat.widget.SearchView
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:queryHint="Search By Meal"
+                android:queryHint="@string/search_by_meal_in_meals_page"
                 android:iconifiedByDefault="false"
                 android:background="@android:color/transparent"/>
         </LinearLayout>

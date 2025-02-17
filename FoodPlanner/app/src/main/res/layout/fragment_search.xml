@@ -33,7 +33,7 @@
             android:id="@+id/welcomeTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome Abdelaziz Maher"
+            android:text="@string/welcome_in_search_page"
             android:textSize="18sp"
             android:textColor="@color/primaryColor"
             android:fontFamily="@font/peridotlatin"/>
@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search"
+                android:text="@string/search"
                 android:fontFamily="@font/peridotlatin"
                 android:textSize="24sp"
                 android:textStyle="bold"/>
@@ -108,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primaryColor"
-                    android:text="Ingredients"
+                    android:text="@string/ingredients"
                     android:textColor="@color/white"
                     app:checkedIconVisible="false"/>
 
@@ -119,7 +119,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/primaryColor"
-                    android:text="Areas"
+                    android:text="@string/areas"
                     app:checkedIconVisible="false"/>
 
                 <com.google.android.material.chip.Chip
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:backgroundTint="@color/primaryColor"
-                    android:text="Categories"
+                    android:text="@string/categories"
                     app:checkedIconVisible="false"/>
             </com.google.android.material.chip.ChipGroup>
 
@@ -138,7 +138,7 @@
                 android:id="@+id/ingredientsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ingredients"
+                android:text="@string/ingredients"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
 
@@ -156,7 +156,7 @@
                 android:id="@+id/areasTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Popular Meals"
+                android:text="@string/popular_meals"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"/>
@@ -178,7 +178,7 @@
                 android:id="@+id/categoriesTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Categories"
+                android:text="@string/categories"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginTop="20dp"/>

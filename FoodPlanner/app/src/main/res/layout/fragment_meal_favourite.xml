@@ -23,7 +23,7 @@
                 android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Favourite Meals:"
+                android:text="@string/your_favourite_meals_in_favourites_page"
                 android:fontFamily="@font/peridotlatin"
                 android:textSize="24sp"
                 android:textStyle="bold"

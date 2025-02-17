@@ -27,7 +27,7 @@
             android:layout_margin="8dp"
             android:padding="12dp"
             android:gravity="center"
-            android:text="Meal Name"
+            android:text="@string/meal_name"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"

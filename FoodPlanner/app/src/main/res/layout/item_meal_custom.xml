@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/mealName"
             android:layout_margin="8dp"
-            android:text="ADD TO FAVOURITES"
+            android:text="@string/add_to_favourites"
             android:backgroundTint="@color/primaryColor"
             android:textColor="@android:color/white"/>
 

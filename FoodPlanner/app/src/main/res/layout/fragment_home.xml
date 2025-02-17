@@ -43,23 +43,18 @@
                     android:id="@+id/welcomeTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome Abdelaziz Maher"
+                    android:text="@string/welcome_in_home_page"
                     android:textSize="18sp"
                     android:textColor="@color/primaryColor"
                     android:fontFamily="@font/peridotlatin"/>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"/>
             </LinearLayout>
 
             <TextView
                 android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily Inspiration"
+                android:text="@string/daily_inspiration_in_home_page"
                 android:textSize="36sp"
                 android:textStyle="bold"
                 android:textColor="@color/primaryColor"
@@ -78,7 +73,7 @@
                 android:id="@+id/firstRecyclerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recommended for You"
+                android:text="@string/recommended_for_you_in_home_page"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/primaryColor"
@@ -100,7 +95,7 @@
                 android:id="@+id/secondRecyclerTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Desserts"
+                android:text="@string/desserts_in_home_page"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textColor="@color/primaryColor"

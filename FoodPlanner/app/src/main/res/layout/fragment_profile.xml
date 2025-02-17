@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:fontFamily="@font/peridotlatin"
-            android:text="Abdelaziz Maher"
+            android:text="@string/profile_in_profile_page"
             android:textColor="@color/primaryColor"
             android:textSize="30sp"
             android:textStyle="bold"
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/peridotlatin"
-                    android:text="My Food Preferences"
+                    android:text="@string/my_food_preferences_in_profile_page"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     android:textColor="@color/primaryColor"/>
@@ -93,7 +93,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Diet Preferences, Allergies, and Meal Plan settings."
+                    android:text="@string/content_in_profile_page"
                     android:textSize="16sp"
                     android:textColor="#717880"
                     android:fontFamily="@font/peridotlatin"
@@ -104,6 +104,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
+                android:contentDescription="@string/navtodetails_in_profile_page"
                 android:src="@drawable/arrow_forward"/>
         </LinearLayout>
 
@@ -120,6 +121,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingVertical="12dp"
@@ -129,14 +131,14 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:src="@drawable/settings"
+                    android:contentDescription="@string/settings"
                     android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
-                    android:text="General Settings"
+                    android:text="@string/general_settings"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
@@ -144,6 +146,7 @@
                     android:id="@+id/settingsNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/nav"
                     android:src="@drawable/arrow_forward"/>
             </LinearLayout>
 
@@ -156,6 +159,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingVertical="12dp"
@@ -164,6 +168,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/nav"
                     android:src="@drawable/edit_profile"
                     android:layout_marginEnd="8dp"/>
 
@@ -171,7 +176,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Edit Profile"
+                    android:text="@string/edit_profile"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
@@ -179,6 +184,7 @@
                     android:id="@+id/profileNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/nav"
                     android:src="@drawable/arrow_forward"/>
             </LinearLayout>
 
@@ -191,6 +197,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingVertical="12dp"
@@ -206,7 +213,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="About The Kitchen"
+                    android:text="@string/about_the_kitchen_in_profile_page"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
@@ -214,6 +221,7 @@
                     android:id="@+id/aboutNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/nav"
                     android:src="@drawable/arrow_forward"/>
             </LinearLayout>
 
@@ -226,6 +234,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:focusable="true"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:paddingVertical="12dp"
@@ -241,7 +250,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Log Out"
+                    android:text="@string/log_out"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
@@ -249,6 +258,7 @@
                     android:id="@+id/logoutNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
+                    android:contentDescription="@string/nav"
                     android:src="@drawable/arrow_forward"/>
             </LinearLayout>
         </LinearLayout>
