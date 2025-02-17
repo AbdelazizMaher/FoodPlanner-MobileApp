@@ -40,6 +40,7 @@
                     android:layout_marginEnd="12dp"/>
 
                 <TextView
+                    android:id="@+id/welcomeTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Welcome Abdelaziz Maher"

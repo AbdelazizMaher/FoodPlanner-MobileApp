@@ -65,7 +65,7 @@ public class MealPlanRecyclerAdapter extends RecyclerView.Adapter<MealPlanRecycl
             super(itemView);
             mealImage = itemView.findViewById(R.id.mealImage);
             mealName = itemView.findViewById(R.id.mealName);
-            addIngredientsBtn = itemView.findViewById(R.id.addIngredientsBtn);
+            addIngredientsBtn = itemView.findViewById(R.id.addFavouritesBtn);
         }
 
         public void bind(MealDTO meal) {

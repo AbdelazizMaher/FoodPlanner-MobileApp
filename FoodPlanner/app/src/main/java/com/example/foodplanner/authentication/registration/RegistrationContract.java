@@ -16,6 +16,7 @@ public interface RegistrationContract {
     }
 
     interface IPresenter {
+        void onSkipClicked();
         void onEmailSignUpClicked();
         void onSignInClicked();
         void onGoogleSignInClicked();

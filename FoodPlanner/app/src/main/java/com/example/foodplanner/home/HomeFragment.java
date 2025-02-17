@@ -13,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
@@ -36,6 +38,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
     private ArrayList<MealResponseModel.MealsDTO> mealList = new ArrayList<>();
     private HomePresenter presenter;
     ImageView profileImage;
+    TextView welcomeTxt;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,6 +66,13 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         recommendedRecyclerView = view.findViewById(R.id.recommendedRecyclerView);
         breakfastRecyclerView = view.findViewById(R.id.breakfastRecyclerView);
         profileImage = view.findViewById(R.id.profileImage);
+        welcomeTxt = view.findViewById(R.id.welcomeTxt);
+
+        if(SharedPreferenceCashing.getInstance().getUserId() != null) {
+            welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
+        }else {
+            welcomeTxt.setText("Welcome Guest");
+        }
 
         randomAdapter = new HomeRecyclerAdapter(mealList, HomeRecyclerAdapter.LAYOUT_TYPE_RANDOM);
         carouselRecyclerview.setAdapter(randomAdapter);
@@ -87,7 +97,20 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         });
 
         profileImage.setOnClickListener(v -> {
-            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment2_to_profileFragment);
+            if(SharedPreferenceCashing.getInstance().getUserId() != null) {
+                Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment2_to_profileFragment);
+            }else {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Sign Up Required")
+                        .setMessage("You need to sign up or log in to access your profile.")
+                        .setPositiveButton("Sign Up", (dialog, which) -> {
+                            Navigation.findNavController(requireView()).navigate(R.id.action_homeFragment2_to_registrationFragment);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
+            }
         });
 
         presenter.syncMeals();

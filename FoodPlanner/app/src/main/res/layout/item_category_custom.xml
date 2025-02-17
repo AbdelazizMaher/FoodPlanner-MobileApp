@@ -1,37 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    android:elevation="10dp"
-    app:cardCornerRadius="20dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="20dp"
+    app:cardBackgroundColor="@color/gray">
 
-    <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="140dp"
-        android:background="@drawable/bg_country_card">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
 
-        <ImageView
-            android:id="@+id/categoryImage"
-            android:layout_width="120dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_launcher_foreground"/>
+        <FrameLayout
+            android:id="@+id/categoryImageContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <ImageView
+                android:id="@+id/categoryImage"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:padding="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_launcher_foreground" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/categoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/categoryImage"
-            android:layout_centerHorizontal="true"
-            android:text="@string/dummytext"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-
-    </RelativeLayout>
+            android:text="120 mL"
+            android:textSize="14sp"
+            android:textColor="@color/primaryColor"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/categoryImageContainer"
+            app:layout_constraintTop_toTopOf="@id/categoryImageContainer"
+            app:layout_constraintBottom_toBottomOf="@id/categoryImageContainer" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

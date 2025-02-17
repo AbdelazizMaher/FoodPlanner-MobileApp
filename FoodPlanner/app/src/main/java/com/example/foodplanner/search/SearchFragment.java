@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
 import com.example.foodplanner.model.AreaResponseModel;
 import com.example.foodplanner.model.CategoryResponseModel;
@@ -43,6 +44,8 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     AreaRecyclerAdapter areasAdapter;
     CategoryRecyclerAdapter categoriesAdapter;
     SearchPresenter presenter;
+    Chiptype type;
+    TextView welcomeTxt;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -75,8 +78,13 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         areasTitle = view.findViewById(R.id.areasTitle);
         categoriesTitle = view.findViewById(R.id.categoriesTitle);
         profileImage = view.findViewById(R.id.profileImage);
+        welcomeTxt = view.findViewById(R.id.welcomeTxt);
 
-        profileImage.setOnClickListener(v -> Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_profileFragment));
+        if(SharedPreferenceCashing.getInstance().getUserId() != null) {
+            welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
+        }else {
+            welcomeTxt.setText("Welcome Guest");
+        }
 
         ingredientsAdapter = new IngredientRecyclerAdapter(new ArrayList<>());
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
@@ -108,27 +116,13 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
 
         chipGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.chipIngredients) {
-                ingredientsRecyclerView.setVisibility(View.VISIBLE);
-                areasRecyclerView.setVisibility(View.GONE);
-                categoriesRecyclerView.setVisibility(View.GONE);
-                ingredientsTitle.setVisibility(View.VISIBLE);
-                areasTitle.setVisibility(View.GONE);
-                categoriesTitle.setVisibility(View.GONE);
+                type = Chiptype.INGREDIENTS;
             } else if (checkedId == R.id.chipAreas) {
-                ingredientsRecyclerView.setVisibility(View.GONE);
-                areasRecyclerView.setVisibility(View.VISIBLE);
-                categoriesRecyclerView.setVisibility(View.GONE);
-                ingredientsTitle.setVisibility(View.GONE);
-                areasTitle.setVisibility(View.VISIBLE);
-                categoriesTitle.setVisibility(View.GONE);
+                type = Chiptype.AREAS;
             } else if (checkedId == R.id.chipCategories) {
-                ingredientsRecyclerView.setVisibility(View.GONE);
-                areasRecyclerView.setVisibility(View.GONE);
-                categoriesRecyclerView.setVisibility(View.VISIBLE);
-                ingredientsTitle.setVisibility(View.GONE);
-                areasTitle.setVisibility(View.GONE);
-                categoriesTitle.setVisibility(View.VISIBLE);
+                type = Chiptype.CATEGORIES;
             }
+            updateViewVisibility(type);
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -142,6 +136,34 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
             public boolean onQueryTextChange(String newText) {
                 filterResults(newText);
                 return false;
+            }
+        });
+
+        searchView.setOnSearchClickListener(v -> {
+            chipGroup.setVisibility(View.VISIBLE);
+
+        });
+
+        searchView.setOnCloseListener(() -> {
+            chipGroup.setVisibility(View.GONE);
+            updateViewVisibility(null);
+            return false;
+        });
+
+        profileImage.setOnClickListener(v -> {
+            if(SharedPreferenceCashing.getInstance().getUserId() != null) {
+                Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_profileFragment);
+            }else {
+                new AlertDialog.Builder(requireContext())
+                        .setTitle("Sign Up Required")
+                        .setMessage("You need to sign up or log in to access your profile.")
+                        .setPositiveButton("Sign Up", (dialog, which) -> {
+                            Navigation.findNavController(requireView()).navigate(R.id.action_searchFragment_to_profileFragment);
+                        })
+                        .setNegativeButton("Cancel", (dialog, which) -> {
+                            dialog.dismiss();
+                        })
+                        .show();
             }
         });
     }
@@ -181,6 +203,24 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         builder.setMessage(error).setTitle("An Error Occurred");
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void updateViewVisibility(Chiptype type) {
+        boolean showAll = (type == null);
+
+        ingredientsRecyclerView.setVisibility(showAll || type == Chiptype.INGREDIENTS ? View.VISIBLE : View.GONE);
+        areasRecyclerView.setVisibility(showAll || type == Chiptype.AREAS ? View.VISIBLE : View.GONE);
+        categoriesRecyclerView.setVisibility(showAll || type == Chiptype.CATEGORIES ? View.VISIBLE : View.GONE);
+
+        ingredientsTitle.setVisibility(showAll || type == Chiptype.INGREDIENTS ? View.VISIBLE : View.GONE);
+        areasTitle.setVisibility(showAll || type == Chiptype.AREAS ? View.VISIBLE : View.GONE);
+        categoriesTitle.setVisibility(showAll || type == Chiptype.CATEGORIES ? View.VISIBLE : View.GONE);
+    }
+
+    private enum Chiptype {
+        INGREDIENTS,
+        AREAS,
+        CATEGORIES
     }
 
 }

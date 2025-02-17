@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -50,6 +51,7 @@ public class RegistrationFragment extends Fragment implements RegistrationContra
 
         progressOverlay = view.findViewById(R.id.progress_overlay);
 
+        view.findViewById(R.id.skipButton).setOnClickListener(v -> presenter.onSkipClicked());
         view.findViewById(R.id.emailSignUpButton).setOnClickListener(v -> presenter.onEmailSignUpClicked());
         view.findViewById(R.id.loginText).setOnClickListener(v -> presenter.onSignInClicked());
         view.findViewById(R.id.googleSignInButton).setOnClickListener(v -> presenter.onGoogleSignInClicked());

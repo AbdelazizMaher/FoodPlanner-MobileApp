@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -54,13 +55,16 @@ public class IngredientRecyclerAdapter extends RecyclerView.Adapter<IngredientRe
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         private ImageView ingredientImage;
+        private TextView ingredientName;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ingredientImage = itemView.findViewById(R.id.ingredientImage);
+            ingredientName = itemView.findViewById(R.id.ingredientQuantity);
         }
 
         public void bind(IngredientResponseModel.MealsDTO ingredient) {
+            ingredientName.setText(ingredient.getStrIngredient());
             Glide.with(ingredientImage.getContext())
                     .load(ingredient.getIngredientImageUrl())
                     .into(ingredientImage);

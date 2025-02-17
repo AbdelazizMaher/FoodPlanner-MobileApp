@@ -32,6 +32,11 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
     }
 
     @Override
+    public void onSkipClicked() {
+        view.navigateToHome();
+    }
+
+    @Override
     public void onEmailSignUpClicked() {
         view.navigateToSignUp();
     }

@@ -33,12 +33,12 @@
 
 
         <Button
-            android:id="@+id/addIngredientsBtn"
+            android:id="@+id/addFavouritesBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/mealName"
             android:layout_margin="8dp"
-            android:text="ADD INGREDIENTS"
+            android:text="ADD TO FAVOURITES"
             android:backgroundTint="@color/primaryColor"
             android:textColor="@android:color/white"/>
 
