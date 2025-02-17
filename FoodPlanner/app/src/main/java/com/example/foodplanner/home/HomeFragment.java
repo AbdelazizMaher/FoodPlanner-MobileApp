@@ -1,5 +1,10 @@
 package com.example.foodplanner.home;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,8 +18,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
@@ -39,6 +46,10 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
     private HomePresenter presenter;
     ImageView profileImage;
     TextView welcomeTxt;
+    private LottieAnimationView lottieAnimationView;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    private ScrollView scrollView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -62,11 +73,24 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        lottieAnimationView = view.findViewById(R.id.lottieAnimationView);
         carouselRecyclerview = view.findViewById(R.id.carouselRecyclerview);
         recommendedRecyclerView = view.findViewById(R.id.recommendedRecyclerView);
         breakfastRecyclerView = view.findViewById(R.id.breakfastRecyclerView);
         profileImage = view.findViewById(R.id.profileImage);
         welcomeTxt = view.findViewById(R.id.welcomeTxt);
+        scrollView = view.findViewById(R.id.scrollView);
+
+        registerNetworkCallback();
+
+        if(!isConnected()) {
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        }else{
+            lottieAnimationView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+        }
+
 
         if(SharedPreferenceCashing.getInstance().getUserId() != null) {
             welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
@@ -140,9 +164,57 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
 
     @Override
     public void showError(String error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage(error).setTitle("An Error Occurred");
-        AlertDialog dialog = builder.create();
-        dialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//        builder.setMessage(error).setTitle("An Error Occurred");
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (connectivityManager != null && networkCallback != null) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }
+
+    }
+
+    private void registerNetworkCallback() {
+        connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(Network network) {
+                requireActivity().runOnUiThread(() -> {
+                    lottieAnimationView.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.VISIBLE);
+                });
+            }
+
+            @Override
+            public void onLost(Network network) {
+                requireActivity().runOnUiThread(() -> {
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    scrollView.setVisibility(View.GONE);
+                });
+            }
+        };
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build();
+
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            Network network = cm.getActiveNetwork();
+            if (network != null) {
+                NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+                return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            }
+        }
+        return false;
     }
 }
