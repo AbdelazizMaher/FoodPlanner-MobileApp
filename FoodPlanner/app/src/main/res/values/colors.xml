@@ -14,5 +14,7 @@
     <color name="red">#FF0000</color>
     <color name="light_orange">#FFE5B4</color>
     <color name="dark_orange">#FF8C00</color>
+    <color name="green">#C8E6C9</color>
+    <color name="cyan">#C5CAE9</color>
 
 </resources>

@@ -65,7 +65,7 @@ public class SplashScreenFragment extends Fragment {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                SharedPreferenceCashing.setInstance(getContext());
+                SharedPreferenceCashing.setInstance(requireContext());
                 String userId = SharedPreferenceCashing.getInstance().getUserId();
                 if (userId == null) {
                     Navigation.findNavController(view).navigate(R.id.action_splashScreenFragment_to_registrationFragment);

@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment implements ProfileContract.IView {
         backToHome = view.findViewById(R.id.backToHome);
 
         backToHome.setOnClickListener(v -> {
-            Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_homeFragment2);
+            Navigation.findNavController(requireView()).navigateUp();
         });
 
         settingsNav.setOnClickListener(v -> {

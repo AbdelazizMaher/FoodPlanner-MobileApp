@@ -45,6 +45,28 @@
                 android:layout_marginTop="16dp"
                 tools:listitem="@layout/item_meal_small_custom"/>
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieAnimationView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/titleText"
+                app:lottie_autoPlay="true"
+                app:lottie_rawRes="@raw/blankandguest" />
+
+            <TextView
+                android:id="@+id/infoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textAlignment="center"
+                android:fontFamily="@font/peridotlatin"
+                android:text="@string/there_is_no_meals_yet"
+                android:textColor="@color/primaryColor"
+                android:textSize="16sp" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

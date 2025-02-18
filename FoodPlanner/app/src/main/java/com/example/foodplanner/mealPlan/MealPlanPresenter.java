@@ -1,5 +1,6 @@
 package com.example.foodplanner.mealPlan;
 
+import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.model.MealDTO;
 import com.example.foodplanner.model.MealRepository;
 
@@ -30,6 +31,8 @@ public class MealPlanPresenter implements MealPlanContract.IPresenter {
         repo.deleteMeal(meal)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+                .subscribe(()-> {
+                    fetchPlannedMeals(SharedPreferenceCashing.getInstance().getUserId(), meal.getDate());
+                });
     }
 }

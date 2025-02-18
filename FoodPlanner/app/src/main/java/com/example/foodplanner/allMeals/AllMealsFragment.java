@@ -67,7 +67,7 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
         backToSearch = view.findViewById(R.id.backToSearch);
 
         backToSearch.setOnClickListener(v -> {
-            Navigation.findNavController(requireView()).navigate(R.id.action_allMealsFragment_to_searchFragment);
+            Navigation.findNavController(requireView()).navigateUp();
         });
 
         adapter = new AllMealsRecyclerAdapter(new ArrayList<>());

@@ -1,11 +1,17 @@
 package com.example.foodplanner.search;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +20,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.MealLocalDataSource;
@@ -46,6 +55,11 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     SearchPresenter presenter;
     Chiptype type;
     TextView welcomeTxt;
+    private LottieAnimationView lottieAnimationView;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
+    private LinearLayout topSection;
+    private NestedScrollView nestedScrollView;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -79,6 +93,21 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         categoriesTitle = view.findViewById(R.id.categoriesTitle);
         profileImage = view.findViewById(R.id.profileImage);
         welcomeTxt = view.findViewById(R.id.welcomeTxt);
+        lottieAnimationView = view.findViewById(R.id.lottieAnimationView);
+        topSection = view.findViewById(R.id.topSection);
+        nestedScrollView = view.findViewById(R.id.nestedScrollView);
+
+        registerNetworkCallback();
+
+        if(!isConnected()) {
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            topSection.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.GONE);
+        }else{
+            lottieAnimationView.setVisibility(View.GONE);
+            topSection.setVisibility(View.VISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);
+        }
 
         if(SharedPreferenceCashing.getInstance().getUserId() != null) {
             welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
@@ -199,10 +228,19 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
 
     @Override
     public void showError(String error) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage(error).setTitle("An Error Occurred");
-        AlertDialog dialog = builder.create();
-        dialog.show();
+//        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+//        builder.setMessage(error).setTitle("An Error Occurred");
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (connectivityManager != null && networkCallback != null) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }
+
     }
 
     private void updateViewVisibility(Chiptype type) {
@@ -221,6 +259,50 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         INGREDIENTS,
         AREAS,
         CATEGORIES
+    }
+
+    private void registerNetworkCallback() {
+        connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(Network network) {
+                requireActivity().runOnUiThread(() -> {
+                    lottieAnimationView.setVisibility(View.GONE);
+                    topSection.setVisibility(View.VISIBLE);
+                    nestedScrollView.setVisibility(View.VISIBLE);
+                    presenter.fetchIngredients();
+                    presenter.fetchAreas();
+                    presenter.fetchCategories();
+                });
+            }
+
+            @Override
+            public void onLost(Network network) {
+                requireActivity().runOnUiThread(() -> {
+                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    topSection.setVisibility(View.GONE);
+                    nestedScrollView.setVisibility(View.GONE);
+                });
+            }
+        };
+        NetworkRequest networkRequest = new NetworkRequest.Builder()
+                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+                .build();
+
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
+    }
+
+    private boolean isConnected() {
+        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            Network network = cm.getActiveNetwork();
+            if (network != null) {
+                NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+                return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
+            }
+        }
+        return false;
     }
 
 }

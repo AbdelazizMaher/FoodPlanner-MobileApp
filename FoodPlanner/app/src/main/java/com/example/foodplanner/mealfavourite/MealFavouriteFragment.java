@@ -4,13 +4,18 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
 import com.example.foodplanner.authentication.registration.RegistrationPresenter;
 import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
@@ -28,6 +33,9 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
     private RecyclerView mealFavouriteRecyclerView;
     private MealFavouriteRecyclerAdapter adapter;
     private MealFavouritePresenter presenter;
+    private Group favouriteGroup;
+    LottieAnimationView lottieAnimationView;
+    TextView infoText;
 
     public MealFavouriteFragment() {
         // Required empty public constructor
@@ -51,20 +59,44 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        favouriteGroup = view.findViewById(R.id.favouriteGroup);
+        infoText = view.findViewById(R.id.infoText);
+        lottieAnimationView = view.findViewById(R.id.lottieAnimationView);
         mealFavouriteRecyclerView = view.findViewById(R.id.mealFavouriteRecyclerView);
         adapter = new MealFavouriteRecyclerAdapter(new ArrayList<>());
         mealFavouriteRecyclerView.setAdapter(adapter);
+
+        if(SharedPreferenceCashing.getInstance().getUserId() == null) {
+            mealFavouriteRecyclerView.setVisibility(View.GONE);
+            favouriteGroup.setVisibility(View.VISIBLE);
+            infoText.setText("You need to sign up or log in to access your favourite Meals");
+        }else {
+            mealFavouriteRecyclerView.setVisibility(View.VISIBLE);
+            favouriteGroup.setVisibility(View.GONE);
+            presenter.fetchFavouriteMeals(SharedPreferenceCashing.getInstance().getUserId());
+        }
+
         adapter.setOnRemoveButtonClickListener(meal->{
             presenter.removeMealFromFavourite(meal);
         });
-
-        presenter.fetchFavouriteMeals(SharedPreferenceCashing.getInstance().getUserId());
-
+        adapter.setOnMealClickListener(meal->{
+            MealFavouriteFragmentDirections.ActionMealFavouriteFragmentToAboutMealFragment action = MealFavouriteFragmentDirections.actionMealFavouriteFragmentToAboutMealFragment(meal,0);
+            Navigation.findNavController(requireView()).navigate(action);
+        });
     }
 
     @Override
     public void showFavouriteMeals(List<MealDTO> meals) {
         adapter.setMeals(meals);
         adapter.notifyDataSetChanged();
+        lottieAnimationView.setVisibility(View.GONE);
+        infoText.setVisibility(View.GONE);
+        mealFavouriteRecyclerView.setVisibility(View.VISIBLE);
+        if(meals.isEmpty()) {
+            mealFavouriteRecyclerView.setVisibility(View.GONE);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            infoText.setVisibility(View.VISIBLE);
+            infoText.setText("You don't have any favourite meals");
+        }
     }
 }

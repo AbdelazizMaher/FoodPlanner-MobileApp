@@ -9,6 +9,7 @@ public interface HomeContract {
         void showRandomMeals(MealResponseModel.MealsDTO meal);
         void showRecommendedMeals(List<MealResponseModel.MealsDTO> meals);
         void showDesserts(List<MealResponseModel.MealsDTO> meals);
+        void showProgress(boolean show);
         void showError(String error);
     }
 
