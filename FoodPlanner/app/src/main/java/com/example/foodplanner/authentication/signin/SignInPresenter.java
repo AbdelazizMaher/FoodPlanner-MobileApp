@@ -1,8 +1,8 @@
 package com.example.foodplanner.authentication.signin;
 
-import com.example.foodplanner.authentication.repository.AuthenticationCallback;
-import com.example.foodplanner.authentication.repository.AuthenticationRepository;
-import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
+import com.example.foodplanner.repository.authrepository.AuthenticationCallback;
+import com.example.foodplanner.repository.authrepository.AuthenticationRepository;
+import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.google.firebase.auth.FirebaseUser;
 
 public class SignInPresenter implements SignInContract.IPresenter {

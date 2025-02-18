@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/white"
-    tools:context=".mealPlan.MealPlanFragment">
+    tools:context=".mealPlan.view.MealPlanFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

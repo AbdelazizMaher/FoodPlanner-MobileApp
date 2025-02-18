@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="16dp"
-    tools:context=".home.HomeFragment">
+    tools:context=".home.view.HomeFragment">
 
     <ScrollView
         android:id="@+id/scrollView"
