@@ -17,29 +17,38 @@ public class HomePresenter implements HomeContract.IPresenter {
 
     @Override
     public void fetchRandomMeals() {
+        //view.showProgress(true);
         repo.getRandomMeal()
                 .subscribeOn(Schedulers.io())
                 .repeat(10)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        response -> view.showRandomMeals(response.getMeals().get(0)),
-                        error -> view.showError(error.getMessage())
+                        response -> {
+                            //view.showProgress(false);
+                            view.showRandomMeals(response.getMeals().get(0));
+                        },
+                        error -> {
+                           // view.showProgress(false);
+                            view.showError(error.getMessage());
+                        }
                 );
     }
 
     @Override
     public void fetchRecommendedMeals() {
+        //view.showProgress(true);
         repo.filterByArea("Egyptian")
                 .subscribeOn(Schedulers.io())
-                .flatMapObservable(response -> Observable.fromIterable(response.getMeals()))
-                .flatMapSingle(meal -> repo.getMealDetailsById(Integer.parseInt(meal.getIdMeal()))
-                        .map(detailsResponse -> detailsResponse.getMeals().get(0))
-                )
-                .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        detailedMeals -> view.showRecommendedMeals(detailedMeals),
-                        error -> view.showError(error.getMessage())
+                        response -> {
+                           // view.showProgress(false);
+                            view.showRecommendedMeals(response.getMeals());
+                        },
+                        error -> {
+                          //  view.showProgress(false);
+                            view.showError(error.getMessage());
+                        }
                 );
     }
 
@@ -47,14 +56,9 @@ public class HomePresenter implements HomeContract.IPresenter {
     public void fetchDesserts() {
         repo.filterByCategory("Breakfast")
                 .subscribeOn(Schedulers.io())
-                .flatMapObservable(response -> Observable.fromIterable(response.getMeals()))
-                .flatMapSingle(meal -> repo.getMealDetailsById(Integer.parseInt(meal.getIdMeal()))
-                        .map(detailsResponse -> detailsResponse.getMeals().get(0))
-                )
-                .toList()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        detailedMeals -> view.showDesserts(detailedMeals),
+                        response -> view.showDesserts(response.getMeals()),
                         error -> view.showError(error.getMessage())
                 );
     }

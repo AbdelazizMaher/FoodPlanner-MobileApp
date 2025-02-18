@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavBar, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.homeFragment2 || destination.getId() == R.id.searchFragment || destination.getId() == R.id.mealPlanFragment || destination.getId() == R.id.mealFavouriteFragment) {
+            if (destination.getId() == R.id.searchFragment || destination.getId() == R.id.mealPlanFragment || destination.getId() == R.id.mealFavouriteFragment) {
                 bottomNavBar.setVisibility(BottomNavigationView.VISIBLE);
             } else {
                 bottomNavBar.setVisibility(BottomNavigationView.GONE);

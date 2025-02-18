@@ -12,11 +12,13 @@
         <action
             android:id="@+id/action_splashScreenFragment_to_registrationFragment"
             app:destination="@id/registrationFragment"
-            app:popUpTo="@id/registrationFragment"
+            app:popUpTo="@id/splashScreenFragment"
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_splashScreenFragment_to_homeFragment2"
-            app:destination="@id/homeFragment2" />
+            app:destination="@id/homeFragment2"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"

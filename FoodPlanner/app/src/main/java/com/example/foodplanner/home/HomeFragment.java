@@ -80,10 +80,13 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
         profileImage = view.findViewById(R.id.profileImage);
         welcomeTxt = view.findViewById(R.id.welcomeTxt);
         scrollView = view.findViewById(R.id.scrollView);
+        requireActivity().findViewById(R.id.bottomNavBar).setVisibility(View.VISIBLE);
+
 
         registerNetworkCallback();
 
         if(!isConnected()) {
+            lottieAnimationView.setAnimation(R.raw.offline);
             lottieAnimationView.setVisibility(View.VISIBLE);
             scrollView.setVisibility(View.GONE);
         }else{
@@ -198,6 +201,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
             @Override
             public void onLost(Network network) {
                 requireActivity().runOnUiThread(() -> {
+                    lottieAnimationView.setAnimation(R.raw.offline);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     scrollView.setVisibility(View.GONE);
                 });
@@ -220,5 +224,17 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
             }
         }
         return false;
+    }
+
+    public void showProgress(boolean show) {
+        if(show) {
+            lottieAnimationView.setAnimation(R.raw.d);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        }else {
+            lottieAnimationView.setAnimation(R.raw.offline);
+            lottieAnimationView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
+        }
     }
 }
