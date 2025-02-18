@@ -1,8 +1,8 @@
 package com.example.foodplanner.profile;
 
 
-import com.example.foodplanner.authentication.repository.AuthenticationRepository;
-import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
+import com.example.foodplanner.repository.authrepository.AuthenticationRepository;
+import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

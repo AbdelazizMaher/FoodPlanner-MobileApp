@@ -8,7 +8,7 @@
     android:layout_marginTop="16dp"
     android:padding="16dp"
     android:background="@color/white"
-    tools:context=".search.SearchFragment">
+    tools:context=".search.view.SearchFragment">
 
     <LinearLayout
         android:id="@+id/topSection"

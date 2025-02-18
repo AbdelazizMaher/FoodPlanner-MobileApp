@@ -14,12 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.authentication.repository.AuthenticationRepository;
-import com.example.foodplanner.database.MealLocalDataSource;
-import com.example.foodplanner.home.HomePresenter;
-import com.example.foodplanner.model.MealRepository;
-import com.example.foodplanner.network.api.MealRemoteApiDataSource;
-import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.example.foodplanner.repository.authrepository.AuthenticationRepository;
 
 public class ProfileFragment extends Fragment implements ProfileContract.IView {
 

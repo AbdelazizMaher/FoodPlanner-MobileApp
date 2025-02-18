@@ -22,7 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.foodplanner.R;
-import com.example.foodplanner.authentication.repository.AuthenticationRepository;
+import com.example.foodplanner.repository.authrepository.AuthenticationRepository;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignUpFragment extends Fragment implements SignUpContract.IView {

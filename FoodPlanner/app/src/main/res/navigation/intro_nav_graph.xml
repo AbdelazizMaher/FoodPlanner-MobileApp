@@ -62,7 +62,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment2"
-        android:name="com.example.foodplanner.home.HomeFragment"
+        android:name="com.example.foodplanner.home.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutMealFragment"
-        android:name="com.example.foodplanner.aboutmeal.AboutMealFragment"
+        android:name="com.example.foodplanner.aboutmeal.view.AboutMealFragment"
         android:label="AboutMealFragment" >
         <argument
             android:name="mealInfo"
@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.foodplanner.search.SearchFragment"
+        android:name="com.example.foodplanner.search.view.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
@@ -118,7 +118,7 @@
     </fragment>
     <fragment
         android:id="@+id/allMealsFragment"
-        android:name="com.example.foodplanner.allMeals.AllMealsFragment"
+        android:name="com.example.foodplanner.allMeals.view.AllMealsFragment"
         android:label="fragment_all_meals"
         tools:layout="@layout/fragment_all_meals" >
         <action
@@ -133,7 +133,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealPlanFragment"
-        android:name="com.example.foodplanner.mealPlan.MealPlanFragment"
+        android:name="com.example.foodplanner.mealPlan.view.MealPlanFragment"
         android:label="fragment_meal_plan"
         tools:layout="@layout/fragment_meal_plan" >
         <action
@@ -142,7 +142,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealFavouriteFragment"
-        android:name="com.example.foodplanner.mealfavourite.MealFavouriteFragment"
+        android:name="com.example.foodplanner.mealfavourite.view.MealFavouriteFragment"
         android:label="fragment_meal_favourite"
         tools:layout="@layout/fragment_meal_favourite" >
         <action

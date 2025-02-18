@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.foodplanner.R;
-import com.example.foodplanner.authentication.sharedpreference.SharedPreferenceCashing;
+import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 
 
 public class SplashScreenFragment extends Fragment {
