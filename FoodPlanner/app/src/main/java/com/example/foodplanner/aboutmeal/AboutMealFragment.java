@@ -83,7 +83,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         addToPlan = view.findViewById(R.id.addToPlan);
 
         backToHome.setOnClickListener(v -> {
-            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_homeFragment2);
+            Navigation.findNavController(requireView()).navigateUp();
         });
 
         addToFavorites.setOnClickListener(v -> {
@@ -127,12 +127,16 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                 int today = calendar.get(Calendar.DAY_OF_WEEK);
 
                 if (today != Calendar.SATURDAY) {
-                    calendar.add(Calendar.DAY_OF_WEEK, -(today % Calendar.SATURDAY));
+                    calendar.add(Calendar.DAY_OF_WEEK, -(today - Calendar.SATURDAY + 7) % 7);
                 }
 
                 long weekStart = calendar.getTimeInMillis();
 
                 calendar.add(Calendar.DAY_OF_WEEK, 6);
+                calendar.set(Calendar.HOUR_OF_DAY, 23);
+                calendar.set(Calendar.MINUTE, 59);
+                calendar.set(Calendar.SECOND, 59);
+                calendar.set(Calendar.MILLISECOND, 999);
                 long weekEnd = calendar.getTimeInMillis();
 
                 calendar = Calendar.getInstance();
@@ -155,8 +159,6 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                                 planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
                                 planMeal.setIdMeal(meal.getIdMeal());
                                 presenter.storeMeal(planMeal);
-                            } else {
-                                Toast.makeText(requireContext(), "Please select a date within this week (Saturday - Friday)", Toast.LENGTH_SHORT).show();
                             }
                         },
                         year, month, day
@@ -176,6 +178,8 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         }
         if (meal != null && mealID != 0) {
             presenter.getMealById(mealID);
+        }else {
+            displayMealDetails(meal);
         }
     }
 

@@ -188,6 +188,10 @@ public class HomeFragment extends Fragment implements HomeContract.IView{
                 requireActivity().runOnUiThread(() -> {
                     lottieAnimationView.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
+                    presenter.syncMeals();
+                    presenter.fetchRandomMeals();
+                    presenter.fetchRecommendedMeals();
+                    presenter.fetchDesserts();
                 });
             }
 

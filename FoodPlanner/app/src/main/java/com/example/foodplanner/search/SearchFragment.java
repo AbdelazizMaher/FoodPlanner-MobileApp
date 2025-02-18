@@ -271,6 +271,9 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
                     lottieAnimationView.setVisibility(View.GONE);
                     topSection.setVisibility(View.VISIBLE);
                     nestedScrollView.setVisibility(View.VISIBLE);
+                    presenter.fetchIngredients();
+                    presenter.fetchAreas();
+                    presenter.fetchCategories();
                 });
             }
 
