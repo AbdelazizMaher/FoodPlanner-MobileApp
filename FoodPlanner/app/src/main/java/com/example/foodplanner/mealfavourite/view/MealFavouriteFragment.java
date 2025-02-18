@@ -19,9 +19,9 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.localdatabase.MealLocalDataSource;
 import com.example.foodplanner.mealfavourite.MealFavouriteContract;
-import com.example.foodplanner.mealfavourite.view.MealFavouriteFragmentDirections;
 import com.example.foodplanner.mealfavourite.presenter.MealFavouritePresenter;
 import com.example.foodplanner.model.MealDTO;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
@@ -78,7 +78,9 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
         }
 
         adapter.setOnRemoveButtonClickListener(meal->{
-            presenter.removeMealFromFavourite(meal);
+            if(ConnectionUtil.isConnected(requireContext())) {
+                presenter.removeMealFromFavourite(meal);
+            }
         });
         adapter.setOnMealClickListener(meal->{
             MealFavouriteFragmentDirections.ActionMealFavouriteFragmentToAboutMealFragment action = MealFavouriteFragmentDirections.actionMealFavouriteFragmentToAboutMealFragment(meal,0);

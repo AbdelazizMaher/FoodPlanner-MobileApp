@@ -1,10 +1,5 @@
 package com.example.foodplanner.home.view;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,8 +21,8 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.localdatabase.MealLocalDataSource;
 import com.example.foodplanner.home.HomeContract;
-import com.example.foodplanner.home.view.HomeFragmentDirections;
 import com.example.foodplanner.home.presenter.HomePresenter;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.model.MealResponseModel;
@@ -50,9 +45,8 @@ public class HomeFragment extends Fragment implements HomeContract.IView {
     ImageView profileImage;
     TextView welcomeTxt;
     private LottieAnimationView lottieAnimationView;
-    private ConnectivityManager connectivityManager;
-    private ConnectivityManager.NetworkCallback networkCallback;
     private ScrollView scrollView;
+    private ConnectionUtil connectionUtil;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -85,18 +79,7 @@ public class HomeFragment extends Fragment implements HomeContract.IView {
         scrollView = view.findViewById(R.id.scrollView);
         requireActivity().findViewById(R.id.bottomNavBar).setVisibility(View.VISIBLE);
 
-
         registerNetworkCallback();
-
-        if(!isConnected()) {
-            lottieAnimationView.setAnimation(R.raw.offline);
-            lottieAnimationView.setVisibility(View.VISIBLE);
-            scrollView.setVisibility(View.GONE);
-        }else{
-            lottieAnimationView.setVisibility(View.GONE);
-            scrollView.setVisibility(View.VISIBLE);
-        }
-
 
         if(SharedPreferenceCashing.getInstance().getUserId() != null) {
             welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
@@ -177,20 +160,21 @@ public class HomeFragment extends Fragment implements HomeContract.IView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        connectionUtil.registerNetworkCallback();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        if (connectivityManager != null && networkCallback != null) {
-            connectivityManager.unregisterNetworkCallback(networkCallback);
-        }
-
+        connectionUtil.unregisterNetworkCallback();
     }
 
     private void registerNetworkCallback() {
-        connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        networkCallback = new ConnectivityManager.NetworkCallback() {
+        connectionUtil = new ConnectionUtil(requireContext(), new ConnectionUtil.NetworkListener() {
             @Override
-            public void onAvailable(Network network) {
+            public void onNetworkAvailable() {
                 requireActivity().runOnUiThread(() -> {
                     lottieAnimationView.setVisibility(View.GONE);
                     scrollView.setVisibility(View.VISIBLE);
@@ -202,32 +186,25 @@ public class HomeFragment extends Fragment implements HomeContract.IView {
             }
 
             @Override
-            public void onLost(Network network) {
+            public void onNetworkLost() {
                 requireActivity().runOnUiThread(() -> {
                     lottieAnimationView.setAnimation(R.raw.offline);
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     scrollView.setVisibility(View.GONE);
                 });
             }
-        };
-        NetworkRequest networkRequest = new NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .build();
+        });
 
-        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
-    }
-
-    private boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            Network network = cm.getActiveNetwork();
-            if (network != null) {
-                NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
-                return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-            }
+        if (!ConnectionUtil.isConnected(requireContext())) {
+            lottieAnimationView.setAnimation(R.raw.offline);
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            scrollView.setVisibility(View.GONE);
+        } else {
+            lottieAnimationView.setVisibility(View.GONE);
+            scrollView.setVisibility(View.VISIBLE);
         }
-        return false;
     }
+
 
     public void showProgress(boolean show) {
         if(show) {

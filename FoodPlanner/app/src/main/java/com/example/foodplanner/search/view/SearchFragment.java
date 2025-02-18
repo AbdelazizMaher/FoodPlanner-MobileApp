@@ -1,10 +1,5 @@
 package com.example.foodplanner.search.view;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,11 +25,11 @@ import com.example.foodplanner.database.localdatabase.MealLocalDataSource;
 import com.example.foodplanner.model.AreaResponseModel;
 import com.example.foodplanner.model.CategoryResponseModel;
 import com.example.foodplanner.model.IngredientResponseModel;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 import com.example.foodplanner.search.SearchContract;
-import com.example.foodplanner.search.view.SearchFragmentDirections;
 import com.example.foodplanner.search.presenter.SearchPresenter;
 import com.example.foodplanner.search.view.adapter.AreaRecyclerAdapter;
 import com.example.foodplanner.search.view.adapter.CategoryRecyclerAdapter;
@@ -61,10 +56,9 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     Chiptype type;
     TextView welcomeTxt;
     private LottieAnimationView lottieAnimationView;
-    private ConnectivityManager connectivityManager;
-    private ConnectivityManager.NetworkCallback networkCallback;
     private LinearLayout topSection;
     private NestedScrollView nestedScrollView;
+    private ConnectionUtil connectionUtil;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -91,16 +85,6 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
         initUI(view);
         setupAdapters();
         registerNetworkCallback();
-
-        if(!isConnected()) {
-            lottieAnimationView.setVisibility(View.VISIBLE);
-            topSection.setVisibility(View.GONE);
-            nestedScrollView.setVisibility(View.GONE);
-        }else{
-            lottieAnimationView.setVisibility(View.GONE);
-            topSection.setVisibility(View.VISIBLE);
-            nestedScrollView.setVisibility(View.VISIBLE);
-        }
 
         if(SharedPreferenceCashing.getInstance().getUserId() != null) {
             welcomeTxt.setText("Welcome " + SharedPreferenceCashing.getInstance().getUserName());
@@ -204,12 +188,15 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        connectionUtil.registerNetworkCallback();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
-        if (connectivityManager != null && networkCallback != null) {
-            connectivityManager.unregisterNetworkCallback(networkCallback);
-        }
-
+        connectionUtil.unregisterNetworkCallback();
     }
 
     private void updateViewVisibility(Chiptype type) {
@@ -273,11 +260,9 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
     }
 
     private void registerNetworkCallback() {
-        connectivityManager = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        networkCallback = new ConnectivityManager.NetworkCallback() {
+        connectionUtil = new ConnectionUtil(requireContext(), new ConnectionUtil.NetworkListener() {
             @Override
-            public void onAvailable(Network network) {
+            public void onNetworkAvailable() {
                 requireActivity().runOnUiThread(() -> {
                     lottieAnimationView.setVisibility(View.GONE);
                     topSection.setVisibility(View.VISIBLE);
@@ -289,31 +274,23 @@ public class SearchFragment extends Fragment implements SearchContract.IView {
             }
 
             @Override
-            public void onLost(Network network) {
+            public void onNetworkLost() {
                 requireActivity().runOnUiThread(() -> {
                     lottieAnimationView.setVisibility(View.VISIBLE);
                     topSection.setVisibility(View.GONE);
                     nestedScrollView.setVisibility(View.GONE);
                 });
             }
-        };
-        NetworkRequest networkRequest = new NetworkRequest.Builder()
-                .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                .build();
+        });
 
-        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
-    }
-
-    private boolean isConnected() {
-        ConnectivityManager cm = (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (cm != null) {
-            Network network = cm.getActiveNetwork();
-            if (network != null) {
-                NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
-                return capabilities != null && capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET);
-            }
+        if(!ConnectionUtil.isConnected(requireContext())) {
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            topSection.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.GONE);
+        }else{
+            lottieAnimationView.setVisibility(View.GONE);
+            topSection.setVisibility(View.VISIBLE);
+            nestedScrollView.setVisibility(View.VISIBLE);
         }
-        return false;
     }
-
 }
