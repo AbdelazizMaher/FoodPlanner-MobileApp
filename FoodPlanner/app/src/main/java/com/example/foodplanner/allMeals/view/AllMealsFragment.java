@@ -27,6 +27,8 @@ import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,8 +79,12 @@ public class AllMealsFragment extends Fragment implements AllMealsContract.IView
         adapter = new AllMealsRecyclerAdapter(new ArrayList<>());
         mealsRecyclerView.setAdapter(adapter);
         adapter.setOnMealClickListener(meal -> {
-            AllMealsFragmentDirections.ActionAllMealsFragmentToAboutMealFragment action = AllMealsFragmentDirections.actionAllMealsFragmentToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
-            Navigation.findNavController(requireView()).navigate(action);
+            if(ConnectionUtil.isConnected(requireContext())) {
+                AllMealsFragmentDirections.ActionAllMealsFragmentToAboutMealFragment action = AllMealsFragmentDirections.actionAllMealsFragmentToAboutMealFragment(meal, Integer.parseInt(meal.getIdMeal()));
+                Navigation.findNavController(requireView()).navigate(action);
+            }else{
+                Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT).show();
+            }
         });
 
         backArrow.setOnClickListener(v -> {

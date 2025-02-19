@@ -35,7 +35,9 @@ import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.utils.dateutil.DateUtil;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -89,71 +91,83 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
         });
 
         addToFavorites.setOnClickListener(v -> {
-            if(SharedPreferenceCashing.getInstance().getUserId() != null) {
-                MealDTO favoriteMeal = new MealDTO(meal);
-                favoriteMeal.setFavorite(true);
-                favoriteMeal.setPlanned(false);
-                favoriteMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
-                favoriteMeal.setDate("0");
-                favoriteMeal.setIdMeal(meal.getIdMeal());
-                presenter.storeMeal(favoriteMeal);
-            }else {
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Sign Up Required")
-                        .setMessage("You need to sign up or log in to access your profile.")
-                        .setPositiveButton("Sign Up", (dialog, which) -> {
-                            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
-                        })
-                        .setNegativeButton("Cancel", (dialog, which) -> {
-                            dialog.dismiss();
-                        })
-                        .show();
+            if(ConnectionUtil.isConnected(requireContext())) {
+                if (SharedPreferenceCashing.getInstance().getUserId() != null) {
+                    MealDTO favoriteMeal = new MealDTO(meal);
+                    favoriteMeal.setFavorite(true);
+                    favoriteMeal.setPlanned(false);
+                    favoriteMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
+                    favoriteMeal.setDate("0");
+                    favoriteMeal.setIdMeal(meal.getIdMeal());
+                    presenter.storeMeal(favoriteMeal);
+                    Snackbar.make(view, "Meal added to favorites!", Snackbar.LENGTH_SHORT).show();
+                } else {
+                    new AlertDialog.Builder(requireContext())
+                            .setTitle("Sign Up Required")
+                            .setMessage("You need to sign up or log in to access your profile.")
+                            .setPositiveButton("Sign Up", (dialog, which) -> {
+                                Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
+                            })
+                            .setNegativeButton("Cancel", (dialog, which) -> {
+                                dialog.dismiss();
+                            })
+                            .show();
+                }
+            }else{
+                Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT).show();
             }
         });
 
+
         addToPlan.setOnClickListener(v -> {
-            if(SharedPreferenceCashing.getInstance().getUserId() == null) {
-                new AlertDialog.Builder(requireContext())
-                        .setTitle("Sign Up Required")
-                        .setMessage("You need to sign up or log in to access your profile.")
-                        .setPositiveButton("Sign Up", (dialog, which) -> {
-                            Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
-                        })
-                        .setNegativeButton("Cancel", (dialog, which) -> {
-                            dialog.dismiss();
-                        })
-                        .show();
-            }else {
-                long[] weekRange = DateUtil.getCurrentWeekRange();
-                long weekStart = weekRange[0];
-                long weekEnd = weekRange[1];
+            if(ConnectionUtil.isConnected(requireContext())) {
+                if (SharedPreferenceCashing.getInstance().getUserId() == null) {
+                    new AlertDialog.Builder(requireContext())
+                            .setTitle("Sign Up Required")
+                            .setMessage("You need to sign up or log in to access your profile.")
+                            .setPositiveButton("Sign Up", (dialog, which) -> {
+                                Navigation.findNavController(requireView()).navigate(R.id.action_aboutMealFragment_to_registrationFragment);
+                            })
+                            .setNegativeButton("Cancel", (dialog, which) -> {
+                                dialog.dismiss();
+                            })
+                            .show();
+                } else {
+                    long[] weekRange = DateUtil.getCurrentWeekRange();
+                    long weekStart = weekRange[0];
+                    long weekEnd = weekRange[1];
 
-                Calendar calendar = Calendar.getInstance();
-                int year = calendar.get(Calendar.YEAR);
-                int month = calendar.get(Calendar.MONTH);
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                    Calendar calendar = Calendar.getInstance();
+                    int year = calendar.get(Calendar.YEAR);
+                    int month = calendar.get(Calendar.MONTH);
+                    int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        requireContext(),
-                        (views, selectedYear, selectedMonth, selectedDay) -> {
-                            if (DateUtil.isWithinCurrentWeek(selectedYear, selectedMonth, selectedDay, weekStart, weekEnd)) {
-                                String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-                                MealDTO planMeal = new MealDTO(meal);
-                                planMeal.setDate(formattedDate);
-                                planMeal.setPlanned(true);
-                                planMeal.setFavorite(false);
-                                planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
-                                planMeal.setIdMeal(meal.getIdMeal());
-                                presenter.storeMeal(planMeal);
-                            }
-                        },
-                        year, month, day
-                );
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(
+                            requireContext(),
+                            (views, selectedYear, selectedMonth, selectedDay) -> {
+                                if (DateUtil.isWithinCurrentWeek(selectedYear, selectedMonth, selectedDay, weekStart, weekEnd)) {
+                                    String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+                                    MealDTO planMeal = new MealDTO(meal);
+                                    planMeal.setDate(formattedDate);
+                                    planMeal.setPlanned(true);
+                                    planMeal.setFavorite(false);
+                                    planMeal.setIdUser(SharedPreferenceCashing.getInstance().getUserId());
+                                    planMeal.setIdMeal(meal.getIdMeal());
+                                    presenter.storeMeal(planMeal);
+                                    Snackbar.make(view, "Meal added to plan!", Snackbar.LENGTH_SHORT).show();
 
-                datePickerDialog.getDatePicker().setMinDate(weekStart);
-                datePickerDialog.getDatePicker().setMaxDate(weekEnd);
+                                }
+                            },
+                            year, month, day
+                    );
 
-                datePickerDialog.show();
+                    datePickerDialog.getDatePicker().setMinDate(weekStart);
+                    datePickerDialog.getDatePicker().setMaxDate(weekEnd);
+
+                    datePickerDialog.show();
+                }
+            }else{
+                Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT).show();
             }
         });
 

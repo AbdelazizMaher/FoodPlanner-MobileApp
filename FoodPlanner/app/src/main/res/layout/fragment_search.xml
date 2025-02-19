@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:queryHint="Search Recipes"
-                        android:background="@android:color/transparent"
+                        app:queryBackground="@color/gray"
                         android:iconifiedByDefault="false"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
