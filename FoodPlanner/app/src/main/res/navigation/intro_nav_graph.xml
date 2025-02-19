@@ -115,6 +115,12 @@
         <action
             android:id="@+id/action_profileFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mealFavouriteFragment"
+            app:destination="@id/mealFavouriteFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_mealPlanFragment"
+            app:destination="@id/mealPlanFragment" />
     </fragment>
     <fragment
         android:id="@+id/allMealsFragment"

@@ -23,22 +23,17 @@ public class ProfilePresenter implements ProfileContract.IPresenter {
 
     @Override
     public void loadUserData() {
-
+        view.showUserName(SharedPreferenceCashing.getInstance().getUserName());
     }
 
     @Override
-    public void onFoodPreferencesClicked() {
-
+    public void onPlanClicked() {
+        view.navigateToPlanPage();
     }
 
     @Override
-    public void onSettingsClicked() {
-
-    }
-
-    @Override
-    public void onEditProfileClicked() {
-
+    public void onFavouriteClicked() {
+        view.navigateToFavouritePage();
     }
 
     @Override

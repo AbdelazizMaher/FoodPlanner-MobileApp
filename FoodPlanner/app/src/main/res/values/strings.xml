@@ -66,4 +66,6 @@
     <string name="description">Teriyaki Sauce</string>
     <string name="add_to_favourites">ADD TO FAVOURITES</string>
     <string name="there_is_no_meals_yet">There is no meals yet,</string>
+    <string name="your_meal_plan">Your Meal Plan</string>
+    <string name="favourite_meals">Favourite Meals</string>
 </resources>

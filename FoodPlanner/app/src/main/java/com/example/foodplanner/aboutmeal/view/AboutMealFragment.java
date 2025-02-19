@@ -35,6 +35,7 @@ import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.model.MealResponseModel;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.example.foodplanner.utils.dateutil.DateUtil;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -123,24 +124,11 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                         })
                         .show();
             }else {
+                long[] weekRange = DateUtil.getCurrentWeekRange();
+                long weekStart = weekRange[0];
+                long weekEnd = weekRange[1];
+
                 Calendar calendar = Calendar.getInstance();
-
-                int today = calendar.get(Calendar.DAY_OF_WEEK);
-
-                if (today != Calendar.SATURDAY) {
-                    calendar.add(Calendar.DAY_OF_WEEK, -(today - Calendar.SATURDAY + 7) % 7);
-                }
-
-                long weekStart = calendar.getTimeInMillis();
-
-                calendar.add(Calendar.DAY_OF_WEEK, 6);
-                calendar.set(Calendar.HOUR_OF_DAY, 23);
-                calendar.set(Calendar.MINUTE, 59);
-                calendar.set(Calendar.SECOND, 59);
-                calendar.set(Calendar.MILLISECOND, 999);
-                long weekEnd = calendar.getTimeInMillis();
-
-                calendar = Calendar.getInstance();
                 int year = calendar.get(Calendar.YEAR);
                 int month = calendar.get(Calendar.MONTH);
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -148,10 +136,7 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
                 DatePickerDialog datePickerDialog = new DatePickerDialog(
                         requireContext(),
                         (views, selectedYear, selectedMonth, selectedDay) -> {
-                            Calendar selectedDate = Calendar.getInstance();
-                            selectedDate.set(selectedYear, selectedMonth, selectedDay);
-
-                            if (selectedDate.getTimeInMillis() >= weekStart && selectedDate.getTimeInMillis() <= weekEnd) {
+                            if (DateUtil.isWithinCurrentWeek(selectedYear, selectedMonth, selectedDay, weekStart, weekEnd)) {
                                 String formattedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
                                 MealDTO planMeal = new MealDTO(meal);
                                 planMeal.setDate(formattedDate);
@@ -181,6 +166,8 @@ public class AboutMealFragment extends Fragment implements AboutMealContract.IVi
             presenter.getMealById(mealID);
         }else {
             displayMealDetails(meal);
+            addToFavorites.setVisibility(View.GONE);
+            addToPlan.setVisibility(View.GONE);
         }
     }
 

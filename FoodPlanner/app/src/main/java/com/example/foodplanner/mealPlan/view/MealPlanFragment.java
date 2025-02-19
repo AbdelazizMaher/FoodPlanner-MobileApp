@@ -20,12 +20,13 @@ import com.example.foodplanner.R;
 import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.database.localdatabase.MealLocalDataSource;
 import com.example.foodplanner.mealPlan.MealPlanContract;
-import com.example.foodplanner.mealPlan.view.MealPlanFragmentDirections;
 import com.example.foodplanner.mealPlan.presenter.MealPlanPresenter;
 import com.example.foodplanner.model.MealDTO;
+import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.example.foodplanner.utils.dateutil.DateUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -81,18 +82,23 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
         adapter = new MealPlanRecyclerAdapter(new ArrayList<>());
         mealPlanRecyclerView.setAdapter(adapter);
         adapter.setOnRemoveButtonClickListener(meal->{
-            presenter.removeMealFromPlan(meal);
+            if(ConnectionUtil.isConnected(requireContext())) {
+                presenter.removeMealFromPlan(meal);
+            }
         });
         adapter.setOnMealClickListener(meal->{
             MealPlanFragmentDirections.ActionMealPlanFragmentToAboutMealFragment action = MealPlanFragmentDirections.actionMealPlanFragmentToAboutMealFragment(meal,0);
             Navigation.findNavController(requireView()).navigate(action);
         });
 
-        setWeekRange();
+        long[] weekRange = DateUtil.getCurrentWeekRange();
+        weekStart = weekRange[0];
+        weekEnd = weekRange[1];
+
         calendarView.setMinDate(weekStart);
         calendarView.setMaxDate(weekEnd);
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            if (isWithinCurrentWeek(year, month, dayOfMonth)){
+            if (DateUtil.isWithinCurrentWeek(year, month, dayOfMonth, weekStart, weekEnd)){
                 String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
                 Log.d("Selected Date", selectedDate);
                 if(SharedPreferenceCashing.getInstance().getUserId() != null) {
@@ -117,28 +123,4 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
             infoText.setText("You don't have any planned meals");
         }
     }
-
-        private void setWeekRange () {
-            Calendar calendar = Calendar.getInstance();
-            int today = calendar.get(Calendar.DAY_OF_WEEK);
-
-            if (today != Calendar.SATURDAY) {
-                calendar.add(Calendar.DAY_OF_WEEK, -(today - Calendar.SATURDAY + 7) % 7);
-            }
-            weekStart = calendar.getTimeInMillis();
-
-            calendar.add(Calendar.DAY_OF_WEEK, 6);
-            calendar.set(Calendar.HOUR_OF_DAY, 23);
-            calendar.set(Calendar.MINUTE, 59);
-            calendar.set(Calendar.SECOND, 59);
-            calendar.set(Calendar.MILLISECOND, 999);
-            weekEnd = calendar.getTimeInMillis();
-        }
-
-        private boolean isWithinCurrentWeek ( int year, int month, int day){
-            Calendar selectedDate = Calendar.getInstance();
-            selectedDate.set(year, month, day);
-            long selectedTime = selectedDate.getTimeInMillis();
-            return selectedTime >= weekStart && selectedTime <= weekEnd;
-        }
 }

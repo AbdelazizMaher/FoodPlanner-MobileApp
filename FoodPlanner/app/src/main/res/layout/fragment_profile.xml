@@ -101,11 +101,6 @@
                     android:layout_marginTop="4dp"/>
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="@string/navtodetails_in_profile_page"
-                android:src="@drawable/arrow_forward"/>
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +125,7 @@
                 <ImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/settings"
+                    android:src="@drawable/bookmark"
                     android:contentDescription="@string/settings"
                     android:layout_marginEnd="8dp"/>
 
@@ -138,12 +133,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/general_settings"
+                    android:text="@string/favourite_meals"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
                 <ImageView
-                    android:id="@+id/settingsNav"
+                    android:id="@+id/favouritesNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/nav"
@@ -169,19 +164,19 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/nav"
-                    android:src="@drawable/edit_profile"
+                    android:src="@drawable/shopping"
                     android:layout_marginEnd="8dp"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/edit_profile"
+                    android:text="@string/your_meal_plan"
                     android:textSize="24sp"
                     android:textColor="@color/black"/>
 
                 <ImageView
-                    android:id="@+id/profileNav"
+                    android:id="@+id/planNav"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:contentDescription="@string/nav"

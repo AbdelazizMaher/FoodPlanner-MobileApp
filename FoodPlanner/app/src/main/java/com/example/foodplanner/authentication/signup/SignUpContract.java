@@ -8,6 +8,6 @@ public interface SignUpContract {
         void showSignUpError(String message);
     }
     interface IPresenter {
-        void signUp(String email, String password);
+        void signUp(String email, String password,  String displayName);
     }
 }
