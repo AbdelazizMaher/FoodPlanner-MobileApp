@@ -25,6 +25,7 @@ import com.example.foodplanner.utils.connectionutil.ConnectionUtil;
 import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,8 @@ public class MealFavouriteFragment extends Fragment implements MealFavouriteCont
         adapter.setOnRemoveButtonClickListener(meal->{
             if(ConnectionUtil.isConnected(requireContext())) {
                 presenter.removeMealFromFavourite(meal);
+            }else{
+                Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT).show();
             }
         });
         adapter.setOnMealClickListener(meal->{

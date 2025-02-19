@@ -27,6 +27,7 @@ import com.example.foodplanner.repository.mealrepository.MealRepository;
 import com.example.foodplanner.network.api.MealRemoteApiDataSource;
 import com.example.foodplanner.network.sync.MealRemoteSyncDataSource;
 import com.example.foodplanner.utils.dateutil.DateUtil;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,6 +85,8 @@ public class MealPlanFragment extends Fragment implements MealPlanContract.IView
         adapter.setOnRemoveButtonClickListener(meal->{
             if(ConnectionUtil.isConnected(requireContext())) {
                 presenter.removeMealFromPlan(meal);
+            }else{
+                Snackbar.make(view, "No internet connection", Snackbar.LENGTH_SHORT).show();
             }
         });
         adapter.setOnMealClickListener(meal->{
