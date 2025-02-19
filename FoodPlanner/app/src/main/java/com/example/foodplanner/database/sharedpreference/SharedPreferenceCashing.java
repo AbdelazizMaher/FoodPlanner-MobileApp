@@ -9,7 +9,6 @@ public class SharedPreferenceCashing {
     private static final String SHARED_PREFS_NAME = "USER_PREFS";
     private static final String KEY_USER_ID = "USER_ID";
     private static final String KEY_USER_NAME = "USERNAME";
-    private static final String KEY_USER_PHOTO = "USER_PHOTO";
 
     private SharedPreferenceCashing(Context context) {
         this.sharedPreferences = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE);
@@ -24,11 +23,10 @@ public class SharedPreferenceCashing {
         return instance;
     }
 
-    public void cacheUser(String userId, String userName, String userPhoto){
+    public void cacheUser(String userId, String userName){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_USER_ID, userId);
         editor.putString(KEY_USER_NAME, userName);
-        editor.putString(KEY_USER_PHOTO, userPhoto);
         editor.apply();
     }
 
@@ -43,8 +41,5 @@ public class SharedPreferenceCashing {
     }
     public String getUserName() {
         return sharedPreferences.getString(KEY_USER_NAME, null);
-    }
-    public String getUserPhoto() {
-        return sharedPreferences.getString(KEY_USER_PHOTO, null);
     }
 }

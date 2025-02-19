@@ -1,5 +1,6 @@
 package com.example.foodplanner.profile;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.foodplanner.R;
+import com.example.foodplanner.database.sharedpreference.SharedPreferenceCashing;
 import com.example.foodplanner.repository.authrepository.AuthenticationRepository;
 
 public class ProfileFragment extends Fragment implements ProfileContract.IView {
 
-    private ImageView settingsNav, profileNav, aboutNav, logoutNav, backToHome;
+    private ImageView favouritesNav, planNav, aboutNav, logoutNav, backToHome;
+    private TextView profileName;
     private ProfilePresenter presenter;
 
     public ProfileFragment() {
@@ -43,22 +47,23 @@ public class ProfileFragment extends Fragment implements ProfileContract.IView {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        settingsNav = view.findViewById(R.id.settingsNav);
-        profileNav = view.findViewById(R.id.profileNav);
+        favouritesNav = view.findViewById(R.id.favouritesNav);
+        planNav = view.findViewById(R.id.planNav);
         aboutNav = view.findViewById(R.id.aboutNav);
         logoutNav = view.findViewById(R.id.logoutNav);
         backToHome = view.findViewById(R.id.backToHome);
+        profileName = view.findViewById(R.id.profile_name);
 
         backToHome.setOnClickListener(v -> {
             Navigation.findNavController(requireView()).navigateUp();
         });
 
-        settingsNav.setOnClickListener(v -> {
-
+        planNav.setOnClickListener(v -> {
+            presenter.onPlanClicked();
         });
 
-        profileNav.setOnClickListener(v -> {
-
+        favouritesNav.setOnClickListener(v -> {
+            presenter.onFavouriteClicked();
         });
 
         aboutNav.setOnClickListener(v -> {
@@ -69,31 +74,22 @@ public class ProfileFragment extends Fragment implements ProfileContract.IView {
             presenter.onLogoutClicked();
         });
 
+        presenter.loadUserData();
     }
 
     @Override
     public void showUserName(String name) {
-
+        profileName.setText(name);
     }
 
     @Override
-    public void showProfileImage(int imageRes) {
-
+    public void navigateToPlanPage() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mealPlanFragment);
     }
 
     @Override
-    public void navigateToFoodPreferences() {
-
-    }
-
-    @Override
-    public void navigateToSettings() {
-
-    }
-
-    @Override
-    public void navigateToEditProfile() {
-
+    public void navigateToFavouritePage() {
+        Navigation.findNavController(requireView()).navigate(R.id.action_profileFragment_to_mealFavouriteFragment);
     }
 
     @Override

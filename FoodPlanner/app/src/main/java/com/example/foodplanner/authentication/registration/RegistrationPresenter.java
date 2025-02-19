@@ -88,6 +88,6 @@ public class RegistrationPresenter implements RegistrationContract.IPresenter {
 
 
     private void casheUser(FirebaseUser user) {
-        SharedPreferenceCashing.getInstance().cacheUser(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString());
+        SharedPreferenceCashing.getInstance().cacheUser(user.getUid(), user.getDisplayName());
     }
 }

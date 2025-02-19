@@ -82,6 +82,7 @@ public class SignInFragment extends Fragment implements SignInContract.IView {
 
         etEmail.addTextChangedListener(textWatcher);
         etPassword.addTextChangedListener(textWatcher);
+        checkBoxSubscribe.setOnCheckedChangeListener((buttonView, isChecked) -> checkInputs());
 
         btnNext.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
@@ -115,8 +116,9 @@ public class SignInFragment extends Fragment implements SignInContract.IView {
     private void checkInputs() {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
+        boolean isChecked = checkBoxSubscribe.isChecked();
 
-        if (!email.isEmpty() && !password.isEmpty()) {
+        if (!email.isEmpty() && !password.isEmpty() && isChecked) {
             btnNext.setEnabled(true);
             btnNext.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.primaryColor));
         } else {

@@ -78,7 +78,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
     @Override
     public void showSignUpSuccess() {
         Toast.makeText(getContext(), "Sign-up successful", Toast.LENGTH_SHORT).show();
-        Navigation.findNavController(requireView()).navigate(R.id.action_signInFragment_to_homeFragment2);
+        Navigation.findNavController(requireView()).navigate(R.id.action_signUpFragment_to_homeFragment2);
 
     }
 
@@ -115,6 +115,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
         etEmail.addTextChangedListener(textWatcher);
         etPassword.addTextChangedListener(textWatcher);
         etConfirmPassword.addTextChangedListener(textWatcher);
+        checkBoxSubscribe.setOnCheckedChangeListener((buttonView, isChecked) -> checkInputs());
     }
 
     private void registerUser() {
@@ -133,7 +134,7 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
             return;
         }
 
-        presenter.signUp(email, password);
+        presenter.signUp(email, password,displayName);
     }
 
     private void checkInputs() {
@@ -141,12 +142,14 @@ public class SignUpFragment extends Fragment implements SignUpContract.IView {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
+        boolean isChecked = checkBoxSubscribe.isChecked();
 
         boolean isEnabled = !TextUtils.isEmpty(displayName) &&
                 !TextUtils.isEmpty(email) &&
                 !TextUtils.isEmpty(password) &&
                 !TextUtils.isEmpty(confirmPassword) &&
-                password.equals(confirmPassword);
+                password.equals(confirmPassword) &&
+                isChecked;;
 
         btnNext.setEnabled(isEnabled);
 
